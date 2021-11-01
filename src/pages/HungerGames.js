@@ -230,15 +230,14 @@ const HungerGamesPage = (props) => {
         }, previousMilis);
     }
 
-    const showStoryline = () => {
-        if(storylineIndex < storyline.story.length){
-            let type = storyline.story[storylineIndex].type;
+    const showStoryline = (index) => {
+        if(index < storyline.story.length){
+            let type = storyline.story[index].type;
         
             switch (type) {
                 case 1: // DAY
                     setPrevActBtn(() => () => {
-                        // setStorylineIndex(storylineIndex-1);
-                        // startActPresentation(setShowStorylinePresentation, setShowStoryactPresentation, 1000, 0, 'hg-the-reaping');
+                        showStoryline(index-1);
                     });
 
                     setNextActBtn(() => () => {
@@ -249,19 +248,21 @@ const HungerGamesPage = (props) => {
                         startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-day');
                     });
 
+                    setNextStoryBtn(() => () =>{
+                        showStoryline(index+1);
+                    });
+
                     startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-day');
                     setTimeout(() => {
                         setStoryactImage(day);
-                        setStoryactTitle('DIA ' + storyline.story[storylineIndex].day);
-                        setStorylineOcurrencies(storyline.story[storylineIndex].occurrencies);
+                        setStoryactTitle('DIA ' + storyline.story[index].day);
+                        setStorylineOcurrencies(storyline.story[index].occurrencies);
                         setStorylineType(0);
                     }, 900);
                     break;
                 case 2: // DEATHS
                     setPrevActBtn(() => () => {
-                        // setStorylineIndex(storylineIndex-2);
-                        // showStoryline();
-                        // startActPresentation(setShowStorylinePresentation, setShowStoryactPresentation, 1000, 0, 'hg-the-reaping');
+                        showStoryline(index-1);
                     });
 
                     setNextActBtn(() => () => {
@@ -272,19 +273,21 @@ const HungerGamesPage = (props) => {
                         startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-deaths');
                     });
 
+                    setNextStoryBtn(() => () =>{
+                        showStoryline(index+1);
+                    });
+
                     startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-deaths');
                     setTimeout(() => {
                         setStoryactImage(deaths);
                         setStoryactTitle('MORTES');
-                        setStorylineOcurrencies(storyline.story[storylineIndex].deaths);
+                        setStorylineOcurrencies(storyline.story[index].deaths);
                         setStorylineType(1);
                     }, 900);
                     break;
                 case 3: // NIGHT
                     setPrevActBtn(() => () => {
-                        // setStorylineIndex(storylineIndex-2);
-                        // showStoryline();
-                        // startActPresentation(setShowStorylinePresentation, setShowStoryactPresentation, 1000, 0, 'hg-the-reaping');
+                        showStoryline(index-1);
                     });
 
                     setNextActBtn(() => () => {
@@ -295,18 +298,21 @@ const HungerGamesPage = (props) => {
                         startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-night');
                     });
 
+                    setNextStoryBtn(() => () =>{
+                        showStoryline(index+1);
+                    });
+
                     startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-night');
                     setTimeout(() => {
                         setStoryactImage(night);
-                        setStoryactTitle('NOITE ' + storyline.story[storylineIndex].day);
-                        setStorylineOcurrencies(storyline.story[storylineIndex].occurrencies);
+                        setStoryactTitle('NOITE ' + storyline.story[index].day);
+                        setStorylineOcurrencies(storyline.story[index].occurrencies);
                         setStorylineType(0);
                     }, 900);
                     break;
                 case 4: // FEAST
                     setPrevActBtn(() => () => {
-                        // setStorylineIndex(storylineIndex-2);
-                        // startActPresentation(setShowStorylinePresentation, setShowStoryactPresentation, 1000, 0, 'hg-the-reaping');
+                        showStoryline(index-1);
                     });
 
                     setNextActBtn(() => () => {
@@ -317,11 +323,15 @@ const HungerGamesPage = (props) => {
                         startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-the-feast');
                     });
 
+                    setNextStoryBtn(() => () =>{
+                        showStoryline(index+1);
+                    });
+
                     startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-the-feast');
                     setTimeout(() => {
                         setStoryactImage(theFeast);
                         setStoryactTitle('O FESTIVAL');
-                        setStorylineOcurrencies(storyline.story[storylineIndex].occurrencies);
+                        setStorylineOcurrencies(storyline.story[index].occurrencies);
                         setStorylineType(0);
                     }, 900);
                     break;
@@ -340,16 +350,20 @@ const HungerGamesPage = (props) => {
                         startActPresentation(setShowStoryactPresentation, setShowStorylinePresentation, 1000, 0, 'hg-the-bloodbath');
                     });
 
+                    setNextStoryBtn(() => () =>{
+                        showStoryline(index+1);
+                    });
+
                     startActPresentation(setShowStoryactPresentation, setShowTheReapingList, 1000, 0, 'hg-the-bloodbath');
                     setTimeout(() => {
                         setStoryactImage(cornucopia);
                         setStoryactTitle('O BANHO DE SANGUE');
-                        setStorylineOcurrencies(storyline.story[storylineIndex].occurrencies);
+                        setStorylineOcurrencies(storyline.story[index].occurrencies);
                         setStorylineType(0);
                     }, 900);
                     break;
             }
-            setStorylineIndex(storylineIndex+1);
+            // setStorylineIndex(storylineIndex+1);
         } else {
             // WINNER
             setWinner(storyline.winner);
@@ -426,7 +440,7 @@ const HungerGamesPage = (props) => {
                     startActPresentation(setShowTheReapingPresentation, setShowTheReapingList, 1000, 0, 'hg-the-reaping');
                 }}
 
-                nextBtn = {() => showStoryline()}
+                nextBtn = {() => showStoryline(0)}
             />
             <ActPresentation 
                 visible={showStoryactPresentation} 
@@ -435,7 +449,7 @@ const HungerGamesPage = (props) => {
                 size='big' 
                 title={storyactTitle}
 
-                previousBtn={() => {prevActBtn()}}
+                previousBtn={() => prevActBtn()}
 
                 nextBtn = {() => nextActBtn()}
             />
@@ -447,7 +461,7 @@ const HungerGamesPage = (props) => {
 
                 previousBtn = {() => prevStoryBtn()}
 
-                nextBtn = {() => showStoryline()}
+                nextBtn = {() => nextStoryBtn()}
             />
             <WinnerSegment
                 visible={showWinnerPresentation}
