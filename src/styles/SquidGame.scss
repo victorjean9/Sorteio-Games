@@ -1,0 +1,24 @@
+.sg-intro {
+    position: fixed !important;
+    width: 100%;
+    height: 100%;
+    background-position-x: center;
+    background-position-y: bottom;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+}
+
+
+@media only screen
+and (max-width:770px){
+	.sg-intro {
+        background-size: cover;
+    }
+}
+
+@media only screen
+and (min-width:771px){
+	.sg-intro {
+        background-size: contain;
+    }
+}

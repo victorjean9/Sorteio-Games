@@ -1,0 +1,284 @@
+.corner-btn {
+    position: fixed;
+    margin: 10px !important;
+}
+
+.loading-bottom {
+    position: fixed;
+    bottom: 10px !important;
+    right: 10px !important;
+}
+
+.home-bg {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-45deg, #EE7752, #E73C7E, #23A6D5, #23D5AB);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.black-presentation-bg {
+	background: black;
+}
+
+.paused {
+    -webkit-animation-play-state: paused; /* Safari 4.0 - 8.0 */
+    animation-play-state: paused;
+}
+
+/* HUNGER GAMES */
+
+.hunger-games-bg {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background:  radial-gradient(ellipse at top, #9A7040, #CF1D35, #DB890C, #F8CE20, #454140);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-presentation-bg {
+	background:  linear-gradient(-215deg, black, black, black, #9A7040, #CF1D35);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-the-reaping {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #2E1220, #7B4855, #8E8690);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-the-bloodbath {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #809DBB, #88957C, #424F33);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-day {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #F6CC94, #DF8955, #773C21);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-night {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #5E6A6D, #434F5C, #0B1A21);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-deaths {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #2E7C9E, #1A5A7D, #08111D);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.hg-the-feast {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #CEB974, #B49B4F, #573223);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+/* SQUID GAME */
+
+.squid-game-bg {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(45deg, #4599b2, #37a18e, #9341a3, #921f81, #B22222);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.sg-presentation-bg {
+	background:  linear-gradient(-215deg, black, black, black, #4599b2, #37a18e, #9341a3, #921f81, #B22222);
+    background-size: 1400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+/* FORTNITE */
+
+.fortnite-bg {
+    width: 100wh;
+    height: 100vh;
+    color: #fff;
+	background: radial-gradient(ellipse at top, #FFD930, #FFD930, #C23A3C, #790E28, #370000);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.fn-presentation-bg {
+	background:  linear-gradient(-215deg, black,black, black, black, #FFD930, #C23A3C, #790E28, #370000);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+/* OTHERS */
+
+.name-red {
+    color: #B22222 !important;
+}
+
+.name-green {
+    color: darkgreen !important;
+}
+
+.ui.label {
+    color: white !important;
+    background-color: transparent !important;
+}
+
+.input-bordered{
+    color: white !important;
+    border: 2px solid white !important;
+    border-radius: 5px;
+    margin-bottom: 10px;
+}
+
+.input-bordered>input{
+    color: white !important;
+}
+
+.input-circular-btn {
+    box-shadow: none !important;
+    border: 2px solid white;
+}
+
+input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
+    color: white !important;
+    opacity: 1; /* Firefox */
+}
+  
+
+.ui.card.district {
+    border: 2px white solid !important;
+    box-shadow: none !important;
+    color: white !important;
+    background-color: transparent !important;
+}
+
+.ui.card.district>.content>.header {
+    color: white !important;
+    font-weight: bolder;
+    font-size: 1.8em !important;
+}
+
+.ui.card.district>.content>.description {
+    color: white !important;
+    font-weight: bolder;
+    font-size: 1.28571429em !important;
+}
+
+.acrylic {
+	/* Parent background + Gaussian blur */
+	backdrop-filter: blur(10px) !important;
+	-webkit-backdrop-filter: blur(10px) !important;
+
+	/* Exclusion blend */
+	background-blend-mode: exclusion !important;
+
+	/* Color/tint overlay + Opacity */
+	background: rgba(255, 255, 255, .6) !important;
+
+	/* Tiled noise texture */
+	background-image: url(data:image/png;base64,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) !important;
+
+	/* Some unrelated styling...
+	border-radius: 1px;
+	border: 1px solid rgba(255, 255, 255, .2);
+	box-shadow: 0 10px 30px rgba(0, 0, 0, .1), 0 1px 8px rgba(0, 0, 0, .2);
+
+    padding: 15px; */
+}
+
+
+
+@-webkit-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@-moz-keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
+
+@keyframes Gradient {
+    0% {
+        background-position: 0% 50%
+    }
+    50% {
+        background-position: 100% 50%
+    }
+    100% {
+        background-position: 0% 50%
+    }
+}
