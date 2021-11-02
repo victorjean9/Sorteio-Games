@@ -34,6 +34,26 @@ const ActPresentation = (props) => {
 
 const StorylinePresentation = (props) => {
 
+    let [storyArray, setStoryArray] = useState([]);
+    let [showControls, setShowControls] = useState(true);
+
+    useEffect(() => {
+        if(props.story !== null)
+            setStoryArray(props.story.slice(0, 1));
+        if(props.type === 1) {
+            setShowControls(true);
+        } else {
+            setShowControls(false);
+        }
+    }, [props.story, props.type]);
+
+    const showMore = () => {
+        setStoryArray(props.story.slice(0, storyArray.length + 1));
+        if(storyArray.length + 1 === props.story.length){
+            setShowControls(true);
+        }
+    }   
+
     return (
         <Transition visible={props.visible} animation={props.animation} duration={1000}>
             <Container>
@@ -50,20 +70,49 @@ const StorylinePresentation = (props) => {
                         :   <Header as='h1' inverted textAlign='center'>Nenhum tiro de canhão pode ser ouvido à distância.</Header>
                     :   null
                 }
-                <List inverted size='massive'>
-                    {   
-                        props.story.map(
-                            (item, index) => (
-                                <List.Item key={'storyOccurrence' + index} ><p style={{textAlign: 'center'}} dangerouslySetInnerHTML={{__html: item}}/></List.Item>
-                            )
-                        )
-                    }
-                </List>
+                {
+                    props.type === 1
+                    ?   <List inverted size='massive'>
+                            {   
+                                props.story.map(
+                                    (item, index) => (
+                                        <List.Item key={'death' + index} ><p style={{textAlign: 'center'}} dangerouslySetInnerHTML={{__html: item}}/></List.Item>
+                                    )
+                                )
+                            }
+                        </List>
+                    :   <>
+                            <Transition.Group
+                                as={List}
+                                duration={200}
+                                divided
+                                size='massive'
+                                verticalAlign='middle'
+                                >
+                                {
+                                    storyArray.map(
+                                        (item, index) => (
+                                            <List.Item key={'storyOccurrence' + index} ><p style={{textAlign: 'center'}} dangerouslySetInnerHTML={{__html: item}}/></List.Item>
+                                        )
+                                    )
+                                }
+                            </Transition.Group>
+                            {
+                                !showControls 
+                                ?   <p style={{textAlign: 'center'}}><Button inverted size='big' onClick={() => showMore()} basic circular icon><Icon name='angle down' /></Button></p>
+                                :   null
+                            }
+                        </>
+                }
                 <br/>
-                <p style={{textAlign:'center'}}>
-                    <Button inverted size='big' onClick={props.previousBtn} basic> <Icon name='angle left' /> VOLTAR </Button>
-                    <Button inverted size='big' onClick={props.nextBtn} basic>PROSSEGUIR <Icon name='angle right' /> </Button>
-                </p>
+                {
+                    showControls 
+                    ?   <p style={{textAlign:'center'}}>
+                            <Button inverted size='big' onClick={props.previousBtn} basic> <Icon name='angle left' /> VOLTAR </Button>
+                            <Button inverted size='big' onClick={props.nextBtn} basic>PROSSEGUIR <Icon name='angle right' /> </Button>
+                        </p>
+                    :   null
+                }
                 <br/>
             </Container>
         </Transition>

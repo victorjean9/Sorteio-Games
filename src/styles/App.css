@@ -177,6 +177,11 @@
     color: darkgreen !important;
 }
 
+.ui.divided.list>.item {
+    border-top: none !important;
+    margin-top: 20px !important;
+}
+
 .ui.label {
     color: white !important;
     background-color: transparent !important;
