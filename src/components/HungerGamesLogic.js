@@ -108,8 +108,8 @@ class HungerGamesLogic {
                         let replacerStr = '(Jogador' + i +')';
                         var regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
 
-                        let color = isDead ? 'name-red' : 'name-green';
-                        let newStr = '<b class="' + color + '">' + chosenPlayer + '</b>';
+                        // let color = isDead ? 'name-red' : 'name-red';
+                        let newStr = '<b class="name-red">' + chosenPlayer + '</b>';
 
                         eventText = eventText.replace(regexStr, newStr);
 
