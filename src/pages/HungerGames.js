@@ -38,12 +38,14 @@ const StorylinePresentation = (props) => {
     let [showControls, setShowControls] = useState(true);
 
     useEffect(() => {
-        if(props.story !== null)
-            setStoryArray(props.story.slice(0, 1));
+        setStoryArray(props.story.slice(0, 1));
         if(props.type === 1) {
             setShowControls(true);
         } else {
-            setShowControls(false);
+            if(props.story.length > 1)
+                setShowControls(false);
+            else   
+                setShowControls(true);
         }
     }, [props.story, props.type]);
 
