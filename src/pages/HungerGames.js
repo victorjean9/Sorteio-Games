@@ -127,10 +127,21 @@ const WinnerSegment = (props) => {
             <div style={{width: '100%', height: '100vh'}}>
                 <span className='span-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
-                        🥇<b style={{textTransform: 'uppercase'}}>{props.winner}</b>🏆
-                        <Header.Subheader>
-                            GANHOU O SORTEIO!
-                        </Header.Subheader>
+                        {
+                            props.winner.length === 0
+                            ?   <>
+                                    👁️👄👁️
+                                    <Header.Subheader>
+                                        NINGUÉM GANHOU!
+                                    </Header.Subheader>
+                                </>
+                            :   <>
+                                    🥇<b style={{textTransform: 'uppercase'}}>{props.winner}</b>🏆
+                                    <Header.Subheader>
+                                        GANHOU O SORTEIO!
+                                    </Header.Subheader>
+                                </>
+                        }
                     </Header>
                 </span>
             </div>
@@ -207,13 +218,10 @@ const HungerGamesPage = (props) => {
     let [prevStoryBtn, setPrevStoryBtn ] = useState(() => {});
     let [nextStoryBtn, setNextStoryBtn ] = useState(() => {});
 
-    // let [storylineTitle, setStorylineTitle] = useState('');
     let [winner, setWinner] = useState('');
 
     let [storyline, setStoryline] = useState();
     let [districts, setDistricts] = useState([]);
-
-    let [storylineIndex, setStorylineIndex] = useState(0);
 
     useEffect(() => {
         props.setAppClass('hunger-games-bg');
@@ -253,7 +261,6 @@ const HungerGamesPage = (props) => {
     let startPresentation = () => {
 
         generateDistricts();
-        storylineIndex = 0;
         setStoryline(HungerGamesLogic.generateGame(props.playerNames.val));
 
         setShowPlayerSegment(false);
@@ -414,7 +421,6 @@ const HungerGamesPage = (props) => {
                     }, 900);
                     break;
             }
-            // setStorylineIndex(storylineIndex+1);
         } else {
             // WINNER
             setWinner(storyline.winner);

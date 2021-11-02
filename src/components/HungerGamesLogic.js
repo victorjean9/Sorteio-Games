@@ -108,7 +108,7 @@ class HungerGamesLogic {
                         let replacerStr = '(Jogador' + i +')';
                         var regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
 
-                        // let color = isDead ? 'name-red' : 'name-red';
+                        // let color = isDead ? 'name-red' : 'name-green';
                         let newStr = '<b>' + chosenPlayer + '</b>';
 
                         eventText = eventText.replace(regexStr, newStr);
@@ -193,7 +193,7 @@ class HungerGamesLogic {
     }
 
     day = () => {
-        let isFatal = this.probabilityFatal(.2); // 50% de morte
+        let isFatal = this.probabilityFatal(.2); // 20% de morte
 
         let event = '';
         let eventNumber = 0;
