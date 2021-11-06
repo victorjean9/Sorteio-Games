@@ -53,13 +53,13 @@ const PlayersForm = (props) => {
             setModalBasicErrorText('Deleta ou escreva nos campos em branco para prosseguir!');
             setModalBasicErrorOpen(true);
         } else {
-            if(props.playerNames.val.length >= 10){
+            // if(props.playerNames.val.length >= 10){
                 setModalBasicOpen(true);
-            }else{
-                setModalBasicErrorTitle(props.game === 0 ? 'Você necessita de mais tributos!' : 'Você necessita de mais jogadores!');
-                setModalBasicErrorText(props.game === 0 ? 'Deve haver no mínimo 10 tributos.' : 'Deve haver no mínimo 10 jogadores.');
-                setModalBasicErrorOpen(true);
-            }
+            // }else{
+            //     setModalBasicErrorTitle(props.game === 0 ? 'Você necessita de mais tributos!' : 'Você necessita de mais jogadores!');
+            //     setModalBasicErrorText(props.game === 0 ? 'Deve haver no mínimo 10 tributos.' : 'Deve haver no mínimo 10 jogadores.');
+            //     setModalBasicErrorOpen(true);
+            // }
         }
     } 
 
