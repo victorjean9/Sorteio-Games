@@ -62,6 +62,7 @@ const HomePage = (props) => {
         props.setAppClass('home-bg');
 
         props.setNome(nomeRef.current.textContent);
+        document.title = "Sorteio de " + nomeRef.current.textContent;
         sessionStorage.setItem('hostName', nomeRef.current.textContent);
 
         setTimeout(() => {
@@ -95,6 +96,7 @@ const HomePage = (props) => {
     }
 
     const reset = () => {
+        document.title = "Meu Sorteio";
         setSorteioSegment(false);
         setShowBtn(false);
         setPlaceholder('___');

@@ -224,6 +224,8 @@ const HungerGamesPage = (props) => {
     let [districts, setDistricts] = useState([]);
 
     useEffect(() => {
+        document.title = "Sorteio de " + props.nome + " - The Hunger Games";
+
         props.setAppClass('hunger-games-bg');
         setShowIntro(true);
 
@@ -235,6 +237,7 @@ const HungerGamesPage = (props) => {
     }, []);
 
     const homePage = () => {
+        document.title = "Sorteio de " + props.nome;
         history.push(Rotas.base);
     }
 
