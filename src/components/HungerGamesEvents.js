@@ -124,7 +124,7 @@ class HungerGamesEvents {
             case 28:
                 return({ tributes: 1, text: "(Jogador1) pensa em sua casa e em sua família."});
             case 29:
-                return({ tributes: 1, text: "(Jogador1) se machuca com espinhos enquanto colhe bagas."});
+                return({ tributes: 1, text: "(Jogador1) se machuca com espinhos enquanto colhe frutas."});
             case 30:
                 return({ tributes: 1, text: "(Jogador1) tenta pescar um peixe com uma lança."});
             case 31:
@@ -274,7 +274,7 @@ class HungerGamesEvents {
             case 4:
                 return({ tributes: 2, text: "(Jogador1) e (Jogador2) brigam por carne crua, mas (Jogador1) desiste e foge."});
             case 5:
-                return({ tributes: 3, text: "(Jogador1), (Jogador2) e (Jogador3) se confrontam, mas pegam o que eles querem devagar para evitar conflito."});
+                return({ tributes: 3, text: "(Jogador1), (Jogador2) e (Jogador3) se confrontam, mas pegam o que querem devagar para evitar conflito."});
             case 6:
                 return({ tributes: 2, text: "(Jogador1) destrói as memórias de (Jogador2) para afrontar."});
             case 7:

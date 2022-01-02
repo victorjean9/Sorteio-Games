@@ -16,6 +16,7 @@ import theFeast from '../images/hunger-games/the-feast.jpg';
 import deaths from '../images/hunger-games/deaths.jpg';
 
 import HungerGamesLogic from "../components/HungerGamesLogic";
+import ModalInfo from "../components/ModalInfo";
 
 const ActPresentation = (props) => {
     return(
@@ -222,6 +223,8 @@ const HungerGamesPage = (props) => {
 
     let [storyline, setStoryline] = useState();
     let [districts, setDistricts] = useState([]);
+
+    let [modalInfoOpen, setModalInfoOpen] = useState(false);
 
     useEffect(() => {
         document.title = "Sorteio de " + props.nome + " - The Hunger Games";
@@ -436,6 +439,7 @@ const HungerGamesPage = (props) => {
 
     return(<>
             <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
+            <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
             <Transition visible={showIntro} animation='fade up' duration={1000}>
                 <div className='hg-intro' style={{backgroundImage: 'url(' + hgIntro +')'}}>
                     <Header as='h2' className='loading-bottom' inverted>
@@ -526,6 +530,11 @@ const HungerGamesPage = (props) => {
             <WinnerSegment
                 visible={showWinnerPresentation}
                 winner={winner}
+            />
+            <ModalInfo
+                open={modalInfoOpen} 
+                onClose={() => setModalInfoOpen(false)}
+                onOpen={() => setModalInfoOpen(true)}
             />
         </>
     );

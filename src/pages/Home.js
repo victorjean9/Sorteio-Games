@@ -7,6 +7,7 @@ import hungerGamesLogo from '../images/jogos-vorazes.png';
 import squidGameLogo from '../images/round-6.png';
 import Rotas from "../components/Rotas";
 import { useHistory } from "react-router";
+import ModalInfo from "../components/ModalInfo";
 
 const HomePage = (props) => {
     let nomeRef = useRef(null);
@@ -17,6 +18,8 @@ const HomePage = (props) => {
 
     let [greetingsSegment, setGreetingsSegment] = useState(false);
     let [sorteioSegment, setSorteioSegment] = useState(false);
+
+    let [modalInfoOpen, setModalInfoOpen] = useState(false);
 
     let history = useHistory();
     
@@ -111,6 +114,9 @@ const HomePage = (props) => {
             <Transition visible={sorteioSegment} animation='fade' duration={1000}>
                 <Button className='corner-btn' circular basic inverted icon='redo' onClick={() => reset()} />
             </Transition>
+            <Transition visible={sorteioSegment} animation='fade' duration={1000}>
+                <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
+            </Transition>
             <Transition visible={greetingsSegment} animation='fade' duration={500}>
                 <span className='span-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
@@ -146,6 +152,11 @@ const HomePage = (props) => {
                     
                 </span>
             </Transition>
+            <ModalInfo 
+                open={modalInfoOpen} 
+                onClose={() => setModalInfoOpen(false)}
+                onOpen={() => setModalInfoOpen(true)}
+            />
         </div>
     );
 

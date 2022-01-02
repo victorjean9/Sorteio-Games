@@ -3,6 +3,13 @@
     margin: 10px !important;
 }
 
+.corner-right-btn {
+    position: fixed;
+    margin: 10px !important;
+    right:10px !important;
+}
+
+
 .loading-bottom {
     position: fixed;
     bottom: 10px !important;
