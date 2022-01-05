@@ -1,10 +1,13 @@
 
 import { useEffect, useState } from "react";
-import { Button, Divider, Header, Icon, Input } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Icon, Input, Popup } from "semantic-ui-react";
+import ModalAddMulti from "./ModalAddMulti";
 import BasicModal from "./ModalBasic";
 
 
 const PlayersForm = (props) => {
+
+    let [modalAddMultiOpen, setModalAddMultiOpen] = useState(false);
 
     let [modalBasicOpen, setModalBasicOpen] = useState(false);
     let [modalBasicErrorOpen, setModalBasicErrorOpen] = useState(false);
@@ -14,15 +17,28 @@ const PlayersForm = (props) => {
 
     useEffect(() => {
         if(props.playerNames.val.length === 0)
-            addNewPlayer();
+            addNewPlayer('');
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
-    const addNewPlayer = () => {
-        props.setPlayerNames({ val: [...props.playerNames.val, '']});
+    const addNewPlayer = (nome) => {
+        props.setPlayerNames({ val: [...props.playerNames.val, nome]});
 
-        sessionStorage.setItem('playersList', JSON.stringify({ val: [...props.playerNames.val, '']}));
+        sessionStorage.setItem('playersList', JSON.stringify({ val: [...props.playerNames.val, nome]}));
     }
+
+    const addMultiplePlayers = (list) => {
+        setModalAddMultiOpen(false);
+
+        if(props.playerNames.val.length === 1 && props.playerNames.val[0] === ''){
+            props.setPlayerNames({ val: [...list]});
+            sessionStorage.setItem('playersList', JSON.stringify({ val: [...list]}));
+        } else {
+            props.setPlayerNames({ val: [...props.playerNames.val, ...list]});
+            sessionStorage.setItem('playersList', JSON.stringify({ val: [...props.playerNames.val, ...list]}));
+        }
+    }
+
     function handleChange(event) {
         let vals = [...props.playerNames.val];
         vals[this] = event.target.value;
@@ -97,7 +113,14 @@ const PlayersForm = (props) => {
                     )
                 }
                 <br/>
-                <Button fluid inverted basic onClick={() => addNewPlayer()}><Icon name='plus' /> Adicionar mais um {props.game === 0 ? 'tributo' : 'jogador'}</Button>
+                <Grid columns='equal'>
+                    <Grid.Column>
+                        <Button inverted basic fluid onClick={() => addNewPlayer('')}><Icon name='plus' /> Adicionar mais um {props.game === 0 ? 'tributo' : 'jogador'}</Button>
+                    </Grid.Column>
+                    <Grid.Column >
+                        <Button inverted basic fluid onClick={() => setModalAddMultiOpen(true)}><Icon name='list' /> Adicionar vários {props.game === 0 ? 'tributos' : 'jogadores'}</Button>
+                    </Grid.Column>
+                </Grid>
                 <br/>
                 <Button fluid inverted basic onClick={() => verifyPlayers()} size='massive' >COMEÇAR SORTEIO</Button>
             </div>
@@ -118,6 +141,13 @@ const PlayersForm = (props) => {
                 icone='exclamation triangle'
                 texto={ modalBasicErrorText }
                 acoes={buttonOK}
+            />
+            <ModalAddMulti
+                open={modalAddMultiOpen} 
+                onClose={() => setModalAddMultiOpen(false)}
+                onOpen={() => setModalAddMultiOpen(true)}
+                game={props.game}
+                addMultiplePlayers={addMultiplePlayers}
             />
         </div>
     );
