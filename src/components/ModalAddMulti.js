@@ -1,5 +1,5 @@
 import React from 'react';
-import { useState } from 'react/cjs/react.development';
+import { useState } from "react";
 import { Button, Form, Icon, Modal, TextArea, Radio, Input, Popup, List } from 'semantic-ui-react';
 import BasicModal from "./ModalBasic";
 
