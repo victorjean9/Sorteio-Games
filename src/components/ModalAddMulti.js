@@ -33,8 +33,8 @@ const ModalAddMulti = (props) => {
     }
 
     const fazLista = (array) => {
-        let listItems = array.map(item => (
-            <List.Item as='li' inverted>{item}</List.Item>
+        let listItems = array.map((item, index) => (
+            <List.Item as='li' key={'list' + index} >{item}</List.Item>
         ));
 
         return <List as='ul' inverted>{listItems}</List>;
@@ -59,7 +59,7 @@ const ModalAddMulti = (props) => {
                 onOpen={props.onOpen}
                 closeIcon
             >
-                <Modal.Header icon>
+                <Modal.Header>
                     <Icon name='list' circular/>
                     Adicionar vários {props.game === 0 ? 'tributos' : 'jogadores'} de uma vez
                 </Modal.Header>

@@ -17,7 +17,7 @@ const BasicModal = (props) => {
                 {props.titulo}
             </Header>
             <Modal.Content>
-                <p>{props.texto}</p>
+                {props.texto}
             </Modal.Content>
             <Modal.Actions>
                 {props.acoes}

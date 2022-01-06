@@ -120,7 +120,7 @@ const HomePage = (props) => {
             <Transition visible={greetingsSegment} animation='fade' duration={500}>
                 <span className='span-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
-                        Olá <span ref={nomeRef} class="input-greetings" onKeyPress={(e) => keyPress(e)} role="textbox" contentEditable onClick={() => clicaPlaceholder()} required>{placeholder}</span>!
+                        Olá <span ref={nomeRef} className="input-greetings" onKeyPress={(e) => keyPress(e)} role="textbox" contentEditable suppressContentEditableWarning onClick={() => clicaPlaceholder()} required>{placeholder}</span>!
                     </Header>
                     <Transition visible={showBtn} animation='fade' duration={500}>
                         <span className='span-grettings'>

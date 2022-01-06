@@ -1,6 +1,6 @@
 
 import { useEffect, useState } from "react";
-import { Button, Divider, Grid, Header, Icon, Input, Popup } from "semantic-ui-react";
+import { Button, Divider, Grid, Header, Icon, Input } from "semantic-ui-react";
 import ModalAddMulti from "./ModalAddMulti";
 import BasicModal from "./ModalBasic";
 
@@ -69,13 +69,13 @@ const PlayersForm = (props) => {
             setModalBasicErrorText('Deleta ou escreva nos campos em branco para prosseguir!');
             setModalBasicErrorOpen(true);
         } else {
-            // if(props.playerNames.val.length >= 10){
+            if(props.playerNames.val.length > 0){
                 setModalBasicOpen(true);
-            // }else{
-            //     setModalBasicErrorTitle(props.game === 0 ? 'Você necessita de mais tributos!' : 'Você necessita de mais jogadores!');
-            //     setModalBasicErrorText(props.game === 0 ? 'Deve haver no mínimo 10 tributos.' : 'Deve haver no mínimo 10 jogadores.');
-            //     setModalBasicErrorOpen(true);
-            // }
+            } else {
+                setModalBasicErrorTitle(props.game === 0 ? 'Você necessita de pelo menos um tributo!' : 'Você necessita de pelo menos um jogador!');
+                setModalBasicErrorText(props.game === 0 ? 'Deve haver no mínimo um tributo.' : 'Deve haver no mínimo um jogador.');
+                setModalBasicErrorOpen(true);
+            }
         }
     } 
 

@@ -11,7 +11,7 @@ const ModalInfo = (props) => {
             dimmer='blurring'
             closeIcon
         >
-            <Modal.Header icon>
+            <Modal.Header>
                 <Icon name='info' circular/>
                 Sobre esse site
             </Modal.Header>
