@@ -4,6 +4,7 @@ class Rotas {
         this.base = '/';
 
         this.fortnite = '/fortnite';
+        this.bbb = '/big-brother-brasil';
         this.hungerGames = '/hunger-games';
         this.squidGame = '/squid-game';
 

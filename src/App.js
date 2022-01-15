@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Rotas from './components/Rotas';
+import BBBPage from './pages/BBB';
 import FortnitePage from './pages/Fortnite';
 import HomePage from './pages/Home';
 import HungerGamesPage from './pages/HungerGames';
@@ -34,6 +35,12 @@ const App = () => {
 		)
 	}
 
+	const renderBBBPage = () => {
+		return(
+			<BBBPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} />
+		)
+	}
+
 	const renderSquidGamePage = () => {
 		return(
 			<SquidGamePage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} />
@@ -46,6 +53,7 @@ const App = () => {
 		)
 	}
 
+	
 	return (
 		<div className={appClass}>
 			<Router>
@@ -53,6 +61,7 @@ const App = () => {
 					<Route path={Rotas.base} exact render={() => renderHomePage()}/>
 					
 					<Route path={Rotas.hungerGames} exact render={() => renderHungerGamesPage()}/>
+					<Route path={Rotas.bbb} exact render={() => renderBBBPage()}/>
 					<Route path={Rotas.squidGame} exact render={() => renderSquidGamePage()}/>
 					<Route path={Rotas.fortnite} exact render={() => renderFortnitePage()}/>
 				</Switch>

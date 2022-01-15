@@ -1,0 +1,11 @@
+.bbb-intro {
+  position: fixed !important;
+  width: 100%;
+  height: 100%;
+  background-position-x: center;
+  background-position-y: bottom;
+  background-attachment: fixed;
+  background-repeat: no-repeat;
+}
+
+/*# sourceMappingURL=BBB.css.map */

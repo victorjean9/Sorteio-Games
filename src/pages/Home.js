@@ -1,13 +1,17 @@
 import { useEffect, useRef, useState } from "react";
 import { Button, Container, Divider, Header, Icon, Image, Transition } from "semantic-ui-react";
 import '../styles/Home.css';
+import '../styles/Emojis.css';
 
 import fortniteLogo from '../images/fortnite.png';
 import hungerGamesLogo from '../images/jogos-vorazes.png';
+import BBBLogo from '../images/bbb-logo.png';
 import squidGameLogo from '../images/round-6.png';
 import Rotas from "../components/Rotas";
 import { useHistory } from "react-router";
 import ModalInfo from "../components/ModalInfo";
+
+import PartyPopperEmoji from "../images/emojis/party-popper.png";
 
 const HomePage = (props) => {
     let nomeRef = useRef(null);
@@ -81,10 +85,14 @@ const HomePage = (props) => {
 
         switch (game) {
             case 1: // squid game
+                rota = Rotas.bbb;
+                break;
+
+            case 2: // squid game
                 rota = Rotas.squidGame;
                 break;
 
-            case 2: // fortnite
+            case 3: // fortnite
                 rota = Rotas.fortnite;
                 break;
         
@@ -133,7 +141,7 @@ const HomePage = (props) => {
             <Transition visible={sorteioSegment} animation='fade' duration={1000}>
                 <span className='segment-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
-                        Sorteio de {props.nome} 🎉
+                        Sorteio de {props.nome} <img src={PartyPopperEmoji} className="emoji party-popper" />
                     </Header>
                     <Container>
                         <Divider />
@@ -144,8 +152,9 @@ const HomePage = (props) => {
                             Escolha um jogo:
                         </Header>
                         <Image className='image-game' src={hungerGamesLogo} size='medium' onClick={() => chooseGame(0)}/>
-                        <Image className='image-game' src={squidGameLogo} size='medium' onClick={() => chooseGame(1)}/>
-                        <Image className='image-game' src={fortniteLogo} size='medium' onClick={() => chooseGame(2)}/>
+                        <Image className='image-game' src={BBBLogo} size='medium' onClick={() => chooseGame(1)}/>
+                        <Image className='image-game' src={squidGameLogo} size='medium' onClick={() => chooseGame(2)}/>
+                        <Image className='image-game' src={fortniteLogo} size='medium' onClick={() => chooseGame(3)}/>
                     </Container>
 
 

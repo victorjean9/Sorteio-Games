@@ -1,5 +1,8 @@
 import React from 'react';
 import { Button, Icon, Modal } from 'semantic-ui-react';
+import '../styles/Animojis.css';
+
+import SparklingHeartAnimoji from '../images/animojis/sparkling_heart.gif';
 
 const ModalInfo = (props) => {
     return(
@@ -18,7 +21,8 @@ const ModalInfo = (props) => {
             <Modal.Content>
                 <p style={{textAlign: 'center'}}> 
                     Inspirado e baseado no site: <a href='https://brantsteele.net/hungergames/' target='_new'>BrantSteele</a>.<br/><br/>
-                    Feito com ❤️ por Victor Jean.
+                    Emojis fornecidos por: <a href='https://www.joypixels.com/' target='_new'>JoyPixels</a>.<br/><br/>
+                    Feito com <img src={SparklingHeartAnimoji} className='animoji sparkling-heart'/> por Victor Jean.
                     <Button as='a' href='https://twitter.com/victorjean9' target='_new' color='twitter'>
                         <Icon name='twitter' />
                         Me siga no Twitter

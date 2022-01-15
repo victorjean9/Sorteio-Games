@@ -2,6 +2,8 @@ import { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Header, Icon, Image, List, Transition } from "semantic-ui-react";
 import PlayersForm from "../components/PlayersForm";
 import '../styles/HungerGames.css';
+import '../styles/Emojis.css';
+import '../styles/Animojis.css';
 
 import hgIntro from '../images/katniss.png';
 import hungerGamesLogo from '../images/jogos-vorazes.png';
@@ -17,6 +19,11 @@ import deaths from '../images/hunger-games/deaths.jpg';
 
 import HungerGamesLogic from "../components/HungerGamesLogic";
 import ModalInfo from "../components/ModalInfo";
+
+import TrophyAnimoji from '../images/animojis/trophy.gif';
+
+import EyeEmoji from '../images/emojis/eye.png';
+import MouthEmoji from '../images/emojis/mouth.png';
 
 const ActPresentation = (props) => {
     return(
@@ -129,15 +136,19 @@ const WinnerSegment = (props) => {
                 <span className='span-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
                         {
-                            props.winner.length === 0
+                            props.winner.length !== 0
                             ?   <>
-                                    👁️👄👁️
+                                    {/* 👁️👄👁️ */}
+                                    <img src={EyeEmoji} className="emoji eye" />
+                                    <img src={MouthEmoji} className="emoji mouth" />
+                                    <img src={EyeEmoji} className="emoji eye" />
                                     <Header.Subheader>
                                         NINGUÉM GANHOU!
                                     </Header.Subheader>
                                 </>
                             :   <>
-                                    🥇<b style={{textTransform: 'uppercase'}}>{props.winner}</b>🏆
+                                    <img src={TrophyAnimoji} className="animoji trophy" /><br/>
+                                    <b style={{textTransform: 'uppercase'}}>{props.winner}</b>
                                     <Header.Subheader>
                                         GANHOU O SORTEIO!
                                     </Header.Subheader>

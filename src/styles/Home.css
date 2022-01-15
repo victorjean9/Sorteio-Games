@@ -32,6 +32,7 @@
     font-size: 40px !important;
     font-weight: 300;
     z-index: 100;
+    position: relative;
   }
 
   .segment-grettings {
@@ -45,6 +46,7 @@
     font-size: 70px !important;
     font-weight: 300;
     z-index: 100;
+    position: relative;
   }
 
   .segment-grettings {
