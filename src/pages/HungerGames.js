@@ -136,9 +136,8 @@ const WinnerSegment = (props) => {
                 <span className='span-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
                         {
-                            props.winner.length !== 0
+                            props.winner.length === 0
                             ?   <>
-                                    {/* 👁️👄👁️ */}
                                     <img src={EyeEmoji} className="emoji eye" />
                                     <img src={MouthEmoji} className="emoji mouth" />
                                     <img src={EyeEmoji} className="emoji eye" />
