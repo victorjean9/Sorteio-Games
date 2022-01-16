@@ -13,7 +13,7 @@ const App = () => {
 	let [nome, setNome] = useState(null);
     let [appClass, setAppClass] = useState('home-bg paused');
 
-	let [playerNames, setPlayerNames] = useState({ val: []});
+	let [playerNames, setPlayerNames] = useState({ val: [], emojis: []});
 
 	useEffect(() => {
 		if(sessionStorage.getItem('hostName') !== null)

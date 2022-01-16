@@ -139,9 +139,9 @@ const HomePage = (props) => {
             </Transition>
 
             <Transition visible={sorteioSegment} animation='fade' duration={1000}>
-                <span className='segment-grettings'>
+                <div className='segment-grettings'>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
-                        Sorteio de {props.nome} <img src={PartyPopperEmoji} className="emoji party-popper" />
+                        Sorteio de {props.nome} <img src={PartyPopperEmoji} className="emoji party-popper" alt="party popper"/>
                     </Header>
                     <Container>
                         <Divider />
@@ -156,10 +156,8 @@ const HomePage = (props) => {
                         <Image className='image-game' src={squidGameLogo} size='medium' onClick={() => chooseGame(2)}/>
                         <Image className='image-game' src={fortniteLogo} size='medium' onClick={() => chooseGame(3)}/>
                     </Container>
-
-
-                    
-                </span>
+                    <br/>
+                </div>
             </Transition>
             <ModalInfo 
                 open={modalInfoOpen} 

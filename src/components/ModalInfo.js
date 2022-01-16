@@ -22,7 +22,7 @@ const ModalInfo = (props) => {
                 <p style={{textAlign: 'center'}}> 
                     Inspirado e baseado no site: <a href='https://brantsteele.net/hungergames/' target='_new'>BrantSteele</a>.<br/><br/>
                     Emojis fornecidos por: <a href='https://www.joypixels.com/' target='_new'>JoyPixels</a>.<br/><br/>
-                    Feito com <img src={SparklingHeartAnimoji} className='animoji sparkling-heart'/> por Victor Jean.
+                    Feito com <img src={SparklingHeartAnimoji} className='animoji sparkling-heart' alt='sparkling heart'/> por Victor Jean.
                     <Button as='a' href='https://twitter.com/victorjean9' target='_new' color='twitter'>
                         <Icon name='twitter' />
                         Me siga no Twitter

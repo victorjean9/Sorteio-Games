@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { Button, Form, Icon, Modal, TextArea, Radio, Input, Popup, List } from 'semantic-ui-react';
 import BasicModal from "./ModalBasic";
 
@@ -14,6 +14,23 @@ const ModalAddMulti = (props) => {
 
     let [listaJogadoresArray, setListaJogadoresArray] = useState([]);
     let [listaJogadores, setListaJogadores] = useState();
+
+    let [playersNames, setPlayersNames] = useState('jogadores');
+
+    useEffect(() => {
+        switch (props.game) {
+            case 0:
+                setPlayersNames('tributos');
+                break;
+            case 1:
+                setPlayersNames('brothers/sisters');
+                break;
+        
+            default:
+                setPlayersNames('jogadores');
+                break;
+        }
+    }, [props.game]);
 
     const separaJogadores = () => {
         let separadorFinal = modoSeparacao === 'linha' ? "\n" : separador;
@@ -60,7 +77,7 @@ const ModalAddMulti = (props) => {
             >
                 <Modal.Header>
                     <Icon name='list' circular/>
-                    Adicionar vários {props.game === 0 ? 'tributos' : 'jogadores'} de uma vez
+                    Adicionar vários { playersNames } de uma vez
                 </Modal.Header>
                 <Modal.Content>
                     <Form onSubmit={() => separaJogadores()}>
@@ -90,10 +107,10 @@ const ModalAddMulti = (props) => {
                             />
                         </Form.Field>
                         <Form.Field>
-                            <TextArea placeholder='Adicione aqui o nome dos jogadores' value={textArea} onChange={(e, {value}) => setTextArea(value) }/>
+                            <TextArea placeholder={'Adicione aqui o nome dos ' + playersNames} value={textArea} onChange={(e, {value}) => setTextArea(value) }/>
                         </Form.Field>
                         <Form.Field disabled={textArea === ""}>
-                            <Button primary fluid> <Icon name='add' />Adicionar todos os {props.game === 0 ? 'tributos' : 'jogadores'}</Button>
+                            <Button primary fluid> <Icon name='add' />Adicionar todos os { playersNames }</Button>
                         </Form.Field>
                     </Form>
                 </Modal.Content>
@@ -102,7 +119,7 @@ const ModalAddMulti = (props) => {
                 open={modalConfirmacaoOpen} 
                 onClose={() => setModalConfirmacaoOpen(false)}
                 onOpen={() => setModalConfirmacaoOpen(true)}
-                titulo={props.game === 0 ? 'Os seguintes tributos serão adicionados:' : 'Os seguintes jogadores serão adicionados:'}
+                titulo={'Os seguintes ' + playersNames + ' serão adicionados:'}
                 icone='list'
                 texto={listaJogadores}
                 acoes={buttonAcoes}

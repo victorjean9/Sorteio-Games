@@ -138,15 +138,15 @@ const WinnerSegment = (props) => {
                         {
                             props.winner.length === 0
                             ?   <>
-                                    <img src={EyeEmoji} className="emoji eye" />
-                                    <img src={MouthEmoji} className="emoji mouth" />
-                                    <img src={EyeEmoji} className="emoji eye" />
+                                    <img src={EyeEmoji} className="emoji eye" alt="eye" />
+                                    <img src={MouthEmoji} className="emoji mouth" alt="mouth" />
+                                    <img src={EyeEmoji} className="emoji eye" alt="eye" />
                                     <Header.Subheader>
                                         NINGUÉM GANHOU!
                                     </Header.Subheader>
                                 </>
                             :   <>
-                                    <img src={TrophyAnimoji} className="animoji trophy" /><br/>
+                                    <img src={TrophyAnimoji} className="animoji trophy" alt="trophy" /><br/>
                                     <b style={{textTransform: 'uppercase'}}>{props.winner}</b>
                                     <Header.Subheader>
                                         GANHOU O SORTEIO!
@@ -237,8 +237,6 @@ const HungerGamesPage = (props) => {
     let [modalInfoOpen, setModalInfoOpen] = useState(false);
 
     useEffect(() => {
-        document.title = "Sorteio de " + props.nome + " - The Hunger Games";
-
         props.setAppClass('hunger-games-bg');
         setShowIntro(true);
 
@@ -248,6 +246,10 @@ const HungerGamesPage = (props) => {
         }, 3000);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+
+    useEffect(() => {
+        document.title = "Sorteio de " + props.nome + " - The Hunger Games";
+    }, [props.nome]);
 
     const homePage = () => {
         document.title = "Sorteio de " + props.nome;

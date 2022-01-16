@@ -1,21 +1,25 @@
 import { useEffect, useState } from "react";
+import Rotas from "../components/Rotas";
+import { useHistory } from "react-router";
 import { Button, Container, Header, Icon, Image, Transition } from "semantic-ui-react";
 import PlayersForm from "../components/PlayersForm";
+import ModalInfo from "../components/ModalInfo";
 import '../styles/BBB.css';
+import '../styles/Emojis.css';
+import '../styles/Animojis.css';
 
 import BBBIntro from '../images/bbb-robos.png';
 import BBBLogo from '../images/bbb-logo.png';
-import Rotas from "../components/Rotas";
-import { useHistory } from "react-router";
 
 const BBBPage = (props) => {
-
     let history = useHistory();
     
     let [showIntro, setShowIntro] = useState(false);
     let [showPlayerSegment, setShowPlayerSegment] = useState(false);
     let [showPresentationName, setShowPresentationName] = useState(false);
     let [showPresentationGame, setShowPresentationGame] = useState(false);
+
+    let [modalInfoOpen, setModalInfoOpen] = useState(false);
 
     useEffect(() => {
         props.setAppClass('bbb-bg');
@@ -25,11 +29,15 @@ const BBBPage = (props) => {
             setShowIntro(false);
             setShowPlayerSegment(true);
         }, 3000);
-
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
+    useEffect(() => {
+        document.title = "Sorteio de " + props.nome + " - Big Brother Brasil";
+    }, [props.nome]);
+
     const homePage = () => {
+        document.title = "Sorteio de " + props.nome;
         history.push(Rotas.base);
     }
 
@@ -48,19 +56,22 @@ const BBBPage = (props) => {
         }, 1000);
     }
 
+    let hide = 0;
+    let show = 3000;
+
     return(<>
-            
+            <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
+            <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
             <Transition visible={showIntro} animation='fade up' duration={1000}>
                 <div className='bbb-intro' style={{backgroundImage: 'url(' + BBBIntro +')'}}>
                     <Header as='h2' className='loading-bottom' inverted>
-                        <Icon name='circle notch' loading size='big' color='white' />
+                        <Icon name='circle notch' loading size='big' />
                         <Header.Content>Carregando</Header.Content>
                     </Header>
                 </div>
             </Transition>
             <Transition visible={showPlayerSegment} animation='fade up' duration={1000}>
                 <div>
-                    <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
                     <Container>
                         <br/>
                         <br/>
@@ -85,13 +96,18 @@ const BBBPage = (props) => {
                     </span>
                 </div>
             </Transition>
-            <Transition visible={showPresentationGame} animation='zoom' duration={3000}>
+            <Transition visible={showPresentationGame} animation='zoom' duration={{hide, show}}>
                 <div style={{width: '100%', height: '100vh'}}>
                     <span className='span-grettings'>
                         <Image src={BBBLogo} size='huge' centered/>
                     </span>
                 </div>
             </Transition>
+            <ModalInfo
+                open={modalInfoOpen} 
+                onClose={() => setModalInfoOpen(false)}
+                onOpen={() => setModalInfoOpen(true)}
+            />
         </>
     );
 }

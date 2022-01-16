@@ -37,6 +37,10 @@
     animation-play-state: paused;
 }
 
+li::before {
+    color: #fff !important;
+}
+
 /* HUNGER GAMES */
 
 .hunger-games-bg {
@@ -146,7 +150,7 @@
 }
 
 .bbb-presentation-bg {
-	background:  linear-gradient(-215deg, black, black, black, #4599b2, #37a18e, #9341a3, #921f81, #B22222);
+	background:  linear-gradient(-215deg, black, black, black, #1ecfbb, #e435cd, #d83467, #631ed1);
     background-size: 1400% 400%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 15s ease infinite;
@@ -237,6 +241,9 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     opacity: 1; /* Firefox */
 }
   
+.input-emoji {
+    padding: 5px;
+}
 
 .ui.card.district {
     border: 2px white solid !important;
@@ -255,6 +262,18 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
     color: white !important;
     font-weight: bolder;
     font-size: 1.28571429em !important;
+}
+
+.clickable {
+    cursor: pointer;
+}
+
+.button-emoji {
+    padding: 0px 10px !important;
+}
+
+.button-emoji-icon {
+    width: 20px;
 }
 
 .acrylic {

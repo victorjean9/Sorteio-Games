@@ -3,9 +3,15 @@
   width: 100%;
   height: 100%;
   background-position-x: center;
-  background-position-y: bottom;
+  background-position-y: center;
   background-attachment: fixed;
   background-repeat: no-repeat;
+}
+
+@media only screen and (max-width: 770px) {
+  .bbb-intro {
+    background-size: contain;
+  }
 }
 
 /*# sourceMappingURL=BBB.css.map */
