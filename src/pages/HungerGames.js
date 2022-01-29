@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Card, Container, Divider, Header, Icon, Image, List, Transition } from "semantic-ui-react";
 import PlayersForm from "../components/PlayersForm";
 import '../styles/HungerGames.css';

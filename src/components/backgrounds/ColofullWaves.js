@@ -1,5 +1,5 @@
 import chroma from "chroma-js";
-import { useEffect, useRef } from "react";
+import React, { useEffect, useRef } from "react";
 import * as THREE from "three";
 
 const ColorfullWaves = (props) => {

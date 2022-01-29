@@ -1,5 +1,5 @@
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Divider, Grid, Header, Icon, Image, Input } from "semantic-ui-react";
 import ModalAddMulti from "./ModalAddMulti";
 import BasicModal from "./ModalBasic";

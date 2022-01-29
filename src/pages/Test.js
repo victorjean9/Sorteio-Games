@@ -4,6 +4,9 @@
 // import LiquidLights from "../components/backgrounds/LiquidLights";
 // import NoiseAbstraction from "../components/backgrounds/NoiseAbstraction";
 // import RainbowLines from "../components/backgrounds/RainbowLines";
+
+
+import React from "react";
 import SlidingDiagonals from "../components/backgrounds/SlidingDiagonals";
 
 

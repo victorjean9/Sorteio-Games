@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Button, Form, Icon, Modal, TextArea, Radio, Input, Popup, List } from 'semantic-ui-react';
 import BasicModal from "./ModalBasic";
 
