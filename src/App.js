@@ -15,7 +15,7 @@ const App = () => {
 	const importAll = (r) => {
         let images = [];
         r.keys().forEach((item) => { 
-            images.push(r(item).default);
+            images.push(r(item));
         });
         return images;
     }

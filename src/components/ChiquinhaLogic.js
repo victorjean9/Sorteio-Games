@@ -97,6 +97,10 @@ class ChiquinhaLogic {
                         eventText = eventText.replace('💩', imgCoco);
                         eventText = eventText.replace('🌽', imgMilho);
                         eventText = eventText.replace('🧚', imgFada);
+                        eventText = eventText.replace('🧚', imgFada);
+                        eventText = eventText.replace('🧚', imgFada);
+                        eventText = eventText.replace('💋', imgBeijo);
+                        eventText = eventText.replace('💋', imgBeijo);
                         eventText = eventText.replace('💋', imgBeijo);
 
                         playersLeft.splice(indexPlayer, 1);
