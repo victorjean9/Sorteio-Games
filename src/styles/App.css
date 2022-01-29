@@ -1,12 +1,14 @@
 .corner-btn {
     position: fixed;
     margin: 10px !important;
+    z-index: 1000;
 }
 
 .corner-right-btn {
     position: fixed;
     margin: 10px !important;
     right:10px !important;
+    z-index: 1000;
 }
 
 
