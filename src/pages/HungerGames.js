@@ -469,7 +469,7 @@ const HungerGamesPage = (props) => {
                         <Header as='h1' inverted textAlign='center' >
                             Por: <b>{props.nome}</b>
                         </Header>
-                        <PlayersForm game={0} playerNames={props.playerNames} setPlayerNames={props.setPlayerNames} startPresentation={startPresentation} />
+                        <PlayersForm game={0} emojis={props.emojis} playerNames={props.playerNames} setPlayerNames={props.setPlayerNames} startPresentation={startPresentation} />
                         <br/>
                     </Container>
                 </div>

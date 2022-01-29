@@ -7,6 +7,9 @@ class Rotas {
         this.bbb = '/big-brother-brasil';
         this.hungerGames = '/hunger-games';
         this.squidGame = '/squid-game';
+        this.chiquinha = '/chiquinha';
+
+        this.test = '/test';
 
         this.erro = '/erro';
     }

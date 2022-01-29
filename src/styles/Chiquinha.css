@@ -1,0 +1,33 @@
+.chiquinha-players-div {
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-image: url(https://thumbs.gfycat.com/HappygoluckyPolishedHartebeest.webp);
+}
+
+.chiquinha-presentation-bg {
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background: linear-gradient(-215deg, black, black, black, green, green);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.chiquinha-storyact-bg {
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background: linear-gradient(-215deg, #06ff00, #fd1d1d);
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+/*# sourceMappingURL=Chiquinha.css.map */

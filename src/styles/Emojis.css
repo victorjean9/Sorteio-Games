@@ -11,5 +11,9 @@
   width: 100px !important;
   vertical-align: middle !important;
 }
+.emoji.intext {
+  width: 25px !important;
+  vertical-align: middle;
+}
 
 /*# sourceMappingURL=Emojis.css.map */

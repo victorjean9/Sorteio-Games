@@ -29,6 +29,10 @@
 }
 
 .black-presentation-bg {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
 	background: black;
 }
 

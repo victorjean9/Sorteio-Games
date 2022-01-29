@@ -8,6 +8,54 @@
     background-repeat: no-repeat;
 }
 
+.bbb-white {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: #ffffff;
+}
+
+.bbb-dinamica-muro {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #1C221C, #A4A3AF, #9FBFD1, #D5B994);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.bbb-dinamica-duas-casas {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #c27052, #3a9daf);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.bbb-dinamica-duas-entradas {
+    width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+	background: linear-gradient(-215deg, #C79B58, #F5D48A, #5E9CBF, #1D4F79);
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}
+
+.bbb-week-header{
+    font-size: 60px !important;
+}
+
 @media only screen
 and (max-width:770px){
 	.bbb-intro {

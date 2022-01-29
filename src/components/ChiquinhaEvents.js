@@ -1,0 +1,62 @@
+
+class ChiquinhaEvents {
+
+    falas = [
+        { players: 1, text: "(Jogador1): iiiiihhh"},
+        { players: 1, text: "(Jogador1): amada?"},
+        { players: 1, text: "(Jogador1): coragem!"},
+        { players: 1, text: "(Jogador1): bem veganers"},
+        { players: 1, text: "(Jogador1): vai ter que respeitar um poquinho!"},
+        { players: 1, text: "(Jogador1): uma coisa bem aleatória e afins"},
+        { players: 1, text: "(Jogador1): uma coisa bem vegana e afins"},
+        { players: 1, text: "(Jogador1): é sobre"},
+        { players: 1, text: "(Jogador1): e ta tudo bem"},
+        { players: 1, text: "(Jogador1): vou ligar a geforce"},
+        { players: 1, text: "(Jogador1): barbarizante"},
+        { players: 1, text: "(Jogador1): babadeira"},
+        { players: 1, text: "(Jogador1): bem cocô"},
+        { players: 1, text: "(Jogador1): ó"},
+        { players: 1, text: "(Jogador1): o surto"},
+        { players: 1, text: "(Jogador1): de milhõõões"},
+        { players: 1, text: "(Jogador1): a chiquinha tem pai"},
+        { players: 1, text: "(Jogador1): manda beijo"},
+        { players: 1, text: "(Jogador1): 💋💋💋"},
+        { players: 1, text: "(Jogador1): 🧚🧚🧚"},
+        { players: 1, text: "(Jogador1): 💩🌽"},
+        { players: 1, text: "(Jogador1): ai que vontade de comer uma p* com doce de leite"},
+        { players: 1, text: "(Jogador1): H-E-L-P"},
+        { players: 1, text: "(Jogador1): meu maior tesouro"},
+        { players: 1, text: "(Jogador1): você me deixou apaixonadinha"},
+        { players: 1, text: "(Jogador1): achei bem cocô"},
+        { players: 1, text: "(Jogador1): odiei"},
+        { players: 1, text: "(Jogador1): alô aqui é a mãe do (Jogador1), ele morreu"},
+        { players: 1, text: "(Jogador1): !hype 10000 ❤️"},
+        { players: 1, text: "(Jogador1): !sematar"},
+        { players: 1, text: "(Jogador1): !frozen"},
+        { players: 1, text: "(Jogador1): !risada"},
+        { players: 1, text: "(Jogador1): ah sim"},
+        { players: 1, text: "(Jogador1): ah pronto"},
+        { players: 1, text: "(Jogador1): kkkkkkkkkkkk"},
+        { players: 1, text: "(Jogador1): oh baby me atende"},
+        { players: 1, text: "(Jogador1): ÃÃÃÃÃN OHNNN AÃÃÃN AÃÕÕÕHN"},
+        { players: 1, text: "(Jogador1): bang"},
+        { players: 1, text: "(Jogador1): !stop"},
+        { players: 1, text: "(Jogador1): meu pai?"},
+        { players: 1, text: "(Jogador1): meu deus?"},
+        { players: 1, text: "(Jogador1): tendi viu"},
+        { players: 2, text: "(Jogador1): quem disse bisso? <br/>(Jogador2): bisso 💋💋💋"},
+        { players: 1, text: "(Jogador1): ?????"},
+        { players: 1, text: "(Jogador1): IMPOSTOR???"},
+        { players: 1, text: "(Jogador1): ;-;"},
+        { players: 1, text: "(Jogador1): .-."},
+        { players: 1, text: "(Jogador1): .-."},
+        { players: 1, text: "(Jogador1): !join"},
+        { players: 1, text: "(Jogador1): éééé gata"},
+    ]
+
+    morte = [
+        { players: 1, deaths: [1], text: "(Jogador1) afirmou ser o pai da chiquinha."},
+    ]
+}
+
+export default (new ChiquinhaEvents());

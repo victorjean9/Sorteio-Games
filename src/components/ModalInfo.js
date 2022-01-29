@@ -3,6 +3,8 @@ import { Button, Icon, Modal } from 'semantic-ui-react';
 import '../styles/Animojis.css';
 
 import SparklingHeartAnimoji from '../images/animojis/sparkling_heart.gif';
+import { Link } from 'react-router-dom';
+import Rotas from './Rotas';
 
 const ModalInfo = (props) => {
     return(
@@ -19,10 +21,10 @@ const ModalInfo = (props) => {
                 Sobre esse site
             </Modal.Header>
             <Modal.Content>
-                <p style={{textAlign: 'center'}}> 
+                <p style={{textAlign: 'center'}}>
                     Inspirado e baseado no site: <a href='https://brantsteele.net/hungergames/' target='_new'>BrantSteele</a>.<br/><br/>
                     Emojis fornecidos por: <a href='https://www.joypixels.com/' target='_new'>JoyPixels</a>.<br/><br/>
-                    Feito com <img src={SparklingHeartAnimoji} className='animoji sparkling-heart' alt='sparkling heart'/> por Victor Jean.
+                    Feito com <Link to={Rotas.chiquinha}><img src={SparklingHeartAnimoji} className='animoji sparkling-heart' alt='sparkling heart'/></Link> por Victor Jean.
                     <Button as='a' href='https://twitter.com/victorjean9' target='_new' color='twitter'>
                         <Icon name='twitter' />
                         Me siga no Twitter

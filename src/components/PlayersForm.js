@@ -7,17 +7,6 @@ import ModalEmojiSelector from "./ModalEmojiSelector";
 
 
 const PlayersForm = (props) => {
-
-    const importAll = (r) => {
-        let images = [];
-        r.keys().forEach((item) => { 
-            images.push(r(item).default);
-        });
-        return images;
-    }
-
-    const emojis = importAll(require.context('../images/emojis', false, /\.(png|jpe?g|svg)$/));
-
     let [modalAddMultiOpen, setModalAddMultiOpen] = useState(false);
     let [modalEmojiSelectorOpen, setModalEmojiSelectorOpen] = useState(false);
 
@@ -59,7 +48,7 @@ const PlayersForm = (props) => {
     const addNewPlayer = (nome, emoji) => {
         let emojiEscolhido = emoji;
         if(emoji === null){
-            emojiEscolhido = Math.floor(Math.random() * emojis.length);
+            emojiEscolhido = Math.floor(Math.random() * props.emojis.length);
         }
 
         props.setPlayerNames({ val: [...props.playerNames.val, nome], emojis: [...props.playerNames.emojis, emojiEscolhido]});
@@ -73,7 +62,7 @@ const PlayersForm = (props) => {
         let emojisArr = [];
         let listIndex = 0;
         while (listIndex < list.length) {
-            emojisArr.push(Math.floor(Math.random() * emojis.length));
+            emojisArr.push(Math.floor(Math.random() * props.emojis.length));
             listIndex++;
         }
 
@@ -176,7 +165,7 @@ const PlayersForm = (props) => {
                                 action = <div className='input-emoji'>
                                             <Button.Group basic inverted size="small">
                                                 <Button className="button-emoji" onClick={() => openModalEmoji(index)}>
-                                                    <Image src={emojis[props.playerNames.emojis[index]]} className="button-emoji-icon"/>
+                                                    <Image src={props.emojis[props.playerNames.emojis[index]]} className="button-emoji-icon"/>
                                                 </Button>
                                                 <Button icon='trash' onClick={() => deletePlayer(index)}/>
                                             </Button.Group>
@@ -242,7 +231,7 @@ const PlayersForm = (props) => {
                 onClose={() => setModalEmojiSelectorOpen(false)}
                 onOpen={() => setModalEmojiSelectorOpen(true)}
 
-                emojis={emojis}
+                emojis={props.emojis}
                 closeModalEmoji={closeModalEmoji}
             />
         </div>
