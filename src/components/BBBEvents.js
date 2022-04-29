@@ -569,21 +569,21 @@ class BBBEvents {
         { type: 'contragolpeMaisVotado', bigfone: false, description: 'O jogador mais votado pela casa poderá contragolpear alguém para ir ao paredão junto com ele.', extra: 'O jogador que foi contragolpeado pelo mais votado da casa também poderá puxar alguém para ir ao paredão com ele.'},
         { type: 'contragolpeIndicadoDoLider', bigfone: false, description: 'O jogador indicado pelo líder poderá contragolpear alguém para ir ao paredão junto com ele.', extra: 'O jogador que foi contragolpeado pelo jogador indicado pelo lider também poderá puxar alguém para ir ao paredão com ele.'},
         { type: 'indicacaoDoAnjo', bigfone: false, description: 'O anjo deverá indicar alguém ao paredão.', extra: 'O jogador que foi indicado pelo anjo deverá contragolpear alguém para ir ao paredão junto com ele.'},
-    ]
+    ];
 
     dinamicaParedaoComBigFone = [
         ...this.dinamicaParedao,
         { type: 'indicacaoBigFone', bigfone: true, description: 'O Big Fone irá tocar essa semana e quem atender deverá indicar alguém ao paredão.', extra: 'O indicado pelo big fone deverá contragolpear alguém para ir ao paredão junto com ele.'},
         { type: 'indicadoBigFone', bigfone: true, description: 'O Big Fone irá tocar essa semana e quem atender estará no paredão.', extra: 'O indicado pelo big fone deverá contragolpear alguém para ir ao paredão junto com ele.'},
         { type: 'indicadoBigFoneOculta', bigfone: true, description: 'O Big Fone irá tocar essa semana e quem atender deverá dar uma pulseira misteriosa para alguém, podendo ser para si mesmo. O jogador que ganhar a pulseira estará no paredão e todos da casa só saberão no dia da votação.', extra: 'O indicado pelo big fone deverá contragolpear alguém para ir ao paredão junto com ele.'},
-    ]
+    ];
 
     dinamicaBigFone = [
         { type: 'imunizaAtendente', description: 'O Big Fone irá tocar essa semana e quem atender estará salvo do paredão.' },
         { type: 'atendenteImuniza', description: 'O Big Fone irá tocar essa semana e quem atender deverá dar uma imunidade para alguém, não podendo ser para si mesmo.' },
         { type: 'imuniza', description: 'O Big Fone irá tocar essa semana e quem atender deverá dar uma imunidade para alguém, inclusive para si mesmo.' },
         { type: 'imunizaOculto', description: 'O Big Fone irá tocar essa semana e quem atender deverá dar uma pulseira misteriosa para alguém, podendo ser para si mesmo. O jogador que ganhar a pulseira estará imune ao paredão e todos da casa só saberão no dia da votação.' },
-    ]
+    ];
 
     bigFone = {
         indicacaoBigFone: "ATENÇÃO! PRESTE MUITA ATENÇÃO!<br/>Você deve imediatamente indicar alguém para o paredão exceto o líder. Reúna todos e comunique sua decisão.",
@@ -631,7 +631,81 @@ class BBBEvents {
         {text: "(Jogador1) afirmou que esse monstro abalou as pessoas da casa."},
         {text: "(Jogador1) afirmou que esse monstro foi duro e promete revidar a indicação quando pudar."},
         {text: "(Jogador1) afirmou que esse monstro foi extremamente tranquilo."},
-    ]
+    ];
+
+    dialogosImunidadeAnjo = [
+        {text: "(Anjo) decide imunizar (Jogador)."},
+        {text: "(Anjo) decide imunizar (Jogador) por estratégia de jogo."},
+        {text: "(Anjo) decide imunizar (Jogador) para que a casa recalcule os votos."},
+        {text: "(Anjo) decide imunizar (Jogador) por que considera ter uma amizade sincera com (Jogador)."},
+        {text: "(Anjo) decide imunizar (Jogador) por que acha que (Jogador) iria para o paredão essa semana."},
+        {text: "(Anjo) decide imunizar (Jogador) pois afirma ter uma aliança no jogo com (Jogador)."},
+        {text: "(Anjo) decide imunizar (Jogador) para ver o fogo no parquinho."},
+        {text: "(Anjo) decide imunizar (Jogador) por que acha que (Jogador) sai se for pro paredão."},
+    ];
+
+    dialogosIndicacaoLider = [
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois considera (Jogador) seu maior rival no jogo."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois considera (Jogador) forte no jogo."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois considera (Jogador) fraco no jogo."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois considera (Jogador) uma planta no jogo."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana por estratégia de jogo."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois quer tirar a opção de voto da casa."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois acha que (Jogador) está cancelado."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois acha que o público quer tirar (Jogador)."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois garante que ninguém da casa suporta mais (Jogador)."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois tem a certeza de que (Jogador) sairá."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois não gosta de (Jogador)."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois garante que (Jogador) quer atrapalhar seu jogo."},
+        {text: "(Lider) decide indicar (Jogador) ao paredão dessa semana pois garante que (Jogador) quer desestabilizar a casa."},
+    ];
+
+    dialogosVotacao = [
+        {text: "(Jogador1) votou em (Jogador2)."},
+        {text: "(Jogador1) votou em (Jogador2) pois considera (Jogador2) seu maior rival no jogo."},
+        {text: "(Jogador1) votou em (Jogador2) pois considera (Jogador2) forte no jogo."},
+        {text: "(Jogador1) votou em (Jogador2) por estratégia de jogo."},
+        {text: "(Jogador1) votou em (Jogador2) para jogar voto fora."},
+        {text: "(Jogador1) votou em (Jogador2) pois acha que (Jogador2) está cancelado."},
+        {text: "(Jogador1) votou em (Jogador2) pois acha que o público quer tirar (Jogador2)."},
+        {text: "(Jogador1) votou em (Jogador2) pois garante que ninguém da casa suporta mais (Jogador2)."},
+        {text: "(Jogador1) votou em (Jogador2) poistem a certeza de que (Jogador2) sairá."},
+        {text: "(Jogador1) votou em (Jogador2) pois não gosta de (Jogador2)."},
+        {text: "(Jogador1) votou em (Jogador2) pois garante que (Jogador2) quer atrapalhar seu jogo."},
+        {text: "(Jogador1) votou em (Jogador2) pois garante que (Jogador2) quer desestabilizar a casa."},
+        {text: "(Jogador1) votou em (Jogador2) para proteger seus aliados."},
+        {text: "(Jogador1) votou em (Jogador2) para proteger um aliado."},
+        {text: "(Jogador1) votou em (Jogador2) para tentar se salvar do paredão."},
+    ];
+
+    dialogosDesempateLider = [
+        {text: "(Lider) escolheu (Jogador)."},
+        {text: "(Lider) com dor no coração escolheu (Jogador) pois afirma gostar muito de todos os jogadores que estão para o desempate."},
+        {text: "(Lider) escolheu (Jogador) por falta de afinidade."},
+        {text: "(Lider) escolheu (Jogador) pois não gosta de (Jogador)."},
+        {text: "(Lider) escolheu (Jogador) pois tem a certeza de que (Jogador) sairá."},
+        {text: "(Lider) escolheu (Jogador) por estratégia de jogo."},
+        {text: "(Lider) escolheu (Jogador) pois considera (Jogador) forte no jogo."},
+        {text: "(Lider) escolheu (Jogador) pois considera (Jogador) fraco no jogo."},
+        {text: "(Lider) escolheu (Jogador) pois considera (Jogador) uma planta no jogo."},
+        {text: "(Lider) escolheu (Jogador) pois acha que o público quer tirar (Jogador)."},
+        {text: "(Lider) escolheu (Jogador) pois (Jogador) não faz parte de sua aliança."},
+    ];
+
+    dialogosContragolpes = [
+        {text: "(Jogador1) decide indicar (Jogador2)."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois considera (Jogador2) seu maior rival no jogo."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois considera (Jogador2) forte no jogo."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois considera (Jogador2) fraco no jogo."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois considera (Jogador2) uma planta no jogo."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana por estratégia de jogo."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois acha que (Jogador2) está cancelado."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois acha que o público quer tirar (Jogador2)."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois garante que ninguém da casa suporta mais (Jogador2)."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois tem a certeza de que (Jogador2) sairá."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois não gosta de (Jogador2)."},
+        {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois garante que (Jogador2) quer atrapalhar seu jogo."},
+    ];
 }
 
 export default (new BBBEvents());

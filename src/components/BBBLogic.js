@@ -33,6 +33,17 @@ class BBBLogic {
         }
     }
 
+    removeDups = (player) => {
+        // let unique = {};
+        // player.forEach(function(i) {
+        //   if(!unique[i]) {
+        //     unique[i] = true;
+        //   }
+        // });
+        // return Object.keys(unique);
+        return Array.from(new Set(player));
+    }
+
     generateGroups = (playersList) => {
         let playersLeft = [];
 
@@ -65,7 +76,7 @@ class BBBLogic {
         return groups;
     }
 
-    generateGame = (groupsList) => {
+    generateGame = (groupsList, apresentador) => {
         let storyArray = [];
 
         let playersLeft = [...groupsList.pipoca, ...groupsList.camarote];
@@ -85,10 +96,9 @@ class BBBLogic {
         let week = 1;
         let imunes = [];
         let monstros = [];
-        // let emparedados = [];
+        let emparedados = [];
         let anjo = null;
         let piorDaProvaAnjo = null;
-        let vetadoDaProvaAnjo = null;
         let lider = null;
         let XEPAlist = [];
         let VIPlist = [];
@@ -295,7 +305,7 @@ class BBBLogic {
         /* QUINTA-FEIRA */
 
         // Dinâmica do paredao da semana
-        let primeiraDinamicaDoParedao = this.dinamicaDoParedao(oBigFoneVaiTocar);
+        let primeiraDinamicaDoParedao = this.dinamicaDoParedao(oBigFoneVaiTocar, true);
         oBigFoneVaiTocar = primeiraDinamicaDoParedao.oBigFoneVaiTocar;
         storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: primeiraDinamicaDoParedao, dayOfWeek: 5});
 
@@ -325,7 +335,7 @@ class BBBLogic {
 
         anjo = primeiraProvaDoAnjoEventos.anjo;
         piorDaProvaAnjo = primeiraProvaDoAnjoEventos.piorJogador;
-        vetadoDaProvaAnjo = primeiraProvaDoAnjoEventos.jogadorVetado;
+       // vetadoDaProvaAnjo = primeiraProvaDoAnjoEventos.jogadorVetado;
 
         // Castigo do monstro
         let primeiroCastigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
@@ -342,8 +352,14 @@ class BBBLogic {
         storyArray.push({type: BBBType.PRESENTE_DO_ANJO, occurrencies: primeiroPresenteDoAnjo, dayOfWeek: 1});
 
         // BIG FONE TOCA
+        let tocarBigFoneEvent = null;
         if(oBigFoneVaiTocar){
-            let tocarBigFoneEvent = this.tocarBigFone(playersLeft, lider, primeiraDinamicaDoParedao);
+            tocarBigFoneEvent = this.tocarBigFone(playersLeft, lider, primeiraDinamicaDoParedao);
+
+            if(tocarBigFoneEvent.imune !== null) {
+                imunes.push(tocarBigFoneEvent.imune);
+            }
+
             storyArray.push({type: BBBType.BIG_FONE, occurrencies: tocarBigFoneEvent, dayOfWeek: 1});
         }
 
@@ -351,6 +367,11 @@ class BBBLogic {
         // Formação de Paredão 
         // Imunidade do anjo e votacao 
         // Dedo duro
+        
+        let primeiraFormacaoParedao = this.formacaoDeParedao(apresentador, playersLeft, lider, anjo, monstros, imunes, primeiraDinamicaDoParedao, piorDaProvaLider, piorDaProvaAnjo, tocarBigFoneEvent);
+        emparedados = primeiraFormacaoParedao.emparedados;
+        
+        storyArray.push({type: BBBType.FORMACAO_DE_PAREDAO, occurrencies: primeiraFormacaoParedao, dayOfWeek: 1});
         // Prova bate e volta
 
         /* SEGUNDA-FEIRA */
@@ -358,6 +379,120 @@ class BBBLogic {
 
         /* TERÇA-FEIRA */
         // Eliminação
+        let primeiraEliminacao = this.eliminacao(emparedados);
+        storyArray.push({type: BBBType.ELIMINACAO, occurrencies: primeiraEliminacao, dayOfWeek: 3});
+
+        // remove jogador
+        playersLeft = playersLeft.filter(n => ![primeiraEliminacao.eliminado].includes(n));
+
+        week++;
+        imunes = [];
+        monstros = [];
+        emparedados = [];
+        anjo = null;
+        piorDaProvaAnjo = null;
+        lider = null;
+        XEPAlist = [];
+        VIPlist = [];
+        piorDaProvaLider = null;
+
+        while (playersLeft.length > 10) {
+            storyArray.push({type: BBBType.SEMANA, week: week});
+
+            /* QUINTA-FEIRA */
+
+            // Dinâmica do paredao da semana
+            let dinamicaDoParedao = this.dinamicaDoParedao(oBigFoneVaiTocar, false);
+            oBigFoneVaiTocar = dinamicaDoParedao.oBigFoneVaiTocar;
+            storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: dinamicaDoParedao, dayOfWeek: 5});
+
+            // Prova do lider
+            let provaDoLiderEventos = this.provaDoLider(playersLeft);
+            storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: provaDoLiderEventos, dayOfWeek: 5});
+
+            piorDaProvaLider = provaDoLiderEventos.worstPlayer;
+            lider = provaDoLiderEventos.winner;
+
+            // Formação VIP/XEPA
+            let formacaoVIP = this.formacaoVipXepa(lider, playersLeft);
+            storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: formacaoVIP, dayOfWeek: 5});
+
+            XEPAlist = [...formacaoVIP.XEPAlist];
+            VIPlist = [...formacaoVIP.VIPlist];
+
+            /* SEXTA-FEIRA */
+            // festa
+            let festa = this.primeiraFesta(playersLeft);
+            storyArray.push({type: BBBType.PRIMEIRA_FESTA, occurrencies: festa, dayOfWeek: 6});
+
+            /* SABADO */
+            // Prova do anjo
+            let provaDoAnjoEventos = this.provaDoAnjo(playersLeft, lider);
+            storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: provaDoAnjoEventos, dayOfWeek: 7});
+
+            anjo = provaDoAnjoEventos.anjo;
+            piorDaProvaAnjo = provaDoAnjoEventos.piorJogador;
+            //vetadoDaProvaAnjo = provaDoAnjoEventos.jogadorVetado;
+
+            // Castigo do monstro
+            let castigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
+            storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: castigoDoMonstro, dayOfWeek: 7});
+
+            monstros = [...castigoDoMonstro.monstros];
+            XEPAlist = [...castigoDoMonstro.XEPAlist];
+            VIPlist = [...castigoDoMonstro.VIPlist];
+
+            /* DOMINGO */
+            // Presente do anjo
+
+            let presenteDoAnjo = this.presenteDoAnjo(playersLeft, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
+            storyArray.push({type: BBBType.PRESENTE_DO_ANJO, occurrencies: presenteDoAnjo, dayOfWeek: 1});
+
+            // BIG FONE TOCA
+            let tocarBigFoneEvent = null;
+            if(oBigFoneVaiTocar){
+                tocarBigFoneEvent = this.tocarBigFone(playersLeft, lider, dinamicaDoParedao);
+
+                if(tocarBigFoneEvent.imune !== null) {
+                    imunes.push(tocarBigFoneEvent.imune);
+                }
+
+                storyArray.push({type: BBBType.BIG_FONE, occurrencies: tocarBigFoneEvent, dayOfWeek: 1});
+            }
+
+            // Monstro liberado 
+            // Formação de Paredão 
+            // Imunidade do anjo e votacao 
+            // Dedo duro
+            
+            let formacaoParedao = this.formacaoDeParedao(apresentador, playersLeft, lider, anjo, monstros, imunes, dinamicaDoParedao, piorDaProvaLider, piorDaProvaAnjo, tocarBigFoneEvent);
+            emparedados = formacaoParedao.emparedados;
+            
+            storyArray.push({type: BBBType.FORMACAO_DE_PAREDAO, occurrencies: formacaoParedao, dayOfWeek: 1});
+            // Prova bate e volta
+
+            /* SEGUNDA-FEIRA */
+            // Jogo da concordia
+
+            /* TERÇA-FEIRA */
+            // Eliminação
+            let eliminacao = this.eliminacao(emparedados);
+            storyArray.push({type: BBBType.ELIMINACAO, occurrencies: eliminacao, dayOfWeek: 3});
+
+            // remove jogador
+            playersLeft = playersLeft.filter(n => ![eliminacao.eliminado].includes(n));
+
+            week++;
+            imunes = [];
+            monstros = [];
+            emparedados = [];
+            anjo = null;
+            piorDaProvaAnjo = null;
+            lider = null;
+            XEPAlist = [];
+            VIPlist = [];
+            piorDaProvaLider = null;
+        }
 
         return({story: storyArray});
     }
@@ -1413,7 +1548,7 @@ class BBBLogic {
         do {
             presenteDoAnjoIndex = this.randomize(BBBEvents.presenteDoAnjo.length);
             presenteDoAnjo = BBBEvents.presenteDoAnjo[presenteDoAnjoIndex];
-        } while ((presenteDoAnjo.motive === 'piores' && anjo === piorLider) || presenteDoAnjo.motive === 'lider' && anjo === lider);
+        } while ((presenteDoAnjo.motive === 'piores' && anjo === piorLider) || (presenteDoAnjo.motive === 'lider' && anjo === lider));
 
         let jogador1 = null;
         let jogador2 = null;
@@ -1505,7 +1640,7 @@ class BBBLogic {
         return eventText;
     }
 
-    dinamicaDoParedao = (oBigFoneFoiRecenteRecebido) => {
+    dinamicaDoParedao = (oBigFoneFoiRecenteRecebido, ehPrimeiraSemana) => {
         let storyEvents = [];
 
         let oBigFoneVaiTocar = false;
@@ -1524,11 +1659,19 @@ class BBBLogic {
         let qtdEventosDinamica = BBBEvents.dinamicaParedao.length;
         let qtdEventosDinamicaComBigFone = BBBEvents.dinamicaParedaoComBigFone.length;
 
-        let terceiroEmparedadoIndex = this.randomize(oBigFoneFoiRecente ? qtdEventosDinamica : qtdEventosDinamicaComBigFone);
-        let terceiroEmparedado = oBigFoneFoiRecente ? BBBEvents.dinamicaParedao[terceiroEmparedadoIndex] : BBBEvents.dinamicaParedaoComBigFone[terceiroEmparedadoIndex];
+        let terceiroEmparedadoIndex;
+        let terceiroEmparedado;
 
-        let quartoEmparedadoIndex = this.randomize(oBigFoneFoiRecente ? qtdEventosDinamica : qtdEventosDinamicaComBigFone);
-        let quartoEmparedado =  oBigFoneFoiRecente ? BBBEvents.dinamicaParedao[quartoEmparedadoIndex] : BBBEvents.dinamicaParedaoComBigFone[quartoEmparedadoIndex];
+        let quartoEmparedadoIndex;
+        let quartoEmparedado;
+
+        do {
+            terceiroEmparedadoIndex = this.randomize(oBigFoneFoiRecente ? qtdEventosDinamica : qtdEventosDinamicaComBigFone);
+            terceiroEmparedado = oBigFoneFoiRecente ? BBBEvents.dinamicaParedao[terceiroEmparedadoIndex] : BBBEvents.dinamicaParedaoComBigFone[terceiroEmparedadoIndex];
+
+            quartoEmparedadoIndex = this.randomize(oBigFoneFoiRecente ? qtdEventosDinamica : qtdEventosDinamicaComBigFone);
+            quartoEmparedado =  oBigFoneFoiRecente ? BBBEvents.dinamicaParedao[quartoEmparedadoIndex] : BBBEvents.dinamicaParedaoComBigFone[quartoEmparedadoIndex];
+        } while (ehPrimeiraSemana && (terceiroEmparedadoIndex === 1 || terceiroEmparedadoIndex === 2 || quartoEmparedadoIndex === 1 || quartoEmparedadoIndex === 2));
 
         oBigFoneVaiTocar = (terceiroEmparedado.bigfone || quartoEmparedado.bigfone);
 
@@ -1570,8 +1713,8 @@ class BBBLogic {
 
         return {
             dinamicaTxt: storyEvents, 
-            terceiro: terceiroEmparedadoIndex, 
-            quarto: quartoEmparedadoIndex,
+            terceiro: terceiroEmparedado, 
+            quarto: quartoEmparedado,
             oBigFoneVaiTocar: oBigFoneVaiTocar,
             oBigFoneVaiSalvar: oBigFoneVaiSalvar,
             tipoBigFone: tipoBigFone,
@@ -1602,8 +1745,6 @@ class BBBLogic {
             indexPlayerPuchado = this.pickOnePlayer(players);
             playerPuchado = players[indexPlayerPuchado];
         } while (playerPuchado === lider || playerPuchado === playerAtendente);
-
-        storyEvents.push(dinamica.tipoBigFone);
 
         switch (dinamica.tipoBigFone) {
             case "indicacaoBigFone":
@@ -1733,37 +1874,44 @@ class BBBLogic {
         }
     }
 
-    formacaoDeParedao = (apresentador, players, lider, anjo, monstos, imunes, dinamica, piorDoLider, piorDoAnjo, bigfone) => {
+    formacaoDeParedao = (apresentador, players, lider, anjo, monstros, imunes, dinamica, piorDoLider, piorDoAnjo, bigfone) => {
 
         let storyEvents = [];
         let emparedados = [];
+        let naoPodemSerVotados = [...imunes, lider];
+
+        let terceiroEmparedado = null;
+        let quartoEmparedado = null;
 
         // inicio apresentador
         let apresentacaoApresentador = "<b>" + apresentador + "</b> aparece na televisão da sala para cumprimentar os participantes.";
         storyEvents.push(apresentacaoApresentador);
 
         // monstro liberado
-        let apresentadorConversaMonstro = "<b>" + apresentador + "</b> começa a conversar com os monstros <b>" + monstos[0].name + "</b> e <b>" + monstos[1].name + "</b> sobre o monstro da semana.";
+        let apresentadorConversaMonstro = "<b>" + apresentador + "</b> começa a conversar com os monstros <b>" + monstros[0].name + "</b> e <b>" + monstros[1].name + "</b> sobre o monstro da semana.";
         storyEvents.push(apresentadorConversaMonstro);
 
-        let eventMonstroIndex = this.randomize(BBBEvents.dialogosMonstros.length);
-        let eventMonstro = BBBEvents.dialogosMonstros[eventMonstroIndex];
+        for (let index = 0; index < 2; index++) {
+            let eventMonstroIndex = this.randomize(BBBEvents.dialogosMonstros.length);
+            let eventMonstro = BBBEvents.dialogosMonstros[eventMonstroIndex];
 
-        let eventText = eventMonstro.text;
+            let eventText = eventMonstro.text;
 
-        let replacerJogador1Str = '(Jogador1)';
-        let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
-        let newJogador1Str = '<b>' + playerAtendente.name + '</b>';
-        eventText = eventText.replace(regexJogador1Str, newJogador1Str);
-        storyEvents.push(eventText);
+            let replacerJogador1Str = "(Jogador1)";
+            let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+            let newJogador1Str = '<b>' + monstros[index].name + '</b>';
+            eventText = eventText.replace(regexJogador1Str, newJogador1Str);
+            storyEvents.push(eventText);
+        }
 
         let apresentadorLiberaMonstro = "<b>" + apresentador + "</b> decretou o fim do castigo do monstro dessa semana.";
         storyEvents.push(apresentadorLiberaMonstro);
 
         // avisos emparedados
+
         let avisoEmparedadosApresentador = "<b>" + apresentador + "</b> avisa que confome combinado com o público ";
 
-        switch (dinamica.type) {
+        switch (dinamica.terceiro.type) {
             case "piorDoLider":
                 let avisoPiorDoLider = avisoEmparedadosApresentador + "o jogador que obtivesse o pior desempenho a prova do líder estaria no paredão.";
                 storyEvents.push(avisoPiorDoLider);
@@ -1772,6 +1920,7 @@ class BBBLogic {
                 storyEvents.push(textoPiorDoLider);
 
                 emparedados.push(piorDoLider);
+                terceiroEmparedado = piorDoLider;
                 break;
             case "piorDoAnjo":
                 let avisoPiorDoAnjo = avisoEmparedadosApresentador + "o jogador que obtivesse o pior desempenho a prova do anjo estaria no paredão.";
@@ -1780,19 +1929,22 @@ class BBBLogic {
                 let textoPiorDoAnjo = "Com isso, <b>" + piorDoAnjo.name + "</b> está no paredão.";
                 storyEvents.push(textoPiorDoAnjo);
 
-                emparedados.push(piorDoLider);
+                emparedados.push(piorDoAnjo);
+                terceiroEmparedado = piorDoAnjo;
                 break;
             case "indicacaoBigFone":
                 let avisoIndicacaoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois foi indicado por <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone.";
                 storyEvents.push(avisoIndicacaoBigFone);
 
                 emparedados.push(bigfone.emparedado);
+                terceiroEmparedado = bigfone.emparedado;
                 break;
             case "indicadoBigFone":
                 let avisoIndicadoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois atendeu o Big Fone.";
                 storyEvents.push(avisoIndicadoBigFone);
 
                 emparedados.push(bigfone.emparedado);
+                terceiroEmparedado = bigfone.emparedado;
                 break;
             case "indicadoBigFoneOculta":
                 let avisoIndicadoBigFoneOculta = avisoEmparedadosApresentador + "a pulseira que <b>" + bigfone.atendente.name + "<b/> recebeu ao atender o Big Fone iria emparedar quem a recebesse.";
@@ -1802,6 +1954,7 @@ class BBBLogic {
                 storyEvents.push(textoIndicadoBigFoneOculta);
 
                 emparedados.push(bigfone.emparedado);
+                terceiroEmparedado = bigfone.emparedado;
                 break;
 
             default: // normal
@@ -1812,15 +1965,978 @@ class BBBLogic {
                 break;
         }
 
+        if(dinamica.terceiro.type !== dinamica.quarto.type){
+            if(!(dinamica.terceiro.bigfone === true && dinamica.terceiro.bigfone === dinamica.quarto.bigfone)) {
+                switch (dinamica.quarto.type) {
+                    case "piorDoLider":
+                        let avisoPiorDoLider = avisoEmparedadosApresentador + "o jogador que obtivesse o pior desempenho a prova do líder estaria no paredão.";
+                        storyEvents.push(avisoPiorDoLider);
+        
+                        let textoPiorDoLider = "Com isso, <b>" + piorDoLider.name + "</b> está no paredão.";
+                        storyEvents.push(textoPiorDoLider);
+        
+                        emparedados.push(piorDoLider);
+                        quartoEmparedado = piorDoLider;
+                        break;
+                    case "piorDoAnjo":
+                        let avisoPiorDoAnjo = avisoEmparedadosApresentador + "o jogador que obtivesse o pior desempenho a prova do anjo estaria no paredão.";
+                        storyEvents.push(avisoPiorDoAnjo);
+        
+                        let textoPiorDoAnjo = "Com isso, <b>" + piorDoAnjo.name + "</b> está no paredão.";
+                        storyEvents.push(textoPiorDoAnjo);
+        
+                        emparedados.push(piorDoAnjo);
+                        quartoEmparedado = piorDoAnjo;
+                        break;
+                    case "indicacaoBigFone":
+                        let avisoIndicacaoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois foi indicado por <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone.";
+                        storyEvents.push(avisoIndicacaoBigFone);
+        
+                        emparedados.push(bigfone.emparedado);
+                        quartoEmparedado = bigfone.emparedado;
+                        break;
+                    case "indicadoBigFone":
+                        let avisoIndicadoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois atendeu o Big Fone.";
+                        storyEvents.push(avisoIndicadoBigFone);
+        
+                        emparedados.push(bigfone.emparedado);
+                        quartoEmparedado = bigfone.emparedado;
+                        break;
+                    case "indicadoBigFoneOculta":
+                        let avisoIndicadoBigFoneOculta = avisoEmparedadosApresentador + "a pulseira que <b>" + bigfone.atendente.name + "<b/> recebeu ao atender o Big Fone iria emparedar quem a recebesse.";
+                        storyEvents.push(avisoIndicadoBigFoneOculta);
+        
+                        let textoIndicadoBigFoneOculta = "Com isso, <b>" + bigfone.emparedado.name + "</b> está no paredão.";
+                        storyEvents.push(textoIndicadoBigFoneOculta);
+        
+                        emparedados.push(bigfone.emparedado);
+                        quartoEmparedado = bigfone.emparedado;
+                        break;
+        
+                    default: // normal
+                        // case "doisMaisVotados":
+                        // case "contragolpeMaisVotado":
+                        // case "contragolpeIndicadoDoLider":
+                        // case "indicacaoDoAnjo":
+                        break;
+                }
+            }
+        }
+
+        naoPodemSerVotados.push(...emparedados);
+
+        // imunidade do bigfone
+        if(dinamica.oBigFoneVaiTocar && dinamica.oBigFoneVaiSalvar) {
+            switch (dinamica.tipoBigFone) {
+                case "imunizaAtendente":
+                    let avisoImunizaAtendente = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana por ter atendido o Big Fone."
+                    storyEvents.push(avisoImunizaAtendente);
+                    break;
+                case "atendenteImuniza":
+                    let avisoAtendenteImuniza = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana pela escolha de <b>" + bigfone.atendente.name + "</b> que atendeu o Big Fone."
+                    storyEvents.push(avisoAtendenteImuniza);
+                    break;
+                case "imuniza":
+                    let avisoImuniza = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana pela escolha de <b>" + bigfone.atendente.name + "</b> que atendeu o Big Fone.";
+                    if(bigfone.atendente === bigfone.imune) {
+                        avisoImuniza = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana por que escolheu se salvar ao atender o Big Fone.";
+                    }
+                    storyEvents.push(avisoImuniza);
+                    break;
+                case "imunizaOculto":
+                    let avisoImunizaOculto = "<b>" + apresentador + "<b/> comunicou com os participantes que a pulseira que <b>" + bigfone.imune.name + "</b> recebeu de <b>" + bigfone.atendente.name + "<b/> ao atender o Big Fone garantia uma imunidade ao paredão dessa semana.";
+                    if(bigfone.atendente === bigfone.imune) {
+                        avisoImunizaOculto = "<b>" + apresentador + "<b/> comunicou com os participantes que a pulseira que <b>" + bigfone.atendente.name + "</b> escolheu colocar em si mesmo ao atender o Big Fone garantia uma imunidade ao paredão dessa semana.";
+                    }
+                    storyEvents.push(avisoImunizaOculto);
+
+                    let segundoAviso = "Com isso <b>" + bigfone.imune.name + "<b/> está imune ao paredão dessa semana!";
+                    storyEvents.push(segundoAviso);
+                    break;
+            
+                default: // ignora os emparedamentos do big fone pq eles foram tratados acima
+                    break;
+            }
+        }
+
         // anjo imuniza
+        if(dinamica.anjoAutoimune){
+            let avisoImunidadeAnjo = "<b>" + apresentador + "</b> avisou para <b>" + anjo.name + "</b> que essa semana o anjo é autoimune, e com isso <b>" + anjo.name + "</b> está salvo desse paredão.";
+            storyEvents.push(avisoImunidadeAnjo);
+            naoPodemSerVotados.push(anjo);
+
+            // se o anjo for emparedado pelo big fone o anjo deve contragolpear
+            if(bigfone !== null && bigfone.emparedado === anjo) {
+                let avisoAnjoExtraIndica = "<b>" + apresentador + "</b> avisou para como o anjo é autoimune <b>" + anjo.name + "</b> foi salvo da indicação do Big Fone e deve escolher alguém para ir no paredão em seu lugar.";
+                storyEvents.push(avisoAnjoExtraIndica);
+
+                emparedados = emparedados.filter(n => ![anjo].includes(n));
+
+                naoPodemSerVotados = this.removeDups(naoPodemSerVotados);
+                let podemSerVotados = players.filter(n => !naoPodemSerVotados.includes(n));
+
+                let eventoAnjoIndex = this.randomize(BBBEvents.dialogosIndicacaoLider.length);
+                let eventoAnjo = BBBEvents.dialogosIndicacaoLider[eventoAnjoIndex];
+        
+                let indicacaoAnjoIndex = this.pickOnePlayer(podemSerVotados);
+                let indicacaoAnjo = podemSerVotados[indicacaoAnjoIndex];
+        
+                let eventText = eventoAnjo.text;
+        
+                let replacerAnjoStr = '(Lider)';
+                let regexAnjoStr = new RegExp(this.escapeRegExp(replacerAnjoStr), 'g');
+                let newAnjoStr = '<b>' + anjo.name + '</b>';
+                eventText = eventText.replace(regexAnjoStr, newAnjoStr);
+        
+                let replacerJogadorStr = '(Jogador)';
+                let regexJogadorStr = new RegExp(this.escapeRegExp(replacerJogadorStr), 'g');
+                let newJogadorStr = '<b>' + indicacaoAnjo.name + '</b>';
+                eventText = eventText.replace(regexJogadorStr, newJogadorStr);
+        
+                storyEvents.push(eventText);
+                naoPodemSerVotados.push(indicacaoAnjo);
+                emparedados.push(indicacaoAnjo);
+
+                terceiroEmparedado = terceiroEmparedado === anjo ? null : terceiroEmparedado;
+                quartoEmparedado = quartoEmparedado === anjo ? null : quartoEmparedado;
+            }
+        } else {
+            naoPodemSerVotados = this.removeDups(naoPodemSerVotados);
+            let podemSerVotados = players.filter(n => !naoPodemSerVotados.includes(n));
+
+            let avisoImunidadeAnjo = "<b>" + apresentador + "</b> avisou para <b>" + anjo.name + "</b> que essa semana o anjo não é autoimune, e com isso <b>" + anjo.name + "</b> terá que escolher outro jogador para livrar desse paredão.";
+            storyEvents.push(avisoImunidadeAnjo);
+
+            let escolheImuneIndex = this.pickOnePlayer(podemSerVotados);
+            let escolheImune = podemSerVotados[escolheImuneIndex];
+
+            let escolheMotivoImunidadeIndex = this.randomize(BBBEvents.dialogosImunidadeAnjo.length);
+            let escolheMotivoImunidade = BBBEvents.dialogosImunidadeAnjo[escolheMotivoImunidadeIndex];
+
+            let eventText = escolheMotivoImunidade.text;
+
+            let replacerAnjoStr = '(Anjo)';
+            let regexAnjoStr = new RegExp(this.escapeRegExp(replacerAnjoStr), 'g');
+            let newAnjoStr = '<b>' + anjo.name + '</b>';
+            eventText = eventText.replace(regexAnjoStr, newAnjoStr);
+
+            let replacerJogador1Str = '(Jogador)';
+            let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+            let newJogador1Str = '<b>' + escolheImune.name + '</b>';
+            eventText = eventText.replace(regexJogador1Str, newJogador1Str);
+
+            storyEvents.push(eventText);
+
+            naoPodemSerVotados.push(escolheImune);
+        }
+
+        // resumo de quem não pode ser votado
+
+        let resumoApr = "<b>" + apresentador + "<b/> avisou a todos que os participantes que não podem ser votados são: ";
+
+        let contador = 1; 
+        naoPodemSerVotados.forEach(player => {
+            let jogadorNome = '<b>' + player.name + '</b>';
+            resumoApr += jogadorNome;
+
+            if(contador === naoPodemSerVotados.length){
+                resumoApr += ".";
+            } else if(contador === (naoPodemSerVotados.length -1)){
+                resumoApr += " e ";
+            } else {
+                resumoApr += ", ";
+            }
+            contador++;
+        });
+        storyEvents.push(resumoApr);
 
         // lider indica
+        naoPodemSerVotados = this.removeDups(naoPodemSerVotados);
+        let podemSerVotados = players.filter(n => !naoPodemSerVotados.includes(n));
+
+        let avisoLider = "<b>" + apresentador + "</b> perguntou para líder <b>" + lider.name + "</b> quem será a indicação ao paredão dessa semana.";
+        storyEvents.push(avisoLider);
+        
+        let eventoLiderIndex = this.randomize(BBBEvents.dialogosIndicacaoLider.length);
+        let eventoLider = BBBEvents.dialogosIndicacaoLider[eventoLiderIndex];
+
+        let indicacaoLiderIndex = this.pickOnePlayer(podemSerVotados);
+        let indicacaoLider = podemSerVotados[indicacaoLiderIndex];
+
+        let eventText = eventoLider.text;
+
+        let replacerLiderStr = '(Lider)';
+        let regexLiderStr = new RegExp(this.escapeRegExp(replacerLiderStr), 'g');
+        let newLiderStr = '<b>' + lider.name + '</b>';
+        eventText = eventText.replace(regexLiderStr, newLiderStr);
+
+        let replacerJogadorStr = '(Jogador)';
+        let regexJogadorStr = new RegExp(this.escapeRegExp(replacerJogadorStr), 'g');
+        let newJogadorStr = '<b>' + indicacaoLider.name + '</b>';
+        eventText = eventText.replace(regexJogadorStr, newJogadorStr);
+
+        storyEvents.push(eventText);
+        naoPodemSerVotados.push(indicacaoLider);
+        emparedados.push(indicacaoLider);
 
         // votacao
 
-        // terceiro e quarto emparedado
+        let votacaoEhNoConfessionario = this.randomize(100) > 50 ? true : false;
+
+        let avisoVotacao = "<b>" + apresentador + "</b> avisa a todos que a votação será aberta e irá chamar um de cada vez.";
+        if(votacaoEhNoConfessionario) {
+            avisoVotacao = "<b>" + apresentador + "</b> avisa a todos que a votação será no confessionário e irá chamar um de cada vez.";
+        }
+        storyEvents.push(avisoVotacao);
+
+        naoPodemSerVotados = this.removeDups(naoPodemSerVotados);
+        podemSerVotados = players.filter(n => !naoPodemSerVotados.includes(n));
+
+        let ordemPlayers = this.shuffle(players);
+        let listaVotacao = [];
+        let votosCountList = [];
+
+        podemSerVotados.forEach(possibilidade => {
+            votosCountList.push({player: possibilidade, votos: 0});
+        });
+
+        ordemPlayers.forEach(playerSorteado => {
+            let votadoIndex;
+            let votado;
+            do {
+                votadoIndex = this.pickOnePlayer(podemSerVotados);
+                votado = podemSerVotados[votadoIndex];
+            } while (playerSorteado === votado);
+
+            let motivoVotoIndex = this.randomize(BBBEvents.dialogosVotacao.length);
+            let motivoVoto = BBBEvents.dialogosVotacao[motivoVotoIndex];
+
+            let motivoVotoText = motivoVoto.text;
+
+            let replacerJogador1Str = '(Jogador1)';
+            let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+            let newJogador1Str = '<b>' + playerSorteado.name + '</b>';
+            motivoVotoText = motivoVotoText.replace(regexJogador1Str, newJogador1Str);
+    
+            let replacerJogador2Str = '(Jogador2)';
+            let regexJogador2Str = new RegExp(this.escapeRegExp(replacerJogador2Str), 'g');
+            let newJogador2Str = '<b>' + votado.name + '</b>';
+            motivoVotoText = motivoVotoText.replace(regexJogador2Str, newJogador2Str);
+
+            votosCountList[votadoIndex].votos = votosCountList[votadoIndex].votos + 1;
+            listaVotacao.push({player: playerSorteado, votouEm: votado});
+
+            storyEvents.push(motivoVotoText);
+        });
+
+        let maiorNumeroDeVotos = 0;
+        let maisVotados = [];
+        votosCountList.forEach(playerVotado => {
+            if(playerVotado.votos > maiorNumeroDeVotos){
+                maiorNumeroDeVotos = playerVotado.votos;
+            }     
+        });
+        votosCountList.forEach(playerVotado => {
+            if(playerVotado.votos === maiorNumeroDeVotos){
+                maisVotados.push(playerVotado);
+            }     
+        });
+
+        let primeiroMaisVotado = null;
+
+        if(maisVotados.length === 1) {
+            let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que o mais votado da casa que irá para o paredão foi <b>" + maisVotados[0].player.name + "</b> com um total de " + maiorNumeroDeVotos + " votos.";
+            storyEvents.push(avisoMaisVotado);
+            emparedados.push(maisVotados[0].player);
+            primeiroMaisVotado = maisVotados[0].player;
+
+            votosCountList = votosCountList.filter(n => !maisVotados.includes(n));
+        } else { // desempata
+            let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que " + maisVotados.length + " jogadores receberam " + maiorNumeroDeVotos + " votos e com isso <b>" + lider.name + "</b> deve escolher alguem desses mais votados para ir ao paredão.";
+            storyEvents.push(avisoMaisVotado);
+
+            let avisoDesempate = "<b>" + apresentador + "</b> pede para que <b>" + lider.name + "</b> escolha entre: ";
+
+            let contador = 1; 
+            maisVotados.forEach(player => {
+                let jogadorNome = '<b>' + player.player.name + '</b>';
+                avisoDesempate += jogadorNome;
+
+                if(contador === maisVotados.length){
+                    avisoDesempate += ".";
+                } else if(contador === (maisVotados.length -1)){
+                    avisoDesempate += " e ";
+                } else {
+                    avisoDesempate += ", ";
+                }
+                contador++;
+            });
+
+            storyEvents.push(avisoDesempate);
+
+            let desempateDoLiderIndex = this.pickOnePlayer(maisVotados);
+            let desempateDoLider = maisVotados[desempateDoLiderIndex].player;
+
+            let motivoDesempateIndex = this.randomize(BBBEvents.dialogosDesempateLider.length);
+            let motivoDesempate = BBBEvents.dialogosDesempateLider[motivoDesempateIndex];
+
+            let eventText = motivoDesempate.text;
+
+            let replacerLiderStr = '(Lider)';
+            let regexLiderStr = new RegExp(this.escapeRegExp(replacerLiderStr), 'g');
+            let newLiderStr = '<b>' + lider.name + '</b>';
+            eventText = eventText.replace(regexLiderStr, newLiderStr);
+
+            let replacerJogadorStr = '(Jogador)';
+            let regexJogadorStr = new RegExp(this.escapeRegExp(replacerJogadorStr), 'g');
+            let newJogadorStr = '<b>' + desempateDoLider.name + '</b>';
+            eventText = eventText.replace(regexJogadorStr, newJogadorStr);
+
+            storyEvents.push(eventText);
+
+            emparedados.push(desempateDoLider);
+            primeiroMaisVotado = desempateDoLider;
+
+            votosCountList = votosCountList.filter(n => ![desempateDoLider].includes(n));
+        }
 
         // dedo-duro
+
+        // if(votacaoEhNoConfessionario) {
+        //     let 
+        // }
+
+        // terceiro e quarto emparedado
+        if(terceiroEmparedado === null) {
+            switch(dinamica.terceiro.type){
+                case "doisMaisVotados":
+                    let doisMaisVotadosAviso = "<b>" + apresentador + "</b> explicou para os participantes que o segundo mais votado também irá ao paredão essa semana.";
+                    storyEvents.push(doisMaisVotadosAviso);
+
+                    maiorNumeroDeVotos = 0;
+                    maisVotados = [];
+                    votosCountList.forEach(playerVotado => {
+                        if(playerVotado.votos > maiorNumeroDeVotos){
+                            maiorNumeroDeVotos = playerVotado.votos;
+                        }     
+                    });
+                    votosCountList.forEach(playerVotado => {
+                        if(playerVotado.votos === maiorNumeroDeVotos){
+                            maisVotados.push(playerVotado);
+                        }     
+                    });
+
+                    if(maisVotados.length === 1) {
+                        let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que o segundo mais votado da casa que irá para o paredão foi <b>" + maisVotados[0].player.name + "</b> com um total de " + maiorNumeroDeVotos + " votos.";
+                        storyEvents.push(avisoMaisVotado);
+                        emparedados.push(maisVotados[0].player);
+            
+                        votosCountList = votosCountList.filter(n => !maisVotados.includes(n));
+                    } else { // desempata
+                        let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que " + maisVotados.length + " jogadores receberam " + maiorNumeroDeVotos + " votos e com isso <b>" + lider.name + "</b> deve escolher alguem desses mais votados para ir ao paredão.";
+                        storyEvents.push(avisoMaisVotado);
+            
+                        let avisoDesempate = "<b>" + apresentador + "</b> pede para que <b>" + lider.name + "</b> escolha entre: ";
+            
+                        let contador = 1; 
+                        maisVotados.forEach(player => {
+                            let jogadorNome = '<b>' + player.player.name + '</b>';
+                            avisoDesempate += jogadorNome;
+            
+                            if(contador === maisVotados.length){
+                                avisoDesempate += ".";
+                            } else if(contador === (maisVotados.length -1)){
+                                avisoDesempate += " e ";
+                            } else {
+                                avisoDesempate += ", ";
+                            }
+                            contador++;
+                        });
+            
+                        storyEvents.push(avisoDesempate);
+            
+                        let desempateDoLiderIndex = this.pickOnePlayer(maisVotados);
+                        let desempateDoLider = maisVotados[desempateDoLiderIndex].player;
+            
+                        let motivoDesempateIndex = this.randomize(BBBEvents.dialogosDesempateLider.length);
+                        let motivoDesempate = BBBEvents.dialogosDesempateLider[motivoDesempateIndex];
+            
+                        let eventText = motivoDesempate.text;
+            
+                        let replacerLiderStr = '(Lider)';
+                        let regexLiderStr = new RegExp(this.escapeRegExp(replacerLiderStr), 'g');
+                        let newLiderStr = '<b>' + lider.name + '</b>';
+                        eventText = eventText.replace(regexLiderStr, newLiderStr);
+            
+                        let replacerJogadorStr = '(Jogador)';
+                        let regexJogadorStr = new RegExp(this.escapeRegExp(replacerJogadorStr), 'g');
+                        let newJogadorStr = '<b>' + desempateDoLider.name + '</b>';
+                        eventText = eventText.replace(regexJogadorStr, newJogadorStr);
+            
+                        storyEvents.push(eventText);
+            
+                        emparedados.push(desempateDoLider);
+
+                        votosCountList = votosCountList.filter(n => ![desempateDoLider].includes(n));
+                    }
+
+                    break;
+                case "contragolpeMaisVotado":
+                    let contragolpeMaisVotadoAviso = "<b>" + apresentador + "</b> explicou para os participantes que o mais votado pela casa poderá puxar alguém para o paredão junto com ele.";
+                    storyEvents.push(contragolpeMaisVotadoAviso);
+
+                    podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                    let eventoContragolpeMaisVotadoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                    let eventoContragolpeMaisVotado = BBBEvents.dialogosContragolpes[eventoContragolpeMaisVotadoIndex];
+            
+                    let indicacaoMaisVotadoIndex = this.pickOnePlayer(podemSerVotados);
+                    let indicacaoMaisVotado = podemSerVotados[indicacaoMaisVotadoIndex];
+            
+                    let eventText = eventoContragolpeMaisVotado.text;
+            
+                    let replacerJogador1Str = '(Jogador1)';
+                    let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+                    let newJogador1Str = '<b>' + primeiroMaisVotado.name + '</b>';
+                    eventText = eventText.replace(regexJogador1Str, newJogador1Str);
+            
+                    let replacerJogador2Str = '(Jogador2)';
+                    let regexJogador2Str = new RegExp(this.escapeRegExp(replacerJogador2Str), 'g');
+                    let newJogador2Str = '<b>' + indicacaoMaisVotado.name + '</b>';
+                    eventText = eventText.replace(regexJogador2Str, newJogador2Str);
+            
+                    storyEvents.push(eventText);
+                    naoPodemSerVotados.push(indicacaoMaisVotado);
+                    emparedados.push(indicacaoMaisVotado);
+
+                    break;
+                case "contragolpeIndicadoDoLider":
+                    let contragolpeIndicadoDoLiderAviso = "<b>" + apresentador + "</b> explicou para os participantes que a indicação do líder tem direito a contra-golpe.";
+                    storyEvents.push(contragolpeIndicadoDoLiderAviso);
+
+                    podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                    let eventoContragolpeLiderIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                    let eventoContragolpeLider = BBBEvents.dialogosContragolpes[eventoContragolpeLiderIndex];
+            
+                    let indicacaoContragolpeLiderIndex = this.pickOnePlayer(podemSerVotados);
+                    let indicacaoContragolpeLider = podemSerVotados[indicacaoContragolpeLiderIndex];
+            
+                    let eventTextLider = eventoContragolpeLider.text;
+            
+                    let replacerJogador1StrLider = '(Jogador1)';
+                    let regexJogador1StrLider = new RegExp(this.escapeRegExp(replacerJogador1StrLider), 'g');
+                    let newJogador1StrLider = '<b>' + indicacaoLider.name + '</b>';
+                    eventTextLider = eventTextLider.replace(regexJogador1StrLider, newJogador1StrLider);
+            
+                    let replacerJogador2StrLider = '(Jogador2)';
+                    let regexJogador2StrLider = new RegExp(this.escapeRegExp(replacerJogador2StrLider), 'g');
+                    let newJogador2StrLider = '<b>' + indicacaoContragolpeLider.name + '</b>';
+                    eventTextLider = eventTextLider.replace(regexJogador2StrLider, newJogador2StrLider);
+            
+                    storyEvents.push(eventTextLider);
+                    naoPodemSerVotados.push(indicacaoContragolpeLider);
+                    emparedados.push(indicacaoContragolpeLider);
+                    break;
+                case "indicacaoDoAnjo":
+                    let indicacaoDoAnjoAviso = "<b>" + apresentador + "</b> explicou para os participantes que essa semana o anjo indicará alguém ao paredão!";
+                    storyEvents.push(indicacaoDoAnjoAviso);
+
+                    podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                    let eventoAnjoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                    let eventoAnjo = BBBEvents.dialogosContragolpes[eventoAnjoIndex];
+            
+                    let indicacaoAnjoIndex = this.pickOnePlayer(podemSerVotados);
+                    let indicacaoAnjo = podemSerVotados[indicacaoAnjoIndex];
+            
+                    let eventTextAnjo = eventoAnjo.text;
+            
+                    let replacerJogador1StrAnjo = '(Jogador1)';
+                    let regexJogador1StrAnjo = new RegExp(this.escapeRegExp(replacerJogador1StrAnjo), 'g');
+                    let newJogador1StrAnjo = '<b>' + anjo.name + '</b>';
+                    eventTextAnjo = eventTextAnjo.replace(regexJogador1StrAnjo, newJogador1StrAnjo);
+            
+                    let replacerJogador2StrAnjo = '(Jogador2)';
+                    let regexJogador2StrAnjo = new RegExp(this.escapeRegExp(replacerJogador2StrAnjo), 'g');
+                    let newJogador2StrAnjo = '<b>' + indicacaoAnjo.name + '</b>';
+                    eventTextAnjo = eventTextAnjo.replace(regexJogador2StrAnjo, newJogador2StrAnjo);
+            
+                    storyEvents.push(eventTextAnjo);
+                    naoPodemSerVotados.push(indicacaoAnjo);
+                    emparedados.push(indicacaoAnjo);
+                    break;
+                default:// IGNORA O RESTO
+                    break;
+            }
+        }
+
+        if(quartoEmparedado === null) {
+            if(dinamica.terceiro.bigfone && dinamica.quarto.bigfone){
+                // contragolpe indicado bigfone
+                let indicacaoDoContragolpeBigFoneAviso = "<b>" + apresentador + "</b> explicou para os participantes que essa semana o indicado do Big Fone terá um contragolpe!";
+                storyEvents.push(indicacaoDoContragolpeBigFoneAviso);
+
+                podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                let eventoBigFoneIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                let eventoBigFone = BBBEvents.dialogosContragolpes[eventoBigFoneIndex];
+        
+                let indicacaoBigFoneIndex = this.pickOnePlayer(podemSerVotados);
+                let indicacaoBigFone = podemSerVotados[indicacaoBigFoneIndex];
+        
+                let eventTextBigFone = eventoBigFone.text;
+        
+                let replacerJogador1Str = '(Jogador1)';
+                let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+                let newJogador1Str = '<b>' + bigfone.emparedado.name + '</b>';
+                eventTextBigFone = eventTextBigFone.replace(regexJogador1Str, newJogador1Str);
+        
+                let replacerJogador2Str = '(Jogador2)';
+                let regexJogador2Str = new RegExp(this.escapeRegExp(replacerJogador2Str), 'g');
+                let newJogador2Str = '<b>' + indicacaoBigFone.name + '</b>';
+                eventTextBigFone = eventTextBigFone.replace(regexJogador2Str, newJogador2Str);
+        
+                storyEvents.push(eventTextBigFone);
+                naoPodemSerVotados.push(indicacaoBigFone);
+                emparedados.push(indicacaoBigFone);
+            } else {
+                if(dinamica.terceiro.type === dinamica.quarto.type) {
+                    // contragolpes diretos
+                    switch(dinamica.quarto.type){
+                        case "doisMaisVotados":
+                            let doisMaisVotadosAviso = "<b>" + apresentador + "</b> explicou para os participantes que o terceiro mais votado também irá compor o paredão dessa semana.";
+                            storyEvents.push(doisMaisVotadosAviso);
+
+                            maiorNumeroDeVotos = 0;
+                            maisVotados = [];
+                            votosCountList.forEach(playerVotado => {
+                                if(playerVotado.votos > maiorNumeroDeVotos){
+                                    maiorNumeroDeVotos = playerVotado.votos;
+                                }     
+                            });
+                            votosCountList.forEach(playerVotado => {
+                                if(playerVotado.votos === maiorNumeroDeVotos){
+                                    maisVotados.push(playerVotado);
+                                }     
+                            });
+
+                            if(maisVotados.length === 1) {
+                                let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que o terceiro mais votado da casa que irá para o paredão foi <b>" + maisVotados[0].player.name + "</b> com um total de " + maiorNumeroDeVotos + " votos.";
+                                storyEvents.push(avisoMaisVotado);
+                                emparedados.push(maisVotados[0].player);
+                    
+                                votosCountList = votosCountList.filter(n => !maisVotados.includes(n));
+                            } else { // desempata
+                                let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que " + maisVotados.length + " jogadores receberam " + maiorNumeroDeVotos + " votos e com isso <b>" + lider.name + "</b> deve escolher alguem desses mais votados para ir ao paredão.";
+                                storyEvents.push(avisoMaisVotado);
+                    
+                                let avisoDesempate = "<b>" + apresentador + "</b> pede para que <b>" + lider.name + "</b> escolha entre: ";
+                    
+                                let contador = 1; 
+                                maisVotados.forEach(player => {
+                                    let jogadorNome = '<b>' + player.player.name + '</b>';
+                                    avisoDesempate += jogadorNome;
+                    
+                                    if(contador === maisVotados.length){
+                                        avisoDesempate += ".";
+                                    } else if(contador === (maisVotados.length -1)){
+                                        avisoDesempate += " e ";
+                                    } else {
+                                        avisoDesempate += ", ";
+                                    }
+                                    contador++;
+                                });
+                    
+                                storyEvents.push(avisoDesempate);
+                    
+                                let desempateDoLiderIndex = this.pickOnePlayer(maisVotados);
+                                let desempateDoLider = maisVotados[desempateDoLiderIndex].player;
+                    
+                                let motivoDesempateIndex = this.randomize(BBBEvents.dialogosDesempateLider.length);
+                                let motivoDesempate = BBBEvents.dialogosDesempateLider[motivoDesempateIndex];
+                    
+                                let eventText = motivoDesempate.text;
+                    
+                                let replacerLiderStr = '(Lider)';
+                                let regexLiderStr = new RegExp(this.escapeRegExp(replacerLiderStr), 'g');
+                                let newLiderStr = '<b>' + lider.name + '</b>';
+                                eventText = eventText.replace(regexLiderStr, newLiderStr);
+                    
+                                let replacerJogadorStr = '(Jogador)';
+                                let regexJogadorStr = new RegExp(this.escapeRegExp(replacerJogadorStr), 'g');
+                                let newJogadorStr = '<b>' + desempateDoLider.name + '</b>';
+                                eventText = eventText.replace(regexJogadorStr, newJogadorStr);
+                    
+                                storyEvents.push(eventText);
+                    
+                                emparedados.push(desempateDoLider);
+                    
+                                votosCountList = votosCountList.filter(n => ![desempateDoLider].includes(n));
+                            }
+                            break;
+                        case "piorDoLider":
+                            let piorDoLiderAviso = "<b>" + apresentador + "</b> explicou para os participantes que o participante que obteve o pior desempenho na prova do líder poderá puxar alguém para ir ao paredão junto com ele.";
+                            storyEvents.push(piorDoLiderAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoPiorDoLiderIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoPiorDoLider = BBBEvents.dialogosContragolpes[eventoPiorDoLiderIndex];
+                    
+                            let indicacaoPiorDoLiderIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoPiorDoLider = podemSerVotados[indicacaoPiorDoLiderIndex];
+                    
+                            let eventTextPiorDoLider = eventoPiorDoLider.text;
+                    
+                            let replacerJogador1Str = '(Jogador1)';
+                            let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+                            let newJogador1Str = '<b>' + piorDoLider.name + '</b>';
+                            eventTextPiorDoLider = eventTextPiorDoLider.replace(regexJogador1Str, newJogador1Str);
+                    
+                            let replacerJogador2Str = '(Jogador2)';
+                            let regexJogador2Str = new RegExp(this.escapeRegExp(replacerJogador2Str), 'g');
+                            let newJogador2Str = '<b>' + indicacaoPiorDoLider.name + '</b>';
+                            eventTextPiorDoLider = eventTextPiorDoLider.replace(regexJogador2Str, newJogador2Str);
+                    
+                            storyEvents.push(eventTextPiorDoLider);
+                            naoPodemSerVotados.push(indicacaoPiorDoLider);
+                            emparedados.push(indicacaoPiorDoLider);
+
+                            break;
+                        case "piorDoAnjo":
+                            let piorDoAnjoAviso = "<b>" + apresentador + "</b> explicou para os participantes que o participante que obteve o pior desempenho na prova do anjo poderá puxar alguém para ir ao paredão junto com ele.";
+                            storyEvents.push(piorDoAnjoAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoPiorDoAnjoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoPiorDoAnjo = BBBEvents.dialogosContragolpes[eventoPiorDoAnjoIndex];
+                    
+                            let indicacaoPiorDoAnjoIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoPiorDoAnjo = podemSerVotados[indicacaoPiorDoAnjoIndex];
+                    
+                            let eventTextPiorDoAnjo = eventoPiorDoAnjo.text;
+                    
+                            let replacerJogador1StrAnjo = '(Jogador1)';
+                            let regexJogador1StrAnjo = new RegExp(this.escapeRegExp(replacerJogador1StrAnjo), 'g');
+                            let newJogador1StrAnjo = '<b>' + piorDoAnjo.name + '</b>';
+                            eventTextPiorDoAnjo = eventTextPiorDoAnjo.replace(regexJogador1StrAnjo, newJogador1StrAnjo);
+                    
+                            let replacerJogador2StrAnjo = '(Jogador2)';
+                            let regexJogador2StrAnjo = new RegExp(this.escapeRegExp(replacerJogador2StrAnjo), 'g');
+                            let newJogador2StrAnjo = '<b>' + indicacaoPiorDoAnjo.name + '</b>';
+                            eventTextPiorDoAnjo = eventTextPiorDoAnjo.replace(regexJogador2StrAnjo, newJogador2StrAnjo);
+                    
+                            storyEvents.push(eventTextPiorDoAnjo);
+                            naoPodemSerVotados.push(indicacaoPiorDoAnjo);
+                            emparedados.push(indicacaoPiorDoAnjo);
+
+                            break;
+                        case "contragolpeMaisVotado":
+                            let contragolpeMaisVotadoAviso = "<b>" + apresentador + "</b> explicou para os participantes que o participante que foi contragolpeado pelo contragolpe do mais votado pela casa também tem direito a contagolpe.";
+                            storyEvents.push(contragolpeMaisVotadoAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoContragolpeMaisVotadoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoContragolpeMaisVotado = BBBEvents.dialogosContragolpes[eventoContragolpeMaisVotadoIndex];
+                    
+                            let indicacaoContragolpeMaisVotadoIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoContragolpeMaisVotado = podemSerVotados[indicacaoContragolpeMaisVotadoIndex];
+                    
+                            let eventTextContragolpeMaisVotado = eventoContragolpeMaisVotado.text;
+                    
+                            let replacerJogador1StrContragolpeMaisVotado = '(Jogador1)';
+                            let regexJogador1StrContragolpeMaisVotado = new RegExp(this.escapeRegExp(replacerJogador1StrContragolpeMaisVotado), 'g');
+                            let newJogador1StrContragolpeMaisVotado = '<b>' + emparedados[emparedados.length-1].name + '</b>';
+                            eventTextContragolpeMaisVotado = eventTextContragolpeMaisVotado.replace(regexJogador1StrContragolpeMaisVotado, newJogador1StrContragolpeMaisVotado);
+                    
+                            let replacerJogador2StrContragolpeMaisVotado = '(Jogador2)';
+                            let regexJogador2StrContragolpeMaisVotado = new RegExp(this.escapeRegExp(replacerJogador2StrContragolpeMaisVotado), 'g');
+                            let newJogador2StrContragolpeMaisVotado = '<b>' + indicacaoContragolpeMaisVotado.name + '</b>';
+                            eventTextContragolpeMaisVotado = eventTextContragolpeMaisVotado.replace(regexJogador2StrContragolpeMaisVotado, newJogador2StrContragolpeMaisVotado);
+                    
+                            storyEvents.push(eventTextContragolpeMaisVotado);
+                            naoPodemSerVotados.push(indicacaoContragolpeMaisVotado);
+                            emparedados.push(indicacaoContragolpeMaisVotado);
+
+                            break;
+                        case "contragolpeIndicadoDoLider":
+                            let contragolpeIndicadoDoLiderAviso = "<b>" + apresentador + "</b> explicou para os participantes que o participante que foi contragolpeado pelo contragolpe da indicação do líder também tem direito a contagolpe.";
+                            storyEvents.push(contragolpeIndicadoDoLiderAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoContragolpeIndicadoDoLiderIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoContragolpeIndicadoDoLider = BBBEvents.dialogosContragolpes[eventoContragolpeIndicadoDoLiderIndex];
+                    
+                            let indicacaoContragolpeIndicadoDoLiderIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoContragolpeIndicadoDoLider = podemSerVotados[indicacaoContragolpeIndicadoDoLiderIndex];
+                    
+                            let eventTextContragolpeIndicadoDoLider = eventoContragolpeIndicadoDoLider.text;
+                    
+                            let replacerJogador1StrContragolpeIndicadoDoLider = '(Jogador1)';
+                            let regexJogador1StrContragolpeIndicadoDoLider = new RegExp(this.escapeRegExp(replacerJogador1StrContragolpeIndicadoDoLider), 'g');
+                            let newJogador1StrContragolpeIndicadoDoLider = '<b>' + emparedados[emparedados.length-1].name + '</b>';
+                            eventTextContragolpeIndicadoDoLider = eventTextContragolpeIndicadoDoLider.replace(regexJogador1StrContragolpeIndicadoDoLider, newJogador1StrContragolpeIndicadoDoLider);
+                    
+                            let replacerJogador2StrContragolpeIndicadoDoLider = '(Jogador2)';
+                            let regexJogador2StrContragolpeIndicadoDoLider = new RegExp(this.escapeRegExp(replacerJogador2StrContragolpeIndicadoDoLider), 'g');
+                            let newJogador2StrContragolpeIndicadoDoLider = '<b>' + indicacaoContragolpeIndicadoDoLider.name + '</b>';
+                            eventTextContragolpeIndicadoDoLider = eventTextContragolpeIndicadoDoLider.replace(regexJogador2StrContragolpeIndicadoDoLider, newJogador2StrContragolpeIndicadoDoLider);
+                    
+                            storyEvents.push(eventTextContragolpeIndicadoDoLider);
+                            naoPodemSerVotados.push(indicacaoContragolpeIndicadoDoLider);
+                            emparedados.push(indicacaoContragolpeIndicadoDoLider);
+
+                            break;
+                        case "indicacaoDoAnjo":
+                            let indicacaoDoAnjoAviso = "<b>" + apresentador + "</b> explicou para os participantes que a indicação do anjo tem direito a um contragolpe.";
+                            storyEvents.push(indicacaoDoAnjoAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoContragolpeAnjoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoContragolpeAnjo = BBBEvents.dialogosContragolpes[eventoContragolpeAnjoIndex];
+                    
+                            let indicacaoContragolpeAnjoIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoContragolpeAnjo = podemSerVotados[indicacaoContragolpeAnjoIndex];
+                    
+                            let eventTextContragolpeAnjo = eventoContragolpeAnjo.text;
+                    
+                            let replacerJogador1StrContragolpeAnjo = '(Jogador1)';
+                            let regexJogador1StrContragolpeAnjo = new RegExp(this.escapeRegExp(replacerJogador1StrContragolpeAnjo), 'g');
+                            let newJogador1StrContragolpeAnjo = '<b>' + emparedados[emparedados.length-1].name + '</b>';
+                            eventTextContragolpeAnjo = eventTextContragolpeAnjo.replace(regexJogador1StrContragolpeAnjo, newJogador1StrContragolpeAnjo);
+                    
+                            let replacerJogador2StrContragolpeAnjo = '(Jogador2)';
+                            let regexJogador2StrContragolpeAnjo = new RegExp(this.escapeRegExp(replacerJogador2StrContragolpeAnjo), 'g');
+                            let newJogador2StrContragolpeAnjo = '<b>' + indicacaoContragolpeAnjo.name + '</b>';
+                            eventTextContragolpeAnjo = eventTextContragolpeAnjo.replace(regexJogador2StrContragolpeAnjo, newJogador2StrContragolpeAnjo);
+                    
+                            storyEvents.push(eventTextContragolpeAnjo);
+                            naoPodemSerVotados.push(indicacaoContragolpeAnjo);
+                            emparedados.push(indicacaoContragolpeAnjo);
+
+                            break;
+                        default:// IGNORA O RESTO
+                            break;
+                    }
+                } else {
+                    switch(dinamica.quarto.type){
+                        case "doisMaisVotados":
+                            let doisMaisVotadosAviso = "<b>" + apresentador + "</b> explicou para os participantes que o segundo mais votado também irá ao paredão essa semana.";
+                            storyEvents.push(doisMaisVotadosAviso);
+
+                            maiorNumeroDeVotos = 0;
+                            maisVotados = [];
+                            votosCountList.forEach(playerVotado => {
+                                if(playerVotado.votos > maiorNumeroDeVotos){
+                                    maiorNumeroDeVotos = playerVotado.votos;
+                                }     
+                            });
+                            votosCountList.forEach(playerVotado => {
+                                if(playerVotado.votos === maiorNumeroDeVotos){
+                                    maisVotados.push(playerVotado);
+                                }     
+                            });
+
+                            if(maisVotados.length === 1) {
+                                let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que o segundo mais votado da casa que irá para o paredão foi <b>" + maisVotados[0].player.name + "</b> com um total de " + maiorNumeroDeVotos + " votos.";
+                                storyEvents.push(avisoMaisVotado);
+                                emparedados.push(maisVotados[0].player);
+                    
+                                votosCountList = votosCountList.filter(n => !maisVotados.includes(n));
+                            } else { // desempata
+                                let avisoMaisVotado = "<b>" + apresentador + "</b> avisa que " + maisVotados.length + " jogadores receberam " + maiorNumeroDeVotos + " votos e com isso <b>" + lider.name + "</b> deve escolher alguem desses mais votados para ir ao paredão.";
+                                storyEvents.push(avisoMaisVotado);
+                    
+                                let avisoDesempate = "<b>" + apresentador + "</b> pede para que <b>" + lider.name + "</b> escolha entre: ";
+                    
+                                let contador = 1; 
+                                maisVotados.forEach(player => {
+                                    let jogadorNome = '<b>' + player.player.name + '</b>';
+                                    avisoDesempate += jogadorNome;
+                    
+                                    if(contador === maisVotados.length){
+                                        avisoDesempate += ".";
+                                    } else if(contador === (maisVotados.length -1)){
+                                        avisoDesempate += " e ";
+                                    } else {
+                                        avisoDesempate += ", ";
+                                    }
+                                    contador++;
+                                });
+                    
+                                storyEvents.push(avisoDesempate);
+                    
+                                let desempateDoLiderIndex = this.pickOnePlayer(maisVotados);
+                                let desempateDoLider = maisVotados[desempateDoLiderIndex].player;
+                    
+                                let motivoDesempateIndex = this.randomize(BBBEvents.dialogosDesempateLider.length);
+                                let motivoDesempate = BBBEvents.dialogosDesempateLider[motivoDesempateIndex];
+                    
+                                let eventText = motivoDesempate.text;
+                    
+                                let replacerLiderStr = '(Lider)';
+                                let regexLiderStr = new RegExp(this.escapeRegExp(replacerLiderStr), 'g');
+                                let newLiderStr = '<b>' + lider.name + '</b>';
+                                eventText = eventText.replace(regexLiderStr, newLiderStr);
+                    
+                                let replacerJogadorStr = '(Jogador)';
+                                let regexJogadorStr = new RegExp(this.escapeRegExp(replacerJogadorStr), 'g');
+                                let newJogadorStr = '<b>' + desempateDoLider.name + '</b>';
+                                eventText = eventText.replace(regexJogadorStr, newJogadorStr);
+                    
+                                storyEvents.push(eventText);
+                    
+                                emparedados.push(desempateDoLider);
+                    
+                                votosCountList = votosCountList.filter(n => ![desempateDoLider].includes(n));
+                            }
+                            break;
+                        case "contragolpeMaisVotado":
+                            let contragolpeMaisVotadoAviso = "<b>" + apresentador + "</b> explicou para os participantes que o mais votado pela casa poderá puxar alguém para o paredão junto com ele.";
+                            storyEvents.push(contragolpeMaisVotadoAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoContragolpeMaisVotadoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoContragolpeMaisVotado = BBBEvents.dialogosContragolpes[eventoContragolpeMaisVotadoIndex];
+                    
+                            let indicacaoMaisVotadoIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoMaisVotado = podemSerVotados[indicacaoMaisVotadoIndex];
+                    
+                            let eventText = eventoContragolpeMaisVotado.text;
+                    
+                            let replacerJogador1Str = '(Jogador1)';
+                            let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
+                            let newJogador1Str = '<b>' + primeiroMaisVotado.name + '</b>';
+                            eventText = eventText.replace(regexJogador1Str, newJogador1Str);
+                    
+                            let replacerJogador2Str = '(Jogador2)';
+                            let regexJogador2Str = new RegExp(this.escapeRegExp(replacerJogador2Str), 'g');
+                            let newJogador2Str = '<b>' + indicacaoMaisVotado.name + '</b>';
+                            eventText = eventText.replace(regexJogador2Str, newJogador2Str);
+                    
+                            storyEvents.push(eventText);
+                            naoPodemSerVotados.push(indicacaoMaisVotado);
+                            emparedados.push(indicacaoMaisVotado);
+                            break;
+                        case "contragolpeIndicadoDoLider":
+                            let contragolpeIndicadoDoLiderAviso = "<b>" + apresentador + "</b> explicou para os participantes que a indicação do líder tem direito a contra-golpe.";
+                            storyEvents.push(contragolpeIndicadoDoLiderAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoContragolpeLiderIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoContragolpeLider = BBBEvents.dialogosContragolpes[eventoContragolpeLiderIndex];
+                    
+                            let indicacaoContragolpeLiderIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoContragolpeLider = podemSerVotados[indicacaoContragolpeLiderIndex];
+                    
+                            let eventTextLider = eventoContragolpeLider.text;
+                    
+                            let replacerJogador1StrLider = '(Jogador1)';
+                            let regexJogador1StrLider = new RegExp(this.escapeRegExp(replacerJogador1StrLider), 'g');
+                            let newJogador1StrLider = '<b>' + indicacaoLider.name + '</b>';
+                            eventTextLider = eventTextLider.replace(regexJogador1StrLider, newJogador1StrLider);
+                    
+                            let replacerJogador2StrLider = '(Jogador2)';
+                            let regexJogador2StrLider = new RegExp(this.escapeRegExp(replacerJogador2StrLider), 'g');
+                            let newJogador2StrLider = '<b>' + indicacaoContragolpeLider.name + '</b>';
+                            eventTextLider = eventTextLider.replace(regexJogador2StrLider, newJogador2StrLider);
+                    
+                            storyEvents.push(eventTextLider);
+                            naoPodemSerVotados.push(indicacaoContragolpeLider);
+                            emparedados.push(indicacaoContragolpeLider);
+
+                            break;
+                        case "indicacaoDoAnjo":
+                            let indicacaoDoAnjoAviso = "<b>" + apresentador + "</b> explicou para os participantes que essa semana o anjo indicará alguém ao paredão!";
+                            storyEvents.push(indicacaoDoAnjoAviso);
+
+                            podemSerVotados = players.filter(n => !emparedados.includes(n));
+
+                            let eventoAnjoIndex = this.randomize(BBBEvents.dialogosContragolpes.length);
+                            let eventoAnjo = BBBEvents.dialogosContragolpes[eventoAnjoIndex];
+                    
+                            let indicacaoAnjoIndex = this.pickOnePlayer(podemSerVotados);
+                            let indicacaoAnjo = podemSerVotados[indicacaoAnjoIndex];
+                    
+                            let eventTextAnjo = eventoAnjo.text;
+                    
+                            let replacerJogador1StrAnjo = '(Jogador1)';
+                            let regexJogador1StrAnjo = new RegExp(this.escapeRegExp(replacerJogador1StrAnjo), 'g');
+                            let newJogador1StrAnjo = '<b>' + anjo.name + '</b>';
+                            eventTextAnjo = eventTextAnjo.replace(regexJogador1StrAnjo, newJogador1StrAnjo);
+                    
+                            let replacerJogador2StrAnjo = '(Jogador2)';
+                            let regexJogador2StrAnjo = new RegExp(this.escapeRegExp(replacerJogador2StrAnjo), 'g');
+                            let newJogador2StrAnjo = '<b>' + indicacaoAnjo.name + '</b>';
+                            eventTextAnjo = eventTextAnjo.replace(regexJogador2StrAnjo, newJogador2StrAnjo);
+                    
+                            storyEvents.push(eventTextAnjo);
+                            naoPodemSerVotados.push(indicacaoAnjo);
+                            emparedados.push(indicacaoAnjo);
+                            break;
+                        default:// IGNORA O RESTO
+                            break;
+                    }
+                }
+            }
+        }
+
+        return {
+            emparedados: emparedados,
+            occurrencies: storyEvents
+        }
+    }
+
+    eliminacao = (emparedados) => {
+
+        let storyEvents = [];
+        let arrayEspacos = [];
+
+        for (let index = 0; index < (emparedados.length - 1); index++) {
+            arrayEspacos.push(this.randomize(100));
+        }
+
+        arrayEspacos = arrayEspacos.sort((a,b)=>a-b);
+
+        let porcentagemList = [];
+        for (let index = 0; index < emparedados.length; index++) {
+            if(index === 0){
+                porcentagemList.push({player: emparedados[index], porcentagem: arrayEspacos[index]});
+            } else if(index === (emparedados.length-1)) {
+                porcentagemList.push({player: emparedados[index], porcentagem: (100 - arrayEspacos[index-1])});
+            } else {
+                porcentagemList.push({player: emparedados[index], porcentagem: (arrayEspacos[index] - arrayEspacos[index-1])});
+            }
+        }
+
+        porcentagemList = porcentagemList.sort((a,b)=>b.porcentagem-a.porcentagem);
+
+        let eliminado = null;
+        let cont = 0;
+        porcentagemList.forEach(emparedado => {
+            if(cont === 0){
+                let discurso = "<b>" + emparedado.player.name + "</b> deixará a casa do BBB essa semana com um total de <b>" + emparedado.porcentagem + "% dos votos</b>!";
+                storyEvents.push(discurso);
+                eliminado = emparedado.player;
+            } else {
+                let discurso = "<b>" + emparedado.player.name + "</b> obteve <b>" + emparedado.porcentagem + "% dos votos</b>!";
+                storyEvents.push(discurso);
+            }
+
+            cont++;
+        });
+
+        return {
+            eliminado: eliminado,
+            occurrencies: storyEvents
+        }
     }
 }
 

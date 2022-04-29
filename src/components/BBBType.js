@@ -33,10 +33,17 @@ class BBBType {
 
     PROVA_DO_ANJO = 24;
     CASTIGO_DO_MONSTRO = 25;
-    PRESENTE_DO_ANJO = 26;
 
+    PRESENTE_DO_ANJO = 26;
     BIG_FONE = 27;
     DINAMICA_DO_PAREDAO = 28;
+    FORMACAO_DE_PAREDAO = 29;
+    PROVA_BATE_VOLTA = 30;
+
+    JOGO_DA_CONCORDIA = 31;
+    JOGO_DA_DISCORDIA = 32;
+
+    ELIMINACAO = 33;
 }
 
 export default (new BBBType());

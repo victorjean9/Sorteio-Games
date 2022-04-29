@@ -285,34 +285,34 @@ const BBBPage = (props) => {
     let startPresentation = () => {
 
         let groups = BBBLogic.generateGroups(props.playerNames);
-        let game = BBBLogic.generateGame(groups);
+        let game = BBBLogic.generateGame(groups, props.nome);
 
-        console.log(groups);
+        //console.log(groups);
         console.log(game);
         setGroups(groups);
         setStoryline(game);
 
-        // setShowPlayerSegment(false);
-        // setTimeout(() => {
-        //     props.setAppClass('black-presentation-bg');
-        //     setShowPresentationName(true);
-        //     setTimeout(() => {
-        //         setShowPresentationName(false);
-        //         setTimeout(() => {
-        //             setShowPresentationGame(true);
-        //             props.setAppClass('bbb-presentation-bg');
-        //             videoPlayer.current.play();
-        //             // startActPresentation(setShowGroupsPresentation, setShowPresentationGame, 100, 2000, null);
-        //             startActPresentation(setShowPresentationLogo, setShowPresentationGame, 100, 1300, 'bbb-white');
-        //             setTimeout(() => {
-        //                 startActPresentation(setShowGroupsPresentation, setShowPresentationLogo, 100, 2000, null);
-        //                 setTimeout(() => {
-        //                     setAnimationSlidingDiagonals(true);
-        //                 }, 2000);
-        //             }, 2000);
-        //         }, 1000);
-        //     }, 1500);
-        // }, 1000);
+        setShowPlayerSegment(false);
+        setTimeout(() => {
+            props.setAppClass('black-presentation-bg');
+            setShowPresentationName(true);
+            setTimeout(() => {
+                setShowPresentationName(false);
+                setTimeout(() => {
+                    setShowPresentationGame(true);
+                    props.setAppClass('bbb-presentation-bg');
+                    videoPlayer.current.play();
+                    // startActPresentation(setShowGroupsPresentation, setShowPresentationGame, 100, 2000, null);
+                    startActPresentation(setShowPresentationLogo, setShowPresentationGame, 100, 1300, 'bbb-white');
+                    setTimeout(() => {
+                        startActPresentation(setShowGroupsPresentation, setShowPresentationLogo, 100, 2000, null);
+                        setTimeout(() => {
+                            setAnimationSlidingDiagonals(true);
+                        }, 2000);
+                    }, 2000);
+                }, 1000);
+            }, 1500);
+        }, 1000);
     }
 
     const startActPresentation = (setActPresentation, setPreviousPresentation, actualMilis, previousMilis, bgClass) =>{
@@ -388,8 +388,6 @@ const BBBPage = (props) => {
                                 );
                             }, 900);
                             break;
-                        case 2:
-                    
                         default: // Pipocas entram de manhã, camarote de noite.
                             startActPresentation(setShowStoryactPresentation, setShowWeekPresentation, 1000, 0, 'bbb-dinamica-duas-entradas');
                             setTimeout(() => {
