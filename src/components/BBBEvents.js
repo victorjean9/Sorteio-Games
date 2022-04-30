@@ -51,7 +51,7 @@ class BBBEvents {
         { players: 2, text: "(Jogador1) perguntou para (Jogador2) se ambos podem trocar de cama. (Jogador2) recusou o pedido." },
         { players: 2, text: "(Jogador1) perguntou para (Jogador2) se ambos podem trocar de cama. (Jogador2) aceitou o pedido." },
         { players: 2, text: "(Jogador1) perguntou para (Jogador2) se já pode entrar na Jacuzzi." },
-        { players: 1, text: "(Jogador1) afirma para (Jogador2) que já possui um ranço de (Jogador3)." },
+        { players: 3, text: "(Jogador1) afirma para (Jogador2) que já possui um ranço de (Jogador3)." },
         { players: 1, text: "(Jogador1) está dançando." },
         { players: 2, text: "(Jogador1) está dançando com (Jogador2)." },
         { players: 3, text: "(Jogador1) está dançando com (Jogador2) e (Jogador3)." },
@@ -62,7 +62,7 @@ class BBBEvents {
         { players: 1, text: "(Jogador1) afirmou para o grupo que irá ajudar com a louça suja." },
         { players: 2, text: "(Jogador1) afirmou para (Jogador2) que irá detestar ser chamada de planta." },
         { players: 2, text: "(Jogador1) tentou brincar com (Jogador2), entretanto (Jogador2) não gostou da brincadeira." },
-        { players: 2, text: "(Jogador1) afirma para jogador (Jogador2) que foi para o BBB para aprender mais sobre si mesmo." },
+        { players: 2, text: "(Jogador1) afirma para (Jogador2) que foi para o BBB para aprender mais sobre si mesmo." },
         { players: 2, text: "(Jogador1) está conversando com (Jogador2) mas não está entendendo nada do que está sendo dito." },
         { players: 2, text: "(Jogador1) falou para (Jogador2) que não gosta de fofoca." },
         { players: 2, text: "(Jogador1) falou para (Jogador2) que adora fofoca." }

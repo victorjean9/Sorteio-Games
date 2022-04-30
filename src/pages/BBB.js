@@ -415,67 +415,54 @@ const BBBPage = (props) => {
                 case BBBType.MUROCAMAROTE:
                     setStorylineTitle(type === BBBType.MUROPIPOCA ? 'AS PIPOCAS ENTRAM NO SEU LADO DA CASA' : 'OS CAMAROTES ENTRAM NO SEU LADO DA CASA');
                     setStorylineImage(type === BBBType.MUROPIPOCA ? dinamicaMuroPipocaImg : dinamicaMuroCamaroteImg);
-                    setStorylineOcurrencies(storyline.story[index].occurrencies);
-                    setShowStorylinePresentation(true);
-
-                    setPrevActBtn(() => () => {
-                        setShowStorylinePresentation(false);
-                        setTimeout(() => {
-                            showStoryline(index-1);
-                        }, 100);
-                    });
-                    setNextActBtn(() => () => {
-                        setShowStorylinePresentation(false);
-                        setTimeout(() => {
-                            showStoryline(index+1);
-                        }, 100);
-                    });
                     break;
 
                 case BBBType.CASAPRINCIPAL:
                 case BBBType.CASASECUNDARIA:
                     setStorylineTitle(type === BBBType.CASAPRINCIPAL ? 'ENTRADA NA CASA DO BBB' : 'ENTRADA DOS IMUNIZADOS NA OUTRA CASA');
                     setStorylineImage(type === BBBType.CASAPRINCIPAL ? dinamicaCasaPrincipalImg : dinamicaCasaSecundariaImg);
-                    setStorylineOcurrencies(storyline.story[index].occurrencies);
-                    setShowStorylinePresentation(true);
-
-                    setPrevActBtn(() => () => {
-                        setShowStorylinePresentation(false);
-                        setTimeout(() => {
-                            showStoryline(index-1);
-                        }, 100);
-                    });
-                    setNextActBtn(() => () => {
-                        setShowStorylinePresentation(false);
-                        setTimeout(() => {
-                            showStoryline(index+1);
-                        }, 100);
-                    });
                     break;
 
                 case BBBType.PIPOCASMANHA:
                 case BBBType.CAMAROTESNOITE:
                     setStorylineTitle(type === BBBType.PIPOCASMANHA ? 'ENTRADA DOS PIPOCAS PELA MANHÃ' : 'ENTRADA DOS CAMAROTES PELA NOITE');
                     setStorylineImage(type === BBBType.PIPOCASMANHA ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
-                    setStorylineOcurrencies(storyline.story[index].occurrencies);
-                    setShowStorylinePresentation(true);
-
-                    setPrevActBtn(() => () => {
-                        setShowStorylinePresentation(false);
-                        setTimeout(() => {
-                            showStoryline(index-1);
-                        }, 100);
-                    });
-                    setNextActBtn(() => () => {
-                        setShowStorylinePresentation(false);
-                        setTimeout(() => {
-                            showStoryline(index+1);
-                        }, 100);
-                    });
                     break;
-            
+                case BBBType.DIALOGOS_MURO_PIPOCAS:
+                case BBBType.DIALOGOS_MURO_CAMAROTES:
+                    setStorylineTitle(type === BBBType.DIALOGOS_MURO_PIPOCAS ? 'CONVERSAS DO LADO PIPOCA DO MURO' : 'CONVERSAS DO LADO CAMAROTE DO MURO');
+                    setStorylineImage(type === BBBType.DIALOGOS_MURO_PIPOCAS ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
+                    break;
+                case BBBType.DIALOGOS_CASA_BBB:
+                case BBBType.DIALOGOS_CASA_SECUNDARIA:
+                    setStorylineTitle(type === BBBType.DIALOGOS_CASA_BBB ? 'CONVERSAS NA CASA DO BBB' : 'CONVERSAS DA SEGUNDA CASA');
+                    setStorylineImage(type === BBBType.DIALOGOS_CASA_BBB ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
+                    break;
+                case BBBType.DIALOGOS_PIPOCAS_MANHA:
+                case BBBType.DIALOGOS_CAMAROTES_NOITE:
+                    setStorylineTitle(type === BBBType.DIALOGOS_PIPOCAS_MANHA ? 'CONVERSAS PELA PARTE DA MANHÃ' : 'CONVERSAS PELA PARTE DA NOITE');
+                    setStorylineImage(type === BBBType.DIALOGOS_PIPOCAS_MANHA ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
+                    break;
                 default:
                     alert('default');
+            }
+
+            if(type > BBBType.DINAMICA) {
+                setStorylineOcurrencies(storyline.story[index].occurrencies);
+                setShowStorylinePresentation(true);
+
+                setPrevActBtn(() => () => {
+                    setShowStorylinePresentation(false);
+                    setTimeout(() => {
+                        showStoryline(index-1);
+                    }, 100);
+                });
+                setNextActBtn(() => () => {
+                    setShowStorylinePresentation(false);
+                    setTimeout(() => {
+                        showStoryline(index+1);
+                    }, 100);
+                });
             }
         }
         //  else {

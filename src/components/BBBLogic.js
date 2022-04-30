@@ -34,13 +34,6 @@ class BBBLogic {
     }
 
     removeDups = (player) => {
-        // let unique = {};
-        // player.forEach(function(i) {
-        //   if(!unique[i]) {
-        //     unique[i] = true;
-        //   }
-        // });
-        // return Object.keys(unique);
         return Array.from(new Set(player));
     }
 
@@ -137,7 +130,7 @@ class BBBLogic {
                 // PROVA IMUNIDADE DOS MUROS
 
                 let provaImunidadeMuro = this.provaImunidadeMuro(groupsList);
-                storyArray.push({type: BBBType.PROVA_IMUNIDADE_MURO, occurrencies: provaImunidadeMuro, dayOfWeek: 3});
+                storyArray.push({type: BBBType.PROVA_IMUNIDADE_MURO, occurrencies: provaImunidadeMuro.events, description: provaImunidadeMuro.description, dayOfWeek: 3});
 
                 // IMUNIZA O PESSOAL VENCEDOR
                 if(provaImunidadeMuro.winner === 'pipoca') {
@@ -214,7 +207,7 @@ class BBBLogic {
 
                 // PROVA IMUNIDADE CASA BBB
                 let provaImunidade = this.provaImunidade(listaParticipantesCasaPrincipal);
-                storyArray.push({type: BBBType.PROVA_IMUNIDADE_CASA_BBB, occurrencies: provaImunidade, dayOfWeek: 3});
+                storyArray.push({type: BBBType.PROVA_IMUNIDADE_CASA_BBB, occurrencies: provaImunidade.events, description: provaImunidade.description, dayOfWeek: 3});
 
                 // IMUNIZA OS VENCEDORES
                 imunes = [...imunes, ...provaImunidade.winners];
@@ -272,11 +265,11 @@ class BBBLogic {
 
                 // PROVA IMUNIDADE PIPOCAS
                 let provaImunidadePipocas = this.provaImunidade(groupsList.pipoca);
-                storyArray.push({type: BBBType.PROVA_IMUNIDADE_PIPOCAS, occurrencies: provaImunidadePipocas, dayOfWeek: 4});
+                storyArray.push({type: BBBType.PROVA_IMUNIDADE_PIPOCAS, occurrencies: provaImunidadePipocas.events, description: provaImunidadePipocas.description, dayOfWeek: 4});
 
                 // PROVA IMUNIDADE CAMAROTES
                 let provaImunidadeCamarotes = this.provaImunidade(groupsList.camarote);
-                storyArray.push({type: BBBType.PROVA_IMUNIDADE_CAMAROTES, occurrencies: provaImunidadeCamarotes, dayOfWeek: 4});
+                storyArray.push({type: BBBType.PROVA_IMUNIDADE_CAMAROTES, occurrencies: provaImunidadeCamarotes.events, description: provaImunidadeCamarotes.description, dayOfWeek: 4});
 
                 // IMUNIZA OS VENCEDORES
                 imunes = [...imunes, ...provaImunidadePipocas.winners, ...provaImunidadeCamarotes.winners];
@@ -307,18 +300,18 @@ class BBBLogic {
         // Dinâmica do paredao da semana
         let primeiraDinamicaDoParedao = this.dinamicaDoParedao(oBigFoneVaiTocar, true);
         oBigFoneVaiTocar = primeiraDinamicaDoParedao.oBigFoneVaiTocar;
-        storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: primeiraDinamicaDoParedao, dayOfWeek: 5});
+        storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: primeiraDinamicaDoParedao.events, dayOfWeek: 5});
 
         // Prova do lider
         let primeiraProvaDoLiderEventos = this.provaDoLider(playersLeft);
-        storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: primeiraProvaDoLiderEventos, dayOfWeek: 5});
+        storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: primeiraProvaDoLiderEventos.events, description: primeiraProvaDoLiderEventos.description, dayOfWeek: 5});
 
         piorDaProvaLider = primeiraProvaDoLiderEventos.worstPlayer;
         lider = primeiraProvaDoLiderEventos.winner;
 
         // Formação VIP/XEPA
         let primeiraFormacaoVIP = this.formacaoVipXepa(lider, playersLeft);
-        storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: primeiraFormacaoVIP, dayOfWeek: 5});
+        storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: primeiraFormacaoVIP.events, dayOfWeek: 5});
 
         XEPAlist = [...primeiraFormacaoVIP.XEPAlist];
         VIPlist = [...primeiraFormacaoVIP.VIPlist];
@@ -331,7 +324,7 @@ class BBBLogic {
         /* SABADO */
         // Prova do anjo
         let primeiraProvaDoAnjoEventos = this.provaDoAnjo(playersLeft, lider);
-        storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: primeiraProvaDoAnjoEventos, dayOfWeek: 7});
+        storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: primeiraProvaDoAnjoEventos.events, dayOfWeek: 7});
 
         anjo = primeiraProvaDoAnjoEventos.anjo;
         piorDaProvaAnjo = primeiraProvaDoAnjoEventos.piorJogador;
@@ -339,7 +332,7 @@ class BBBLogic {
 
         // Castigo do monstro
         let primeiroCastigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
-        storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: primeiroCastigoDoMonstro, dayOfWeek: 7});
+        storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: primeiroCastigoDoMonstro.events, description: primeiroCastigoDoMonstro.description, dayOfWeek: 7});
 
         monstros = [...primeiroCastigoDoMonstro.monstros];
         XEPAlist = [...primeiroCastigoDoMonstro.XEPAlist];
@@ -360,7 +353,7 @@ class BBBLogic {
                 imunes.push(tocarBigFoneEvent.imune);
             }
 
-            storyArray.push({type: BBBType.BIG_FONE, occurrencies: tocarBigFoneEvent, dayOfWeek: 1});
+            storyArray.push({type: BBBType.BIG_FONE, occurrencies: tocarBigFoneEvent.events, dayOfWeek: 1});
         }
 
         // Monstro liberado 
@@ -371,7 +364,7 @@ class BBBLogic {
         let primeiraFormacaoParedao = this.formacaoDeParedao(apresentador, playersLeft, lider, anjo, monstros, imunes, primeiraDinamicaDoParedao, piorDaProvaLider, piorDaProvaAnjo, tocarBigFoneEvent);
         emparedados = primeiraFormacaoParedao.emparedados;
         
-        storyArray.push({type: BBBType.FORMACAO_DE_PAREDAO, occurrencies: primeiraFormacaoParedao, dayOfWeek: 1});
+        storyArray.push({type: BBBType.FORMACAO_DE_PAREDAO, occurrencies: primeiraFormacaoParedao.events, dayOfWeek: 1});
         // Prova bate e volta
 
         /* SEGUNDA-FEIRA */
@@ -380,7 +373,7 @@ class BBBLogic {
         /* TERÇA-FEIRA */
         // Eliminação
         let primeiraEliminacao = this.eliminacao(emparedados);
-        storyArray.push({type: BBBType.ELIMINACAO, occurrencies: primeiraEliminacao, dayOfWeek: 3});
+        storyArray.push({type: BBBType.ELIMINACAO, occurrencies: primeiraEliminacao.events, dayOfWeek: 3});
 
         // remove jogador
         playersLeft = playersLeft.filter(n => ![primeiraEliminacao.eliminado].includes(n));
@@ -404,18 +397,18 @@ class BBBLogic {
             // Dinâmica do paredao da semana
             let dinamicaDoParedao = this.dinamicaDoParedao(oBigFoneVaiTocar, false);
             oBigFoneVaiTocar = dinamicaDoParedao.oBigFoneVaiTocar;
-            storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: dinamicaDoParedao, dayOfWeek: 5});
+            storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: dinamicaDoParedao.events, dayOfWeek: 5});
 
             // Prova do lider
             let provaDoLiderEventos = this.provaDoLider(playersLeft);
-            storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: provaDoLiderEventos, dayOfWeek: 5});
+            storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: provaDoLiderEventos.events, description: provaDoLiderEventos.description, dayOfWeek: 5});
 
             piorDaProvaLider = provaDoLiderEventos.worstPlayer;
             lider = provaDoLiderEventos.winner;
 
             // Formação VIP/XEPA
             let formacaoVIP = this.formacaoVipXepa(lider, playersLeft);
-            storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: formacaoVIP, dayOfWeek: 5});
+            storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: formacaoVIP.events, dayOfWeek: 5});
 
             XEPAlist = [...formacaoVIP.XEPAlist];
             VIPlist = [...formacaoVIP.VIPlist];
@@ -428,7 +421,7 @@ class BBBLogic {
             /* SABADO */
             // Prova do anjo
             let provaDoAnjoEventos = this.provaDoAnjo(playersLeft, lider);
-            storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: provaDoAnjoEventos, dayOfWeek: 7});
+            storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: provaDoAnjoEventos.events, dayOfWeek: 7});
 
             anjo = provaDoAnjoEventos.anjo;
             piorDaProvaAnjo = provaDoAnjoEventos.piorJogador;
@@ -436,7 +429,7 @@ class BBBLogic {
 
             // Castigo do monstro
             let castigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
-            storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: castigoDoMonstro, dayOfWeek: 7});
+            storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: castigoDoMonstro.events, description: castigoDoMonstro.description, dayOfWeek: 7});
 
             monstros = [...castigoDoMonstro.monstros];
             XEPAlist = [...castigoDoMonstro.XEPAlist];
@@ -457,7 +450,7 @@ class BBBLogic {
                     imunes.push(tocarBigFoneEvent.imune);
                 }
 
-                storyArray.push({type: BBBType.BIG_FONE, occurrencies: tocarBigFoneEvent, dayOfWeek: 1});
+                storyArray.push({type: BBBType.BIG_FONE, occurrencies: tocarBigFoneEvent.events, dayOfWeek: 1});
             }
 
             // Monstro liberado 
@@ -468,7 +461,7 @@ class BBBLogic {
             let formacaoParedao = this.formacaoDeParedao(apresentador, playersLeft, lider, anjo, monstros, imunes, dinamicaDoParedao, piorDaProvaLider, piorDaProvaAnjo, tocarBigFoneEvent);
             emparedados = formacaoParedao.emparedados;
             
-            storyArray.push({type: BBBType.FORMACAO_DE_PAREDAO, occurrencies: formacaoParedao, dayOfWeek: 1});
+            storyArray.push({type: BBBType.FORMACAO_DE_PAREDAO, occurrencies: formacaoParedao.events, dayOfWeek: 1});
             // Prova bate e volta
 
             /* SEGUNDA-FEIRA */
@@ -477,7 +470,7 @@ class BBBLogic {
             /* TERÇA-FEIRA */
             // Eliminação
             let eliminacao = this.eliminacao(emparedados);
-            storyArray.push({type: BBBType.ELIMINACAO, occurrencies: eliminacao, dayOfWeek: 3});
+            storyArray.push({type: BBBType.ELIMINACAO, occurrencies: eliminacao.events, dayOfWeek: 3});
 
             // remove jogador
             playersLeft = playersLeft.filter(n => ![eliminacao.eliminado].includes(n));
@@ -662,6 +655,8 @@ class BBBLogic {
         let provaImunidadeIndex = this.randomize(BBBEvents.provaImunidadeMuro.length);
         let provaImunidade = BBBEvents.provaImunidadeMuro[provaImunidadeIndex];
 
+        storyEvents.push(provaImunidade.description);
+
         while(qtdPipocas > 0 && qtdCamarotes > 0){
             let qtdPlayers = 0;
             let eventNumber = 0;
@@ -725,6 +720,9 @@ class BBBLogic {
 
         let winner = qtdPipocas > 0 ? 'pipoca' : 'camarote';
 
+        let anunciaGrupoVencedor = "🏆 Vitória dos participantes <b/>" + winner + "s</b>"; 
+        storyEvents.push(anunciaGrupoVencedor);
+
         return {type: provaImunidade.type, description: provaImunidade.description, events: storyEvents, winner: winner };
     }
 
@@ -736,6 +734,8 @@ class BBBLogic {
 
         let provaImunidadeIndex = this.randomize(BBBEvents.provaImunidade.length);
         let provaImunidade = BBBEvents.provaImunidade[provaImunidadeIndex];
+
+        storyEvents.push(provaImunidade.description);
 
         while(playersOrder.length > 2){
             let qtdPlayers = 0;
@@ -785,6 +785,9 @@ class BBBLogic {
 
             storyEvents.push(eventText);
         }
+
+        let anunciaVencedores = "🏆 <b/>" + playersOrder[0].nome + "</b> e <b/>" + playersOrder[1].nome + "</b> ganharam a prova de imunidade!"; 
+        storyEvents.push(anunciaVencedores);
 
         return {type: provaImunidade.type, description: provaImunidade.description, events: storyEvents, winners: playersOrder };
     }
@@ -1066,6 +1069,9 @@ class BBBLogic {
         let worstPlayer = null;
 
         if(provaDoLider.type === 'resistência'){
+
+            storyEvents.push(provaDoLider.description);
+
             while(playersLeft.length > 1) {
                 let qtdPlayers = 0;
                 let eventNumber = 0;
@@ -1119,6 +1125,9 @@ class BBBLogic {
             }
 
         } else { /* sorte */ }
+
+        let anunciaVencedor = "🏆 <b>" + playersLeft[0].name + "</b> venceu a prova do líder!";
+        storyEvents.push(anunciaVencedor);
 
         return {type: provaDoLider.type, description: provaDoLider.description, events: storyEvents, winner: playersLeft[0], worstPlayer: worstPlayer};
     } 
@@ -1637,7 +1646,7 @@ class BBBLogic {
         let newJogador3Str = '<b>' + jogador3.name + '</b>';
         eventText = eventText.replace(regexJogador3Str, newJogador3Str);
 
-        return eventText;
+        return [eventText];
     }
 
     dinamicaDoParedao = (oBigFoneFoiRecenteRecebido, ehPrimeiraSemana) => {
@@ -1649,6 +1658,7 @@ class BBBLogic {
         let oBigFoneFoiRecente = oBigFoneFoiRecenteRecebido;
 
         let anjoAutoimune = this.randomize(100) > 50 ? true : false;
+        let teraBateVolta = this.randomize(100) > 50 ? true : false;
 
         if(anjoAutoimune) {
             storyEvents.push("O anjo dessa semana será autoimune!");
@@ -1711,8 +1721,14 @@ class BBBLogic {
             }
         }
 
+        let avisoBateVolta = "Não haverá prova bate volta essa semana.";
+        if(teraBateVolta) {
+            avisoBateVolta = "Essa semana terá prova bate volta!";
+        }
+        storyEvents.push(avisoBateVolta);
+
         return {
-            dinamicaTxt: storyEvents, 
+            events: storyEvents, 
             terceiro: terceiroEmparedado, 
             quarto: quartoEmparedado,
             oBigFoneVaiTocar: oBigFoneVaiTocar,
@@ -1867,7 +1883,7 @@ class BBBLogic {
         storyEvents.push("Os participantes da casa já começaram a fazer teorias sobre como será o próximo paredão.");
 
         return {
-            occurrencies: storyEvents,
+            events: storyEvents,
             imune: imune,
             emparedado: emparedado,
             atendente: playerAtendente
@@ -2888,9 +2904,26 @@ class BBBLogic {
             }
         }
 
+        let resumoEmparedados = "Estão no paredão: ";
+
+        let contadorFinal = 1; 
+        emparedados.forEach(player => {
+            let jogadorNome = '<b>' + player.name + '</b>';
+            resumoEmparedados += jogadorNome;
+
+            if(contadorFinal === emparedados.length){
+                resumoEmparedados += ".";
+            } else if(contadorFinal === (emparedados.length - 1)){
+                resumoEmparedados += " e ";
+            } else {
+                resumoEmparedados += ", ";
+            }
+            contadorFinal++;
+        });
+
         return {
             emparedados: emparedados,
-            occurrencies: storyEvents
+            events: storyEvents
         }
     }
 
@@ -2916,12 +2949,12 @@ class BBBLogic {
             }
         }
 
-        porcentagemList = porcentagemList.sort((a,b)=>b.porcentagem-a.porcentagem);
+        porcentagemList = porcentagemList.sort((a,b)=>a.porcentagem-b.porcentagem);
 
         let eliminado = null;
         let cont = 0;
         porcentagemList.forEach(emparedado => {
-            if(cont === 0){
+            if(cont === (porcentagemList.length-1)){
                 let discurso = "<b>" + emparedado.player.name + "</b> deixará a casa do BBB essa semana com um total de <b>" + emparedado.porcentagem + "% dos votos</b>!";
                 storyEvents.push(discurso);
                 eliminado = emparedado.player;
@@ -2935,9 +2968,29 @@ class BBBLogic {
 
         return {
             eliminado: eliminado,
-            occurrencies: storyEvents
+            events: storyEvents
         }
     }
 }
 
 export default (new BBBLogic());
+
+/*
+    COISAS QUE FALTAM
+    -> Dedo duro
+    -> Prova bate volta
+    -> 30 segundos de cada participante
+    -> Jogo da concórdia
+    -> Jogo da discórdia
+    -> Festas
+    -> MODO TURBO (< 10 participantes)
+
+    EXTRAS
+    -> Casa de vidro externa
+    -> Casa de vidro interna
+    -> Quarto branco
+    -> Desistências
+    -> Desclassificações
+    ->
+
+*/
