@@ -720,7 +720,7 @@ class BBBLogic {
 
         let winner = qtdPipocas > 0 ? 'pipoca' : 'camarote';
 
-        let anunciaGrupoVencedor = "🏆 Vitória dos participantes <b/>" + winner + "s</b>"; 
+        let anunciaGrupoVencedor = "🏆 Vitória dos participantes <b>" + winner + "s</b>"; 
         storyEvents.push(anunciaGrupoVencedor);
 
         return {type: provaImunidade.type, description: provaImunidade.description, events: storyEvents, winner: winner };
@@ -786,7 +786,7 @@ class BBBLogic {
             storyEvents.push(eventText);
         }
 
-        let anunciaVencedores = "🏆 <b/>" + playersOrder[0].nome + "</b> e <b/>" + playersOrder[1].nome + "</b> ganharam a prova de imunidade!"; 
+        let anunciaVencedores = "🏆 <b>" + playersOrder[0].name + "</b> e <b>" + playersOrder[1].name + "</b> ganharam a prova de imunidade!"; 
         storyEvents.push(anunciaVencedores);
 
         return {type: provaImunidade.type, description: provaImunidade.description, events: storyEvents, winners: playersOrder };
@@ -1421,7 +1421,7 @@ class BBBLogic {
 
             // anuncia vencedor
 
-            let fraseVitoria = "O anjo da semana é (Vencedor)!";
+            let fraseVitoria = "😇 O anjo da semana é (Vencedor)!";
             let replacerVencedorStr = '(Vencedor)';
             let regexVencedorStr = new RegExp(this.escapeRegExp(replacerVencedorStr), 'g');
             let newVencedorStr = '<b>' + melhorJogador.name + '</b>';
@@ -1460,6 +1460,8 @@ class BBBLogic {
         // escolhe um castigo
         let castigoDoMonstroIndex = this.randomize(BBBEvents.castigoDoMonstro.length);
         let castigoDoMonstro = BBBEvents.castigoDoMonstro[castigoDoMonstroIndex];
+
+        storyEvents.push(castigoDoMonstro.description);
 
         if(castigoDoMonstro.type === "musica") {
 
@@ -1925,7 +1927,7 @@ class BBBLogic {
 
         // avisos emparedados
 
-        let avisoEmparedadosApresentador = "<b>" + apresentador + "</b> avisa que confome combinado com o público ";
+        let avisoEmparedadosApresentador = "<b>" + apresentador + "</b> avisa que conforme combinado com o público ";
 
         switch (dinamica.terceiro.type) {
             case "piorDoLider":
@@ -1949,21 +1951,21 @@ class BBBLogic {
                 terceiroEmparedado = piorDoAnjo;
                 break;
             case "indicacaoBigFone":
-                let avisoIndicacaoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois foi indicado por <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone.";
+                let avisoIndicacaoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "</b> está no paredão pois foi indicado por <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone.";
                 storyEvents.push(avisoIndicacaoBigFone);
 
                 emparedados.push(bigfone.emparedado);
                 terceiroEmparedado = bigfone.emparedado;
                 break;
             case "indicadoBigFone":
-                let avisoIndicadoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois atendeu o Big Fone.";
+                let avisoIndicadoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "</b> está no paredão pois atendeu o Big Fone.";
                 storyEvents.push(avisoIndicadoBigFone);
 
                 emparedados.push(bigfone.emparedado);
                 terceiroEmparedado = bigfone.emparedado;
                 break;
             case "indicadoBigFoneOculta":
-                let avisoIndicadoBigFoneOculta = avisoEmparedadosApresentador + "a pulseira que <b>" + bigfone.atendente.name + "<b/> recebeu ao atender o Big Fone iria emparedar quem a recebesse.";
+                let avisoIndicadoBigFoneOculta = avisoEmparedadosApresentador + "a pulseira que <b>" + bigfone.atendente.name + "</b> recebeu ao atender o Big Fone iria emparedar quem a recebesse.";
                 storyEvents.push(avisoIndicadoBigFoneOculta);
 
                 let textoIndicadoBigFoneOculta = "Com isso, <b>" + bigfone.emparedado.name + "</b> está no paredão.";
@@ -2005,21 +2007,21 @@ class BBBLogic {
                         quartoEmparedado = piorDoAnjo;
                         break;
                     case "indicacaoBigFone":
-                        let avisoIndicacaoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois foi indicado por <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone.";
+                        let avisoIndicacaoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "</b> está no paredão pois foi indicado por <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone.";
                         storyEvents.push(avisoIndicacaoBigFone);
         
                         emparedados.push(bigfone.emparedado);
                         quartoEmparedado = bigfone.emparedado;
                         break;
                     case "indicadoBigFone":
-                        let avisoIndicadoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "<b/> está no paredão pois atendeu o Big Fone.";
+                        let avisoIndicadoBigFone = "<b>" + apresentador + "</b> voltou a confirmar que <b>" + bigfone.emparedado.name + "</b> está no paredão pois atendeu o Big Fone.";
                         storyEvents.push(avisoIndicadoBigFone);
         
                         emparedados.push(bigfone.emparedado);
                         quartoEmparedado = bigfone.emparedado;
                         break;
                     case "indicadoBigFoneOculta":
-                        let avisoIndicadoBigFoneOculta = avisoEmparedadosApresentador + "a pulseira que <b>" + bigfone.atendente.name + "<b/> recebeu ao atender o Big Fone iria emparedar quem a recebesse.";
+                        let avisoIndicadoBigFoneOculta = avisoEmparedadosApresentador + "a pulseira que <b>" + bigfone.atendente.name + "</b> recebeu ao atender o Big Fone iria emparedar quem a recebesse.";
                         storyEvents.push(avisoIndicadoBigFoneOculta);
         
                         let textoIndicadoBigFoneOculta = "Com isso, <b>" + bigfone.emparedado.name + "</b> está no paredão.";
@@ -2045,28 +2047,28 @@ class BBBLogic {
         if(dinamica.oBigFoneVaiTocar && dinamica.oBigFoneVaiSalvar) {
             switch (dinamica.tipoBigFone) {
                 case "imunizaAtendente":
-                    let avisoImunizaAtendente = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana por ter atendido o Big Fone."
+                    let avisoImunizaAtendente = "<b>" + apresentador + "</b> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana por ter atendido o Big Fone."
                     storyEvents.push(avisoImunizaAtendente);
                     break;
                 case "atendenteImuniza":
-                    let avisoAtendenteImuniza = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana pela escolha de <b>" + bigfone.atendente.name + "</b> que atendeu o Big Fone."
+                    let avisoAtendenteImuniza = "<b>" + apresentador + "</b> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana pela escolha de <b>" + bigfone.atendente.name + "</b> que atendeu o Big Fone."
                     storyEvents.push(avisoAtendenteImuniza);
                     break;
                 case "imuniza":
-                    let avisoImuniza = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana pela escolha de <b>" + bigfone.atendente.name + "</b> que atendeu o Big Fone.";
+                    let avisoImuniza = "<b>" + apresentador + "</b> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana pela escolha de <b>" + bigfone.atendente.name + "</b> que atendeu o Big Fone.";
                     if(bigfone.atendente === bigfone.imune) {
-                        avisoImuniza = "<b>" + apresentador + "<b/> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana por que escolheu se salvar ao atender o Big Fone.";
+                        avisoImuniza = "<b>" + apresentador + "</b> voltou a lembrar para todos da casa que <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana por que escolheu se salvar ao atender o Big Fone.";
                     }
                     storyEvents.push(avisoImuniza);
                     break;
                 case "imunizaOculto":
-                    let avisoImunizaOculto = "<b>" + apresentador + "<b/> comunicou com os participantes que a pulseira que <b>" + bigfone.imune.name + "</b> recebeu de <b>" + bigfone.atendente.name + "<b/> ao atender o Big Fone garantia uma imunidade ao paredão dessa semana.";
+                    let avisoImunizaOculto = "<b>" + apresentador + "</b> comunicou com os participantes que a pulseira que <b>" + bigfone.imune.name + "</b> recebeu de <b>" + bigfone.atendente.name + "</b> ao atender o Big Fone garantia uma imunidade ao paredão dessa semana.";
                     if(bigfone.atendente === bigfone.imune) {
-                        avisoImunizaOculto = "<b>" + apresentador + "<b/> comunicou com os participantes que a pulseira que <b>" + bigfone.atendente.name + "</b> escolheu colocar em si mesmo ao atender o Big Fone garantia uma imunidade ao paredão dessa semana.";
+                        avisoImunizaOculto = "<b>" + apresentador + "</b> comunicou com os participantes que a pulseira que <b>" + bigfone.atendente.name + "</b> escolheu colocar em si mesmo ao atender o Big Fone garantia uma imunidade ao paredão dessa semana.";
                     }
                     storyEvents.push(avisoImunizaOculto);
 
-                    let segundoAviso = "Com isso <b>" + bigfone.imune.name + "<b/> está imune ao paredão dessa semana!";
+                    let segundoAviso = "Com isso <b>" + bigfone.imune.name + "</b> está imune ao paredão dessa semana!";
                     storyEvents.push(segundoAviso);
                     break;
             
@@ -2148,7 +2150,7 @@ class BBBLogic {
 
         // resumo de quem não pode ser votado
 
-        let resumoApr = "<b>" + apresentador + "<b/> avisou a todos que os participantes que não podem ser votados são: ";
+        let resumoApr = "<b>" + apresentador + "</b> avisou a todos que os participantes que não podem ser votados são: ";
 
         let contador = 1; 
         naoPodemSerVotados.forEach(player => {
@@ -2920,6 +2922,8 @@ class BBBLogic {
             }
             contadorFinal++;
         });
+
+        storyEvents.push(resumoEmparedados);
 
         return {
             emparedados: emparedados,

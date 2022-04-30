@@ -34,6 +34,40 @@ import dinamicaCasaSecundariaImg from '../images/bbb/bbb-casa-secundaria.jpg';
 import dinamicaPipocasManhaImg from '../images/bbb/bbb-pipocas-manha.jpg';
 import dinamicaCamarotesNoiteImg from '../images/bbb/bbb-camarotes-noite.jpg';
 
+import dinamicaDialogosMuroPipocasImg from '../images/bbb/bbb-dialogos-muro-pipocas.png';
+import dinamicaDialogosMuroCamarotesImg from '../images/bbb/bbb-dialogos-muro-camarotes.png';
+import dinamicaDialogosCasaBBBImg from '../images/bbb/bbb-dialogos-casa-bbb.png';
+import dinamicaDialogosCasaSecundariaImg from '../images/bbb/bbb-dialogos-casa-secundaria.png';
+import dinamicaDialogosPipocasManhaImg from '../images/bbb/bbb-dialogos-pipocas-manha.png';
+import dinamicaDialogosCamarotesNoiteImg from '../images/bbb/bbb-dialogos-camarotes-noite.png';
+
+import dinamicaProvaImunidadeMuroImg from '../images/bbb/bbb-prova-imunidade-muro.png';
+import dinamicaProvaImunidadeCasaBBBImg from '../images/bbb/bbb-prova-imunidade-casa-bbb.png';
+import dinamicaProvaImunidadePipocasImg from '../images/bbb/bbb-prova-imunidade-pipocas.png';
+import dinamicaProvaImunidadeCamarotesImg from '../images/bbb/bbb-prova-imunidade-camarotes.png';
+
+import dinamicaDialogosPosProvaImunidadeImg from '../images/bbb/bbb-dialogos-pos-prova-imunidade.png';
+
+import dinamicaFimMuroImg from '../images/bbb/bbb-fim-muro.png';
+import dinamicaFimCasaSecundariaImg from '../images/bbb/bbb-fim-casa-secundaria.png';
+
+import dinamicaProvaDoLiderImg from '../images/bbb/bbb-prova-do-lider.png';
+import dinamicaFormacaoVipXepaImg from '../images/bbb/bbb-formacao-vip-xepa.png';
+
+import dinamicaPrimeiraFestaImg from '../images/bbb/bbb-primeira-festa.png';
+
+import dinamicaProvaDoAnjoImg from '../images/bbb/bbb-prova-do-anjo.png';
+import dinamicaCastigoDoMonstroImg from '../images/bbb/bbb-castigo-do-monstro.png';
+import dinamicaPresenteDoAnjoImg from '../images/bbb/bbb-presente-do-anjo.png';
+import dinamicaBigFoneImg from '../images/bbb/bbb-big-fone.png';
+import dinamicaDinamicaDoParedaoImg from '../images/bbb/bbb-dinamica-do-paredao.png';
+import dinamicaFormacaoDeParedaoImg from '../images/bbb/bbb-formacao-de-paredao.png';
+import dinamicaProvaBateVoltaImg from '../images/bbb/bbb-prova-bate-volta.png';
+import dinamicaJogoDaConcordiaImg from '../images/bbb/bbb-jogo-da-concordia.png';
+import dinamicaJogoDaDiscordiaImg from '../images/bbb/bbb-jogo-da-discordia.png';
+import dinamicaEliminacaoImg from '../images/bbb/bbb-eliminacao.png';
+import dinamicaFestaImg from '../images/bbb/bbb-festa.png';
+
 
 const GroupsPresentation = (props) => (
     <Transition visible={props.visible} animation={props.animation} duration={1000}>
@@ -287,7 +321,6 @@ const BBBPage = (props) => {
         let groups = BBBLogic.generateGroups(props.playerNames);
         let game = BBBLogic.generateGame(groups, props.nome);
 
-        //console.log(groups);
         console.log(game);
         setGroups(groups);
         setStoryline(game);
@@ -343,20 +376,27 @@ const BBBPage = (props) => {
 
                     setActualWeek(week);
 
-                    if(week === 1){
-                        setPrevActBtn(() => () => {
-                            startActPresentation(setShowGroupsPresentation, setShowWeekPresentation, 1000, 0, null);
-                            setTimeout(() => {
-                                setAnimationColorfullWaves(false);
-                                setAnimationSlidingDiagonals(true);
-                            }, 1000);
-                        });
-                    } else {
-                        setPrevActBtn(() => () => {
+                    // if(week === 1){
+                    //     setPrevActBtn(() => () => {
+                    //         startActPresentation(setShowGroupsPresentation, setShowWeekPresentation, 1000, 0, null);
+                    //         setTimeout(() => {
+                    //             setAnimationColorfullWaves(false);
+                    //             setAnimationSlidingDiagonals(true);
+                    //         }, 1000);
+                    //     });
+                    // } else {
+                    //     setPrevActBtn(() => () => {
+                    //         setAnimationColorfullWaves(false);
+                    //         showStoryline(index-1);
+                    //     });
+                    // }
+                    setPrevActBtn(() => () => {
+                        startActPresentation(setShowGroupsPresentation, setShowWeekPresentation, 1000, 0, null);
+                        setTimeout(() => {
                             setAnimationColorfullWaves(false);
-                            showStoryline(index-1);
-                        });
-                    }
+                            setAnimationSlidingDiagonals(true);
+                        }, 1000);
+                    });
                     setNextActBtn(() => () => {
                         showStoryline(index+1);
                         setTimeout(() => {
@@ -431,24 +471,109 @@ const BBBPage = (props) => {
                 case BBBType.DIALOGOS_MURO_PIPOCAS:
                 case BBBType.DIALOGOS_MURO_CAMAROTES:
                     setStorylineTitle(type === BBBType.DIALOGOS_MURO_PIPOCAS ? 'CONVERSAS DO LADO PIPOCA DO MURO' : 'CONVERSAS DO LADO CAMAROTE DO MURO');
-                    setStorylineImage(type === BBBType.DIALOGOS_MURO_PIPOCAS ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
+                    setStorylineImage(type === BBBType.DIALOGOS_MURO_PIPOCAS ? dinamicaDialogosMuroPipocasImg : dinamicaDialogosMuroCamarotesImg);
                     break;
                 case BBBType.DIALOGOS_CASA_BBB:
                 case BBBType.DIALOGOS_CASA_SECUNDARIA:
                     setStorylineTitle(type === BBBType.DIALOGOS_CASA_BBB ? 'CONVERSAS NA CASA DO BBB' : 'CONVERSAS DA SEGUNDA CASA');
-                    setStorylineImage(type === BBBType.DIALOGOS_CASA_BBB ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
+                    setStorylineImage(type === BBBType.DIALOGOS_CASA_BBB ? dinamicaDialogosCasaBBBImg : dinamicaDialogosCasaSecundariaImg);
                     break;
                 case BBBType.DIALOGOS_PIPOCAS_MANHA:
                 case BBBType.DIALOGOS_CAMAROTES_NOITE:
                     setStorylineTitle(type === BBBType.DIALOGOS_PIPOCAS_MANHA ? 'CONVERSAS PELA PARTE DA MANHÃ' : 'CONVERSAS PELA PARTE DA NOITE');
-                    setStorylineImage(type === BBBType.DIALOGOS_PIPOCAS_MANHA ? dinamicaPipocasManhaImg : dinamicaCamarotesNoiteImg);
+                    setStorylineImage(type === BBBType.DIALOGOS_PIPOCAS_MANHA ? dinamicaDialogosPipocasManhaImg : dinamicaDialogosCamarotesNoiteImg);
+                    break;
+                case BBBType.PROVA_IMUNIDADE_MURO:
+                    setStorylineTitle("PROVA DE IMUNIDADE - PIPOCAS vs CAMAROTES");
+                    setStorylineImage(dinamicaProvaImunidadeMuroImg);
+                    break;
+                case BBBType.PROVA_IMUNIDADE_CASA_BBB:
+                    setStorylineTitle("PROVA DE IMUNIDADE");
+                    setStorylineImage(dinamicaProvaImunidadeCasaBBBImg);
+                    break;
+                case BBBType.PROVA_IMUNIDADE_PIPOCAS:
+                    setStorylineTitle("PROVA DE IMUNIDADE PARA PIPOCAS");
+                    setStorylineImage(dinamicaProvaImunidadePipocasImg);
+                    break;
+                case BBBType.PROVA_IMUNIDADE_CAMAROTES:
+                    setStorylineTitle("PROVA DE IMUNIDADE PARA CAMAROTES");
+                    setStorylineImage(dinamicaProvaImunidadeCamarotesImg);
+                    break;
+                case BBBType.DIALOGOS_POS_PROVA_IMUNIDADE:
+                    setStorylineTitle("COMENTÁRIOS PÓS PROVA DE IMUNIDADE");
+                    setStorylineImage(dinamicaDialogosPosProvaImunidadeImg);
+                    break;
+                case BBBType.FIM_MURO:
+                    setStorylineTitle("O MURO QUE DIVIDE A CASA CAIU");
+                    setStorylineImage(dinamicaFimMuroImg);
+                    break;
+                case BBBType.FIM_CASA_SECUNDARIA:
+                    setStorylineTitle("OS PARTICIPANTES DA SEGUNDA CASA ENTRAM NA CASA DO BBB");
+                    setStorylineImage(dinamicaFimCasaSecundariaImg);
+                    break;
+                case BBBType.PROVA_DO_LIDER:
+                    setStorylineTitle("PROVA DO LÍDER");
+                    setStorylineImage(dinamicaProvaDoLiderImg);
+                    break;
+                case BBBType.FORMACAO_VIP_XEPA:
+                    setStorylineTitle("FORMAÇÃO DO VIP");
+                    setStorylineImage(dinamicaFormacaoVipXepaImg);
+                    break;
+                case BBBType.PRIMEIRA_FESTA:
+                    setStorylineTitle("PRIMEIRA FESTA");
+                    setStorylineImage(dinamicaPrimeiraFestaImg);
+                    break;
+                case BBBType.PROVA_DO_ANJO:
+                    setStorylineTitle("PROVA DO ANJO");
+                    setStorylineImage(dinamicaProvaDoAnjoImg);
+                    break;
+                case BBBType.CASTIGO_DO_MONSTRO:
+                    setStorylineTitle("CASTIGO DO MONSTRO");
+                    setStorylineImage(dinamicaCastigoDoMonstroImg);
+                    break;
+                case BBBType.PRESENTE_DO_ANJO:
+                    setStorylineTitle("PRESENTE DO ANJO");
+                    setStorylineImage(dinamicaPresenteDoAnjoImg);
+                    break;
+                case BBBType.BIG_FONE:
+                    setStorylineTitle("O BIG FONE TOCOU");
+                    setStorylineImage(dinamicaBigFoneImg);
+                    break;
+                case BBBType.DINAMICA_DO_PAREDAO:
+                    setStorylineTitle("DINÂMICA DA SEMANA");
+                    setStorylineImage(dinamicaDinamicaDoParedaoImg);
+                    break;
+                case BBBType.FORMACAO_DE_PAREDAO:
+                    setStorylineTitle("FORMAÇÃO DE PAREDÃO");
+                    setStorylineImage(dinamicaFormacaoDeParedaoImg);
+                    break;
+                case BBBType.PROVA_BATE_VOLTA:
+                    setStorylineTitle("PROVA BATE VOLTA");
+                    setStorylineImage(dinamicaProvaBateVoltaImg);
+                    break;
+                case BBBType.JOGO_DA_CONCORDIA:
+                    setStorylineTitle("JOGO DA CONCORDIA");
+                    setStorylineImage(dinamicaJogoDaConcordiaImg);
+                    break;
+                case BBBType.JOGO_DA_DISCORDIA:
+                    setStorylineTitle("JOGO DA DISCÓRDIA");
+                    setStorylineImage(dinamicaJogoDaDiscordiaImg);
+                    break;
+                case BBBType.ELIMINACAO:
+                    setStorylineTitle("ELIMINAÇÃO");
+                    setStorylineImage(dinamicaEliminacaoImg);
+                    break;
+                case BBBType.FESTA:
+                    setStorylineTitle("FESTA");
+                    setStorylineImage(dinamicaFestaImg);
                     break;
                 default:
-                    alert('default');
+                    break;
             }
 
             if(type > BBBType.DINAMICA) {
                 setStorylineOcurrencies(storyline.story[index].occurrencies);
+                setShowWeekPresentation(false);
                 setShowStorylinePresentation(true);
 
                 setPrevActBtn(() => () => {
