@@ -2991,6 +2991,6 @@ export default (new BBBLogic());
     -> Quarto branco
     -> Desistências
     -> Desclassificações
-    ->
+    -> Paredao falso
 
 */
