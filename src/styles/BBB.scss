@@ -1,3 +1,5 @@
+@import '_theme';
+
 .bbb-intro {
     position: fixed !important;
     width: 100%;
@@ -16,44 +18,121 @@
 	background: #ffffff;
 }
 
+.bbb-week-header{
+    font-size: 60px !important;
+}
+
 .bbb-dinamica-muro {
-    width: 100wh;
-    min-height: 100vh;
-    height: 100%;
-    color: #fff;
 	background: linear-gradient(-215deg, #1C221C, #A4A3AF, #9FBFD1, #D5B994);
-    background-size: 400% 400%;
-    -webkit-animation: Gradient 15s ease infinite;
-    -moz-animation: Gradient 15s ease infinite;
-    animation: Gradient 15s ease infinite;
+    @include backgroundTheme();
 }
 
 .bbb-dinamica-duas-casas {
-    width: 100wh;
-    min-height: 100vh;
-    height: 100%;
-    color: #fff;
 	background: linear-gradient(-215deg, #c27052, #3a9daf);
-    background-size: 400% 400%;
-    -webkit-animation: Gradient 15s ease infinite;
-    -moz-animation: Gradient 15s ease infinite;
-    animation: Gradient 15s ease infinite;
+    @include backgroundTheme();
 }
 
 .bbb-dinamica-duas-entradas {
-    width: 100wh;
-    min-height: 100vh;
-    height: 100%;
-    color: #fff;
 	background: linear-gradient(-215deg, #C79B58, #F5D48A, #5E9CBF, #1D4F79);
-    background-size: 400% 400%;
-    -webkit-animation: Gradient 15s ease infinite;
-    -moz-animation: Gradient 15s ease infinite;
-    animation: Gradient 15s ease infinite;
+    @include backgroundTheme();
 }
 
-.bbb-week-header{
-    font-size: 60px !important;
+
+
+
+
+
+.bbb-prova-imunidade-muro {
+	background: linear-gradient(-215deg, #110F17,#221E2F, #504E57, #908E97);
+    @include backgroundTheme();
+}
+.bbb-prova-imunidade-casa-bbb {
+	background: linear-gradient(-215deg, #461B24, #8D374A, #865B64, #C69AA4);
+    @include backgroundTheme();
+}
+.bbb-prova-imunidade-pipocas {
+	background: linear-gradient(-215deg, #68091C, #D11438, #A8495B, #E8899B);
+    @include backgroundTheme();
+}
+.bbb-prova-imunidade-camarotes {
+	background: linear-gradient(-215deg, #142522, #4a6a42, #688758, #1e7b4c, #999d7c);
+    @include backgroundTheme();
+}
+
+.bbb-dialogos-pos-prova-imunidade {
+	// nao tem
+}
+
+.bbb-fim-muro {
+	background: linear-gradient(-215deg, #3B1E22, #773D44, #7B5E61, #BB9EA1);
+    @include backgroundTheme();
+}
+.bbb-fim-casa-secundaria {
+	background: linear-gradient(-215deg, #141018, #282031, #956170, #bf8fa6);
+    @include backgroundTheme();
+}
+
+.bbb-prova-do-lider {
+	background: linear-gradient(-215deg, #583176, #7f2d77, #dc2444, #da1a47, #df4843, #f4c1c5);
+    @include backgroundTheme();
+}
+.bbb-formacao-vip-xepa {
+	background: linear-gradient(-215deg, #913742, #853942, #a77371, #e7ccc2);
+    @include backgroundTheme();
+}
+
+.bbb-primeira-festa {
+	background: linear-gradient(-215deg, #100c1f, #4c3b58, #5e4d6a, #756293, #aea2d9);
+    @include backgroundTheme();
+}
+
+.bbb-prova-do-anjo {
+	background: linear-gradient(-215deg, #b21e71, #de3742, #e77934, #db1a45, #f6cdb8, #e3633d);
+    @include backgroundTheme();
+}
+.bbb-castigo-do-monstro {
+	background: linear-gradient(-215deg, #ee9c80, #805550, #b07864, #232937, #1b212f);
+    @include backgroundTheme();
+}
+
+.bbb-presente-do-anjo {
+	background: linear-gradient(-215deg, #171411, #c99197, #6b5e47, #569f3d, #a07b7d);
+    @include backgroundTheme();
+}
+.bbb-big-fone {
+	background: linear-gradient(-215deg, #848495, #755e66, #21233c, #2e3c77, #a0887c);
+    @include backgroundTheme();
+}
+.bbb-dinamica-do-paredao {
+	background: linear-gradient(-215deg, #f97ee0, #ea89b0, #f67c72, #c997a4, #f57f4b, #907e86, #587577);
+    @include backgroundTheme();
+}
+.bbb-formacao-de-paredao {
+	background: linear-gradient(-215deg, #c99590, #67474a, #9e5e6b, #23161c, #83575d);
+    @include backgroundTheme();
+}
+.bbb-prova-bate-volta {
+	background: linear-gradient(-215deg, #ad736a, #966965, #bb896c, #26212d, #7a5b5d, #d9b69f);
+    @include backgroundTheme();
+}
+
+.bbb-jogo-da-concordia {
+	background: linear-gradient(-215deg, #231c26, #b5907b, #885e5d, #f2d36e, #6c4d4f);
+    @include backgroundTheme();
+}
+.bbb-jogo-da-discordia {
+	background: linear-gradient(-215deg, #e24c40, #8a1c70, #dd3041, #db1e45, #33182b);
+    @include backgroundTheme();
+}
+
+.bbb-eliminacao {
+	background: linear-gradient(-215deg, #de2e44, #f7d8c5, #804e66, #e3683d, #dc114e, #e77b39, #d5355f);
+    @include backgroundTheme();
+}
+
+.bbb-festa {
+	background: linear-gradient(-215deg, #684e6b, #d39aae, #a47599, #36263f, #89698f, #775e7f);
+    @include backgroundTheme();
 }
 
 @media only screen

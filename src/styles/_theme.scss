@@ -1,0 +1,12 @@
+
+
+@mixin backgroundTheme() {
+	width: 100wh;
+    min-height: 100vh;
+    height: 100%;
+    color: #fff;
+    background-size: 400% 400%;
+    -webkit-animation: Gradient 15s ease infinite;
+    -moz-animation: Gradient 15s ease infinite;
+    animation: Gradient 15s ease infinite;
+}

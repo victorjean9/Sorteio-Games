@@ -484,18 +484,22 @@ const BBBPage = (props) => {
                     setStorylineImage(type === BBBType.DIALOGOS_PIPOCAS_MANHA ? dinamicaDialogosPipocasManhaImg : dinamicaDialogosCamarotesNoiteImg);
                     break;
                 case BBBType.PROVA_IMUNIDADE_MURO:
+                    props.setAppClass("bbb-prova-imunidade-muro");
                     setStorylineTitle("PROVA DE IMUNIDADE - PIPOCAS vs CAMAROTES");
                     setStorylineImage(dinamicaProvaImunidadeMuroImg);
                     break;
                 case BBBType.PROVA_IMUNIDADE_CASA_BBB:
+                    props.setAppClass("bbb-prova-imunidade-casa-bbb");
                     setStorylineTitle("PROVA DE IMUNIDADE");
                     setStorylineImage(dinamicaProvaImunidadeCasaBBBImg);
                     break;
                 case BBBType.PROVA_IMUNIDADE_PIPOCAS:
+                    props.setAppClass("bbb-prova-imunidade-pipocas");
                     setStorylineTitle("PROVA DE IMUNIDADE PARA PIPOCAS");
                     setStorylineImage(dinamicaProvaImunidadePipocasImg);
                     break;
                 case BBBType.PROVA_IMUNIDADE_CAMAROTES:
+                    props.setAppClass("bbb-prova-imunidade-camarotes");
                     setStorylineTitle("PROVA DE IMUNIDADE PARA CAMAROTES");
                     setStorylineImage(dinamicaProvaImunidadeCamarotesImg);
                     break;
@@ -503,67 +507,84 @@ const BBBPage = (props) => {
                     setStorylineTitle("COMENTÁRIOS PÓS PROVA DE IMUNIDADE");
                     setStorylineImage(dinamicaDialogosPosProvaImunidadeImg);
                     break;
+                    //props.setAppClass("");
                 case BBBType.FIM_MURO:
+                    props.setAppClass("bbb-fim-muro");
                     setStorylineTitle("O MURO QUE DIVIDE A CASA CAIU");
                     setStorylineImage(dinamicaFimMuroImg);
                     break;
                 case BBBType.FIM_CASA_SECUNDARIA:
+                    props.setAppClass("bbb-fim-casa-secundaria");
                     setStorylineTitle("OS PARTICIPANTES DA SEGUNDA CASA ENTRAM NA CASA DO BBB");
                     setStorylineImage(dinamicaFimCasaSecundariaImg);
                     break;
                 case BBBType.PROVA_DO_LIDER:
+                    props.setAppClass("bbb-prova-do-lider");
                     setStorylineTitle("PROVA DO LÍDER");
                     setStorylineImage(dinamicaProvaDoLiderImg);
                     break;
                 case BBBType.FORMACAO_VIP_XEPA:
+                    props.setAppClass("bbb-formacao-vip-xepa");
                     setStorylineTitle("FORMAÇÃO DO VIP");
                     setStorylineImage(dinamicaFormacaoVipXepaImg);
                     break;
                 case BBBType.PRIMEIRA_FESTA:
+                    props.setAppClass("bbb-primeira-festa");
                     setStorylineTitle("PRIMEIRA FESTA");
                     setStorylineImage(dinamicaPrimeiraFestaImg);
                     break;
                 case BBBType.PROVA_DO_ANJO:
+                    props.setAppClass("bbb-prova-do-anjo");
                     setStorylineTitle("PROVA DO ANJO");
                     setStorylineImage(dinamicaProvaDoAnjoImg);
                     break;
                 case BBBType.CASTIGO_DO_MONSTRO:
+                    props.setAppClass("bbb-castigo-do-monstro");
                     setStorylineTitle("CASTIGO DO MONSTRO");
                     setStorylineImage(dinamicaCastigoDoMonstroImg);
                     break;
                 case BBBType.PRESENTE_DO_ANJO:
+                    props.setAppClass("bbb-presente-do-anjo");
                     setStorylineTitle("PRESENTE DO ANJO");
                     setStorylineImage(dinamicaPresenteDoAnjoImg);
                     break;
                 case BBBType.BIG_FONE:
+                    props.setAppClass("bbb-big-fone");
                     setStorylineTitle("O BIG FONE TOCOU");
                     setStorylineImage(dinamicaBigFoneImg);
                     break;
                 case BBBType.DINAMICA_DO_PAREDAO:
+                    props.setAppClass("bbb-dinamica-do-paredao");
                     setStorylineTitle("DINÂMICA DA SEMANA");
                     setStorylineImage(dinamicaDinamicaDoParedaoImg);
                     break;
                 case BBBType.FORMACAO_DE_PAREDAO:
+                    props.setAppClass("bbb-formacao-de-paredao");
                     setStorylineTitle("FORMAÇÃO DE PAREDÃO");
                     setStorylineImage(dinamicaFormacaoDeParedaoImg);
                     break;
                 case BBBType.PROVA_BATE_VOLTA:
+                    props.setAppClass("bbb-prova-bate-volta");
                     setStorylineTitle("PROVA BATE VOLTA");
                     setStorylineImage(dinamicaProvaBateVoltaImg);
                     break;
                 case BBBType.JOGO_DA_CONCORDIA:
+                    props.setAppClass("bbb-jogo-da-concordia");
                     setStorylineTitle("JOGO DA CONCORDIA");
                     setStorylineImage(dinamicaJogoDaConcordiaImg);
                     break;
                 case BBBType.JOGO_DA_DISCORDIA:
+                    props.setAppClass("bbb-jogo-da-discordia");
                     setStorylineTitle("JOGO DA DISCÓRDIA");
                     setStorylineImage(dinamicaJogoDaDiscordiaImg);
                     break;
                 case BBBType.ELIMINACAO:
+                    props.setAppClass("bbb-eliminacao");
                     setStorylineTitle("ELIMINAÇÃO");
                     setStorylineImage(dinamicaEliminacaoImg);
                     break;
                 case BBBType.FESTA:
+                    props.setAppClass("bbb-festa");
                     setStorylineTitle("FESTA");
                     setStorylineImage(dinamicaFestaImg);
                     break;

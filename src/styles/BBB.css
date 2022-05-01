@@ -16,12 +16,16 @@
   background: #ffffff;
 }
 
+.bbb-week-header {
+  font-size: 60px !important;
+}
+
 .bbb-dinamica-muro {
+  background: linear-gradient(-215deg, #1C221C, #A4A3AF, #9FBFD1, #D5B994);
   width: 100wh;
   min-height: 100vh;
   height: 100%;
   color: #fff;
-  background: linear-gradient(-215deg, #1C221C, #A4A3AF, #9FBFD1, #D5B994);
   background-size: 400% 400%;
   -webkit-animation: Gradient 15s ease infinite;
   -moz-animation: Gradient 15s ease infinite;
@@ -29,11 +33,11 @@
 }
 
 .bbb-dinamica-duas-casas {
+  background: linear-gradient(-215deg, #c27052, #3a9daf);
   width: 100wh;
   min-height: 100vh;
   height: 100%;
   color: #fff;
-  background: linear-gradient(-215deg, #c27052, #3a9daf);
   background-size: 400% 400%;
   -webkit-animation: Gradient 15s ease infinite;
   -moz-animation: Gradient 15s ease infinite;
@@ -41,19 +45,255 @@
 }
 
 .bbb-dinamica-duas-entradas {
+  background: linear-gradient(-215deg, #C79B58, #F5D48A, #5E9CBF, #1D4F79);
   width: 100wh;
   min-height: 100vh;
   height: 100%;
   color: #fff;
-  background: linear-gradient(-215deg, #C79B58, #F5D48A, #5E9CBF, #1D4F79);
   background-size: 400% 400%;
   -webkit-animation: Gradient 15s ease infinite;
   -moz-animation: Gradient 15s ease infinite;
   animation: Gradient 15s ease infinite;
 }
 
-.bbb-week-header {
-  font-size: 60px !important;
+.bbb-prova-imunidade-muro {
+  background: linear-gradient(-215deg, #110F17, #221E2F, #504E57, #908E97);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-imunidade-casa-bbb {
+  background: linear-gradient(-215deg, #461B24, #8D374A, #865B64, #C69AA4);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-imunidade-pipocas {
+  background: linear-gradient(-215deg, #68091C, #D11438, #A8495B, #E8899B);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-imunidade-camarotes {
+  background: linear-gradient(-215deg, #142522, #4a6a42, #688758, #1e7b4c, #999d7c);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-fim-muro {
+  background: linear-gradient(-215deg, #3B1E22, #773D44, #7B5E61, #BB9EA1);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-fim-casa-secundaria {
+  background: linear-gradient(-215deg, #141018, #282031, #956170, #bf8fa6);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-do-lider {
+  background: linear-gradient(-215deg, #583176, #7f2d77, #dc2444, #da1a47, #df4843, #f4c1c5);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-formacao-vip-xepa {
+  background: linear-gradient(-215deg, #913742, #853942, #a77371, #e7ccc2);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-primeira-festa {
+  background: linear-gradient(-215deg, #100c1f, #4c3b58, #5e4d6a, #756293, #aea2d9);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-do-anjo {
+  background: linear-gradient(-215deg, #b21e71, #de3742, #e77934, #db1a45, #f6cdb8, #e3633d);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-castigo-do-monstro {
+  background: linear-gradient(-215deg, #ee9c80, #805550, #b07864, #232937, #1b212f);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-presente-do-anjo {
+  background: linear-gradient(-215deg, #171411, #c99197, #6b5e47, #569f3d, #a07b7d);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-big-fone {
+  background: linear-gradient(-215deg, #848495, #755e66, #21233c, #2e3c77, #a0887c);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-dinamica-do-paredao {
+  background: linear-gradient(-215deg, #f97ee0, #ea89b0, #f67c72, #c997a4, #f57f4b, #907e86, #587577);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-formacao-de-paredao {
+  background: linear-gradient(-215deg, #c99590, #67474a, #9e5e6b, #23161c, #83575d);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-bate-volta {
+  background: linear-gradient(-215deg, #ad736a, #966965, #bb896c, #26212d, #7a5b5d, #d9b69f);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-jogo-da-concordia {
+  background: linear-gradient(-215deg, #231c26, #b5907b, #885e5d, #f2d36e, #6c4d4f);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-jogo-da-discordia {
+  background: linear-gradient(-215deg, #e24c40, #8a1c70, #dd3041, #db1e45, #33182b);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-eliminacao {
+  background: linear-gradient(-215deg, #de2e44, #f7d8c5, #804e66, #e3683d, #dc114e, #e77b39, #d5355f);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-festa {
+  background: linear-gradient(-215deg, #684e6b, #d39aae, #a47599, #36263f, #89698f, #775e7f);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
 }
 
 @media only screen and (max-width: 770px) {

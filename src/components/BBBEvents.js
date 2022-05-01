@@ -60,7 +60,7 @@ class BBBEvents {
         { players: 2, text: "(Jogador1) disse que não tem problemas em dormir no chão para (Jogador2)." },
         { players: 1, text: "(Jogador1) afirmou para o grupo que irá ajudar a preparar a comida." },
         { players: 1, text: "(Jogador1) afirmou para o grupo que irá ajudar com a louça suja." },
-        { players: 2, text: "(Jogador1) afirmou para (Jogador2) que irá detestar ser chamada de planta." },
+        { players: 2, text: "(Jogador1) afirmou para (Jogador2) que irá causar briga se receber o apelido de planta." },
         { players: 2, text: "(Jogador1) tentou brincar com (Jogador2), entretanto (Jogador2) não gostou da brincadeira." },
         { players: 2, text: "(Jogador1) afirma para (Jogador2) que foi para o BBB para aprender mais sobre si mesmo." },
         { players: 2, text: "(Jogador1) está conversando com (Jogador2) mas não está entendendo nada do que está sendo dito." },
