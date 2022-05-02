@@ -420,10 +420,8 @@ class BBBEvents {
         { text: "(Lider) decidiu chamar (Jogador) pois considera planta e quer ver mais da sua participação no programa." },
     ]
 
-    primeiraFesta = [
-        { players: 1, text: '(Jogador1) está se sentindo emocionado por estar na primeira festa do BBB.'},
+    festa = [
         { players: 6, text: 'A música tema do BBB começou a tocar na festa e (Jogador1), (Jogador2), (Jogador3), (Jogador4), (Jogador5) e (Jogador6) começaram a cantar e dançar.'},
-        { players: 2, text: '(Jogador1) e (Jogador2) estão bebendo para comemorar a primeira festa do BBB'},
         { players: 1, text: '(Jogador1) está em seu canto observando todos da festa.'},
         { players: 1, text: '(Jogador1) foi direto nas comidas da festa.'},
         { players: 1, text: '(Jogador1) correu pra dançar muito na pista de dança.'},
@@ -444,8 +442,6 @@ class BBBEvents {
         { players: 2, text: '(Jogador1) quer conversar sobre jogo com (Jogador2).'},
         { players: 2, text: '(Jogador1), sob influência de álcool, começou a discutir com (Jogador2) e outros brothers tentaram separar a briga.'},
         { players: 2, text: '(Jogador1), sob influência de álcool, tentou beijar (Jogador2) entretanto não teve sucesso.'},
-        { players: 2, text: '(Jogador1) tenta convencer (Jogador2) sobre serem o primeiro casal do BBB.'},
-        { players: 2, text: '(Jogador1) tenta convencer (Jogador2) a dar o primeiro beijo da edição.'},
         { players: 2, text: '(Jogador1) e (Jogador2) estão cantando juntos.'},
         { players: 3, text: '(Jogador1), (Jogador2) e (Jogador3) estão cantando juntos.'},
         { players: 3, text: '(Jogador1) falou mal de (Jogador2) para (Jogador3), que correu para avisar a (Jogador2).'},
@@ -458,8 +454,16 @@ class BBBEvents {
         { players: 1, text: '(Jogador1) quebrou a decoração da festa enquanto dançava.'},
         { players: 1, text: '(Jogador1) levou bronca da produção pois seu microfone caiu enquanto dançava.'},
         { players: 1, text: '(Jogador1) bebeu muito e começou a falar línguas estranhas.'},
-        { players: 1, text: '(Jogador1) está chorando de emoção por estar na primeira festa do BBB'},
         { players: 1, text: '(Jogador1) está muito mal de tanto beber e pensa em apertar o botão da desistência.'},
+    ]
+
+    primeiraFesta = [
+        ...this.festa,
+        { players: 1, text: '(Jogador1) está se sentindo emocionado por estar na primeira festa do BBB.'},
+        { players: 2, text: '(Jogador1) e (Jogador2) estão bebendo para comemorar a primeira festa do BBB'},
+        { players: 1, text: '(Jogador1) está chorando de emoção por estar na primeira festa do BBB'},
+        { players: 2, text: '(Jogador1) tenta convencer (Jogador2) sobre serem o primeiro casal do BBB.'},
+        { players: 2, text: '(Jogador1) tenta convencer (Jogador2) a dar o primeiro beijo da edição.'},
     ]
 
     provaDoAnjo = [
@@ -467,7 +471,7 @@ class BBBEvents {
             type: 'tempo',
             description: 'Cada jogador deve montar um quebra cabeça gigante no menor tempo que conseguir. Deve ser colocada apenas uma peça por vez, caso contrário o jogador é desclassificado. Vence a prova do anjo o jogador que conseguir montar o quebra cabeça no menor tempo possível.',
             eventTempo: '(Jogador) fez a prova no tempo de (Tempo) minutos.',
-            eventFatal: '(Jogador) tentou tirar vantagem durante a prova e com isso garantiu sua desclassificação.'
+            eventFatal: '(Jogador) tentou tirar vantagem durante a prova e com isso garantiu sua desclassificação.',
         }
     ]
 
@@ -629,7 +633,7 @@ class BBBEvents {
         {text: "(Jogador1) afirmou que esse monstro foi bom pra ver quem está realmente do seu lado e quem não está."},
         {text: "(Jogador1) afirmou que esse monstro não foi difícil."},
         {text: "(Jogador1) afirmou que esse monstro abalou as pessoas da casa."},
-        {text: "(Jogador1) afirmou que esse monstro foi duro e promete revidar a indicação quando pudar."},
+        {text: "(Jogador1) afirmou que esse monstro foi duro e promete revidar a indicação quando puder."},
         {text: "(Jogador1) afirmou que esse monstro foi extremamente tranquilo."},
     ];
 
@@ -706,6 +710,78 @@ class BBBEvents {
         {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois não gosta de (Jogador2)."},
         {text: "(Jogador1) decide indicar (Jogador2) ao paredão dessa semana pois garante que (Jogador2) quer atrapalhar seu jogo."},
     ];
+
+    resumoDoDia = [
+        { players: 2, text: "(Jogador1) comenta para (Jogador2) que sente falta de alguns eliminados, mas que em sua maioria não sente falta de ninguém." },
+        { players: 2, text: "(Jogador1) insiste para (Jogador2) parar de fazer VT e sair do personagem pois a essa altura do jogo o público já escolheu quem irá vencer." },
+        { players: 3, text: "(Jogador1) comenta com (Jogador2) que (Jogador3) não ajuda em nenhuma tarefa da casa." },
+        { players: 3, text: "(Jogador1) comenta com (Jogador2) que (Jogador3) está até agora no programa sem tomar banho." },
+        { players: 1, text: "(Jogador1) está com saudade de seus amigos e familiares." },
+        { players: 1, text: "(Jogador1) tem a certeza de que o cancelamento veio e está com medo da vida fora do programa." },
+        { players: 1, text: "(Jogador1) tem a certeza de que o cancelamento veio e promete desestabilizar a casa e deixar todo mundo maluco até chegar sua hora de deixar o programa." },
+        { players: 1, text: "(Jogador1) está falando sozinho com as câmeras." },
+        { players: 2, text: "(Jogador1) está brigando com (Jogador2) por conta de comida." },
+        { players: 4, text: "(Jogador1) está brigando com (Jogador2) por algum motivo idiota. (Jogador3) e (Jogador4) separaram ambos para evirar uma briga física." },
+        { players: 1, text: "(Jogador1) está chorando em frente as plantas." },
+        { players: 2, text: "(Jogador1) está remoendo seus atritos com (Jogador2)." },
+        { players: 1, text: "(Jogador1) prometeu dar o máximo de si na próxima prova." },
+        { players: 2, text: "(Jogador1) se arrependeu de não ter votado em (Jogador2)." },
+        { players: 2, text: "(Jogador1) se arrependeu de ter votado em (Jogador2)." },
+        { players: 2, text: "(Jogador1) e (Jogador2) estão se evitando na casa." },
+        { players: 2, text: "(Jogador1) acusou (Jogador2) de falsidade." },
+        { players: 2, text: "(Jogador1) prometeu para (Jogador2) lealdade ate a final." },
+        { players: 2, text: "(Jogador1) prometeu processar (Jogador2) por difamação ao sair da casa." },
+        { players: 2, text: "(Jogador1) está na piscina com (Jogador2)." },
+        { players: 1, text: "(Jogador1) está na academia." },
+        { players: 2, text: "(Jogador1) está na academia com (Jogador2)." },
+        { players: 1, text: "(Jogador1) está dormindo." },
+        { players: 1, text: "(Jogador1) está sentindo que sua vez de deixar a casa chegou." },
+        { players: 1, text: "(Jogador1) está confiante com sua vitória no programa." },
+        { players: 2, text: "(Jogador1) comenta com (Jogador2) que o último paredão pode ser falso. (Jogador2) concordou." },
+        { players: 2, text: "(Jogador1) comenta com (Jogador2) que o último paredão pode ser falso. (Jogador2) discordou." },
+        { players: 2, text: "(Jogador1) comenta com (Jogador2) que ainda pode haver um paredão falso nessa edição." },
+        { players: 1, text: "(Jogador1) está cantando no quarto." },
+    ]
+
+    provaDeSobrevivencia = [
+        {
+            type: "resistencia",
+            description: "Os jogadores deverão abraçados em um bastão em cima de uma plataforma declinada. A angulação da plataforma varia de acordo com o tempo. Os jogadores que soltarem o bastão caem numa piscina de espumas. Os (qtd) primeiros jogadores a cairem na piscina estão no paredão.",
+            events: [
+                { text: "(Jogador) desistiu da prova e se jogou na piscina." },
+                { text: "(Jogador) desistiu da prova por conta do cansaço e se jogou na piscina." },
+                { text: "(Jogador) não estava se sentindo bem e desistiu da prova." },
+                { text: "(Jogador) estava quase desmaiando de sono e decidiu desistir da prova." },
+                { text: "(Jogador) desmaiou de sono e caiu na piscina." },
+                { text: "(Jogador) estava começando a se sentir tontura e decidiu desistir da prova." },
+                { text: "(Jogador) ficou tonto e caiu na piscina." },
+                { text: "(Jogador) estava morrendo de sede e decidiu desistir da prova." },
+                { text: "(Jogador) chorando muito de cansaço decidiu desistir da prova." },
+                { text: "(Jogador) estava sentindo muita fome e decidiu desistir da prova." },
+                { text: "(Jogador) não teve forças para segurar o bastao e caiu na piscina." },
+                { text: "(Jogador) estava começando a sentir suas pernas dormentes e caiu na piscina." },
+                { text: "(Jogador) estava reclamando de muita dor nas pernas e desistiu da prova." },
+                { text: "(Jogador) caiu na piscina pois suas pernas falharam." },
+                { text: "(Jogador) caiu na piscina quando a plataforma mudou de angulação." },
+                { text: "(Jogador) dormiu na prova e caiu na piscina." },
+                { text: "(Jogador) desmaiou durante a prova e com isso caiu na piscina." },
+
+                { text: "(Jogador) fez suas necessidades durante a prova e com isso garantiu a sua desclassificação." },
+                { text: "(Jogador) tentou tirar vantagem durante a prova e com isso garantiu a sua desclassificação." },
+            ]
+        },
+        {
+            type: "sorte",
+            description: "Cada participante deverá escolher um número de 1 a 50 estourar o balão correspondente ao número.<br/>Se o balão soltar porpurina dourada o participante se livra do paredão.<br/>Apenas 10 balões possuem porpurina dourada.<br/>Vencem o desafio os primeiros (qtd) jogadores que acharem os balões corretos.",
+            eventNeutral: '(Jogador) escolheu o balão de número (Numero), mas o balão não tinha nada.',
+            eventWin: '(Jogador) escolheu o balão de número (Numero), e o balão continha porpurina dourada. (Jogador) está salvo do paredão.',
+        },
+        // {
+        //     type: "tempo",
+        //     description: "Cada participante terá que completar um jogo da memória do patrocinador do programa. Os (qtd) participantes que mais demorarem para completar a prova estão no paredão essa semana.",
+        //     eventTempo: '(Jogador) fez a prova no tempo de (Tempo) minutos.',
+        // },
+    ]
 }
 
 export default (new BBBEvents());

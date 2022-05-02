@@ -46,6 +46,15 @@ class BBBType {
     ELIMINACAO = 33; // bbb-eliminacao.png
 
     FESTA = 34; // bbb-festa.png
+
+    RESUMO_DO_DIA = 35; // bbb-resumo.jpg
+    PROVA_DE_SOBREVIVENCIA = 36; // bbb-prova-de-sobrevivencia.jpg
+
+    MODO_TURBO = 37;
+
+    FINAL = 38;
+    RESULTADO_FINAL = 39; // bbb-resultado-final.jpg
+
 }
 
 export default (new BBBType());

@@ -135,6 +135,33 @@
     @include backgroundTheme();
 }
 
+.bbb-modo-turbo {
+    background: linear-gradient(-215deg, #b535b2, #ab37b6, #625db8, #c33ca8, #a532b9, #d34dae, #fcd8ef);
+    @include backgroundTheme();
+}
+
+.bbb-resumo {
+    background: linear-gradient(-215deg, #ffc8b2, #438ff7, #9d5ce8, #8674fd, #012705, #cb7ad9);
+    @include backgroundTheme();
+}
+
+.bbb-prova-de-sobrevivencia {
+    background: linear-gradient(-215deg, #852e42, #b84754, #9d3746, #fc735b, #190d1d, #df666d);
+    @include backgroundTheme();
+}
+
+.bbb-resultado-final {
+    background: linear-gradient(-215deg, #e56570, #4d8693, #fa825a, #fdccdb, #b09b98, #f38f7e);
+    @include backgroundTheme();
+}
+
+.bbb-final {
+    background: linear-gradient(-215deg, #191933, #7c687a, #9687a6, #d9b3bc, #b298b8, #f2e1dd, #655369);
+    @include backgroundTheme();
+}
+
+
+
 @media only screen
 and (max-width:770px){
 	.bbb-intro {

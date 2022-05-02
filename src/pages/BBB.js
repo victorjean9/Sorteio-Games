@@ -8,6 +8,8 @@ import '../styles/BBB.css';
 import '../styles/Emojis.css';
 import '../styles/Animojis.css';
 
+import useLongPress from '../components/exported/useLongPress';
+
 import BBBIntro from '../images/bbb-robos.png';
 import BBBLogo from '../images/bbb-logo.png';
 import PopcornAnimoji from '../images/animojis/popcorn.gif';
@@ -24,6 +26,10 @@ import BBBType from "../components/BBBType";
 import muroImg from '../images/bbb/muro.jpg';
 import duasCasasImg from '../images/bbb/duascasas.jpeg';
 import duasEntradasImg from '../images/bbb/duasentradas.png';
+import modoTurboImg from '../images/bbb/top10.png';
+import finalImg from '../images/bbb/final.png';
+
+
 import ColorfullWaves from "../components/backgrounds/ColofullWaves";
 
 //BANNERS
@@ -67,7 +73,9 @@ import dinamicaJogoDaConcordiaImg from '../images/bbb/bbb-jogo-da-concordia.png'
 import dinamicaJogoDaDiscordiaImg from '../images/bbb/bbb-jogo-da-discordia.png';
 import dinamicaEliminacaoImg from '../images/bbb/bbb-eliminacao.png';
 import dinamicaFestaImg from '../images/bbb/bbb-festa.png';
-
+import resumoDoDiaImg from '../images/bbb/bbb-resumo.jpg';
+import provaDeSobrevivenciaImg from '../images/bbb/bbb-prova-de-sobrevivencia.jpg';
+import resultadoFinalImg from '../images/bbb/bbb-resultado-final.jpg';
 
 const GroupsPresentation = (props) => (
     <Transition visible={props.visible} animation={props.animation} duration={1000}>
@@ -193,6 +201,8 @@ const StorylinePresentation = (props) => {
     let [storyArray, setStoryArray] = useState([]);
     let [showControls, setShowControls] = useState(true);
 
+    let [diaDaSemana, setDiaDaSemana] = useState("");
+
     useEffect(() => {
         setStoryArray(props.story.slice(0, 1));
         if(props.story.length > 1)
@@ -201,12 +211,54 @@ const StorylinePresentation = (props) => {
             setShowControls(true);
     }, [props.story]);
 
+    useEffect(() => {
+        switch (props.dayOfWeek) {
+            case 1: // DOMINGO
+                setDiaDaSemana("DOMINGO");
+                break;
+            case 2: // SEGUNDA-FEIRA
+                setDiaDaSemana("SEGUNDA-FEIRA");
+                break;
+            case 3: // TERÇA-FEIRA
+                setDiaDaSemana("TERÇA-FEIRA");
+                break;
+            case 4: // QUARTA-FEIRA
+                setDiaDaSemana("QUARTA-FEIRA");
+                break;
+            case 5: // QUINTA-FEIRA
+                setDiaDaSemana("QUINTA-FEIRA");
+                break;
+            case 6: // SEXTA-FEIRA
+                setDiaDaSemana("SEXTA-FEIRA");
+                break;
+            default: // SÁBADO
+                setDiaDaSemana("SÁBADO");
+                break;
+        }
+    }, [props.dayOfWeek]);
+
     const showMore = () => {
         setStoryArray(props.story.slice(0, storyArray.length + 1));
         if(storyArray.length + 1 === props.story.length){
             setShowControls(true);
         }
     }   
+
+    const onLongPress = () => {
+        setStoryArray(props.story);
+        setShowControls(true);
+    };
+
+    const onClick = () => {
+        showMore();
+    }
+
+    const defaultOptions = {
+        shouldPreventDefault: true,
+        delay: 500,
+    };
+
+    const longPressEvent = useLongPress(onLongPress, onClick, defaultOptions);
 
     return (
         <Transition visible={props.visible} animation={props.animation} duration={1000}>
@@ -217,7 +269,7 @@ const StorylinePresentation = (props) => {
                 <Image src={props.image} size='big' centered rounded/>
                 <Header as='h1' inverted textAlign='center' >
                     {props.title}
-                    <Header.Subheader>SEGUNDA-FEIRA</Header.Subheader>
+                    <Header.Subheader>{diaDaSemana}</Header.Subheader>
                 </Header>
                 <Divider/>
                 <Transition.Group
@@ -237,7 +289,7 @@ const StorylinePresentation = (props) => {
                 </Transition.Group>
                 {
                     !showControls 
-                    ?   <p style={{textAlign: 'center'}}><Button inverted size='big' onClick={() => showMore()} basic circular icon><Icon name='angle down' /></Button></p>
+                    ?   <p style={{textAlign: 'center'}}><Button inverted size='big' {...longPressEvent} basic circular icon><Icon name='angle down' /></Button></p>
                     :   null
                 }
                 <br/>
@@ -255,6 +307,26 @@ const StorylinePresentation = (props) => {
     );
 } 
 
+const WinnerSegment = (props) => {
+    return(
+        <Transition visible={props.visible} animation='fade' duration={1000}>
+            <div style={{width: '100%', height: '100vh'}}>
+                <span className='span-grettings'>
+                    <Header className='header-greetings' as='h1' inverted textAlign='center' >
+                        <>
+                            <img src={props.emojis[props.winner.emoji]} className="animoji trophy" alt="trophy" />
+                            <br/>
+                            <b style={{textTransform: 'uppercase'}}>{props.winner.name}</b>
+                            <Header.Subheader>
+                                GANHOU O SORTEIO!
+                            </Header.Subheader>
+                        </>
+                    </Header>
+                </span>
+            </div>
+        </Transition>
+    );
+}
 
 const BBBPage = (props) => {
     let history = useHistory();
@@ -280,6 +352,7 @@ const BBBPage = (props) => {
     let [storylineOcurrencies, setStorylineOcurrencies] = useState([]);
     let [storylineTitle, setStorylineTitle] = useState('');
     let [storylineImage, setStorylineImage] = useState();
+    let [dayOfWeek, setDayOfWeek] = useState(2);
 
     let [actualWeek, setActualWeek] = useState(1);
 
@@ -293,6 +366,9 @@ const BBBPage = (props) => {
 
     let [animationSlidingDiagonals, setAnimationSlidingDiagonals] = useState(false);
     let [animationColorfullWaves, setAnimationColorfullWaves] = useState(false);
+
+    let [showWinnerPresentation, setShowWinnerPresentation] = useState(false);
+    let [winner, setWinner] = useState({name: "", emoji: 10});
 
     const videoPlayer = useRef();
 
@@ -451,6 +527,52 @@ const BBBPage = (props) => {
                         }, 100);
                     });
                     break;
+                case BBBType.MODO_TURBO:
+                    startActPresentation(setShowStoryactPresentation, setShowWeekPresentation, 1000, 0, 'bbb-modo-turbo');
+                    setTimeout(() => {
+                        setStoryactImage(modoTurboImg);
+                        setStoryactTitle('RESTAM APENAS 10 PARTICIPANTES!');
+                        setStoryactDescription(
+                            <>A partir de agora o jogo entrará em modo turbo!<br/>Não haverá mais líderes nem anjos, apenas provas de sobrevivência.<br/>Quem der sorte ou resistir se livra do paredão.</>
+                        );
+                    }, 900);
+
+                    setPrevActBtn(() => () => {
+                        setShowStoryactPresentation(false);
+                        setTimeout(() => {
+                            showStoryline(index-1);
+                        }, 100);
+                    });
+                    setNextActBtn(() => () => {
+                        setShowStoryactPresentation(false);
+                        setTimeout(() => {
+                            showStoryline(index+1);
+                        }, 100);
+                    });
+                    break;
+                case BBBType.FINAL:
+                    startActPresentation(setShowStoryactPresentation, setShowWeekPresentation, 1000, 0, 'bbb-final');
+                    setTimeout(() => {
+                        setStoryactImage(finalImg);
+                        setStoryactTitle('A GRANDE FINAL CHEGOU!');
+                        setStoryactDescription(
+                            <>Agora o voto é para ganhar!<br/>O último paredão já está formado e quem ganhar mais votos, ganha o prêmio dessa edição.</>
+                        );
+                    }, 900);
+
+                    setPrevActBtn(() => () => {
+                        setShowStoryactPresentation(false);
+                        setTimeout(() => {
+                            showStoryline(index-1);
+                        }, 100);
+                    });
+                    setNextActBtn(() => () => {
+                        setShowStoryactPresentation(false);
+                        setTimeout(() => {
+                            showStoryline(index+1);
+                        }, 100);
+                    });
+                    break;
                 case BBBType.MUROPIPOCA:
                 case BBBType.MUROCAMAROTE:
                     setStorylineTitle(type === BBBType.MUROPIPOCA ? 'AS PIPOCAS ENTRAM NO SEU LADO DA CASA' : 'OS CAMAROTES ENTRAM NO SEU LADO DA CASA');
@@ -588,11 +710,27 @@ const BBBPage = (props) => {
                     setStorylineTitle("FESTA");
                     setStorylineImage(dinamicaFestaImg);
                     break;
+                case BBBType.RESUMO_DO_DIA:
+                    props.setAppClass("bbb-resumo");
+                    setStorylineTitle("RESUMO DO DIA");
+                    setStorylineImage(resumoDoDiaImg);
+                    break;
+                case BBBType.PROVA_DE_SOBREVIVENCIA:
+                    props.setAppClass("bbb-prova-de-sobrevivencia");
+                    setStorylineTitle("PROVA DE SOBREVIVÊNCIA");
+                    setStorylineImage(provaDeSobrevivenciaImg);
+                    break;
+                case BBBType.RESULTADO_FINAL:
+                    props.setAppClass("bbb-resultado-final");
+                    setStorylineTitle("A GRANDE FINAL");
+                    setStorylineImage(resultadoFinalImg);
+                    break;
                 default:
                     break;
             }
 
-            if(type > BBBType.DINAMICA) {
+            if((type > BBBType.DINAMICA) && (type !== BBBType.MODO_TURBO) && (type !== BBBType.FINAL)) {
+                setDayOfWeek(storyline.story[index].dayOfWeek);
                 setStorylineOcurrencies(storyline.story[index].occurrencies);
                 setShowWeekPresentation(false);
                 setShowStorylinePresentation(true);
@@ -610,12 +748,11 @@ const BBBPage = (props) => {
                     }, 100);
                 });
             }
-        }
-        //  else {
+        } else {
             // WINNER
-        //     setWinner(storyline.winner);
-        //     startActPresentation(setShowWinnerPresentation, setShowStorylinePresentation, 1000, 0, 'hunger-games-bg');
-        // }
+            setWinner(storyline.winner);
+            startActPresentation(setShowWinnerPresentation, setShowStorylinePresentation, 1000, 0, 'hunger-games-bg');
+        }
     }
 
     let hide = 0;
@@ -732,12 +869,17 @@ const BBBPage = (props) => {
                 title={storylineTitle}
                 story={storylineOcurrencies}
                 image={storylineImage}
+                dayOfWeek={dayOfWeek}
 
                 previousBtn = {() => prevActBtn()}
 
                 nextBtn = {() => nextActBtn()}
             />
-
+            <WinnerSegment
+                emojis={props.emojis}
+                visible={showWinnerPresentation}
+                winner={winner}
+            />
             <ModalInfo
                 open={modalInfoOpen} 
                 onClose={() => setModalInfoOpen(false)}

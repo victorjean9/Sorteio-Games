@@ -296,6 +296,66 @@
   animation: Gradient 15s ease infinite;
 }
 
+.bbb-modo-turbo {
+  background: linear-gradient(-215deg, #b535b2, #ab37b6, #625db8, #c33ca8, #a532b9, #d34dae, #fcd8ef);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-resumo {
+  background: linear-gradient(-215deg, #ffc8b2, #438ff7, #9d5ce8, #8674fd, #012705, #cb7ad9);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-prova-de-sobrevivencia {
+  background: linear-gradient(-215deg, #852e42, #b84754, #9d3746, #fc735b, #190d1d, #df666d);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-resultado-final {
+  background: linear-gradient(-215deg, #e56570, #4d8693, #fa825a, #fdccdb, #b09b98, #f38f7e);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
+.bbb-final {
+  background: linear-gradient(-215deg, #191933, #7c687a, #9687a6, #d9b3bc, #b298b8, #f2e1dd, #655369);
+  width: 100wh;
+  min-height: 100vh;
+  height: 100%;
+  color: #fff;
+  background-size: 400% 400%;
+  -webkit-animation: Gradient 15s ease infinite;
+  -moz-animation: Gradient 15s ease infinite;
+  animation: Gradient 15s ease infinite;
+}
+
 @media only screen and (max-width: 770px) {
   .bbb-intro {
     background-size: contain;
