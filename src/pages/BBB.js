@@ -19,7 +19,6 @@ import CrownAnimoji from '../images/animojis/crown.gif';
 import introVideo from '../videos/robo.webm';
 import BBBLogic from "../components/BBBLogic";
 import { useMediaQuery } from "react-responsive";
-import SlidingDiagonals from "../components/backgrounds/SlidingDiagonals";
 import BBBType from "../components/BBBType";
 
 
@@ -28,9 +27,6 @@ import duasCasasImg from '../images/bbb/duascasas.jpeg';
 import duasEntradasImg from '../images/bbb/duasentradas.png';
 import modoTurboImg from '../images/bbb/top10.png';
 import finalImg from '../images/bbb/final.png';
-
-
-import ColorfullWaves from "../components/backgrounds/ColofullWaves";
 
 //BANNERS
 import dinamicaMuroPipocaImg from '../images/bbb/bbb-muro-pipoca.jpg';
@@ -364,8 +360,8 @@ const BBBPage = (props) => {
 
     let [modalInfoOpen, setModalInfoOpen] = useState(false);
 
-    let [animationSlidingDiagonals, setAnimationSlidingDiagonals] = useState(false);
-    let [animationColorfullWaves, setAnimationColorfullWaves] = useState(false);
+    // let [animationSlidingDiagonals, setAnimationSlidingDiagonals] = useState(false);
+    // let [animationColorfullWaves, setAnimationColorfullWaves] = useState(false);
 
     let [showWinnerPresentation, setShowWinnerPresentation] = useState(false);
     let [winner, setWinner] = useState({name: "", emoji: 10});
@@ -414,10 +410,10 @@ const BBBPage = (props) => {
                     // startActPresentation(setShowGroupsPresentation, setShowPresentationGame, 100, 2000, null);
                     startActPresentation(setShowPresentationLogo, setShowPresentationGame, 100, 1300, 'bbb-white');
                     setTimeout(() => {
-                        startActPresentation(setShowGroupsPresentation, setShowPresentationLogo, 100, 2000, null);
-                        setTimeout(() => {
-                            setAnimationSlidingDiagonals(true);
-                        }, 2000);
+                        startActPresentation(setShowGroupsPresentation, setShowPresentationLogo, 100, 2000, 'bbb-week-presentation');
+                        // setTimeout(() => {
+                        //     setAnimationSlidingDiagonals(true);
+                        // }, 2000);
                     }, 2000);
                 }, 1000);
             }, 1500);
@@ -444,40 +440,15 @@ const BBBPage = (props) => {
             switch (type) {
                 case BBBType.SEMANA: // MOSTRA SEMANA
                     let week = storyline.story[index].week;
-                    startActPresentation(setShowWeekPresentation, setShowGroupsList, 1000, 0, null);
-                    setTimeout(() => {
-                        setAnimationSlidingDiagonals(false);
-                        setAnimationColorfullWaves(true);
-                    }, 1000);
+                    startActPresentation(setShowWeekPresentation, setShowGroupsList, 1000, 0, 'bbb-week-presentation');
 
                     setActualWeek(week);
 
-                    // if(week === 1){
-                    //     setPrevActBtn(() => () => {
-                    //         startActPresentation(setShowGroupsPresentation, setShowWeekPresentation, 1000, 0, null);
-                    //         setTimeout(() => {
-                    //             setAnimationColorfullWaves(false);
-                    //             setAnimationSlidingDiagonals(true);
-                    //         }, 1000);
-                    //     });
-                    // } else {
-                    //     setPrevActBtn(() => () => {
-                    //         setAnimationColorfullWaves(false);
-                    //         showStoryline(index-1);
-                    //     });
-                    // }
                     setPrevActBtn(() => () => {
                         startActPresentation(setShowGroupsPresentation, setShowWeekPresentation, 1000, 0, null);
-                        setTimeout(() => {
-                            setAnimationColorfullWaves(false);
-                            setAnimationSlidingDiagonals(true);
-                        }, 1000);
                     });
                     setNextActBtn(() => () => {
                         showStoryline(index+1);
-                        setTimeout(() => {
-                            setAnimationColorfullWaves(false);
-                        }, 1000);
                     });
                     break;
                 case BBBType.DINAMICA:
@@ -762,8 +733,6 @@ const BBBPage = (props) => {
     let showLogo = 0;
 
     return(<>
-            <SlidingDiagonals visible={animationSlidingDiagonals}/>
-            <ColorfullWaves visible={animationColorfullWaves} week={actualWeek}/>
             <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
             <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
             <Transition visible={showIntro} animation='fade up' duration={1000}>
@@ -822,9 +791,9 @@ const BBBPage = (props) => {
 
                 previousBtn = {() => {
                     startActPresentation(setShowPlayerSegment, setShowGroupsPresentation, 1000, 0, 'bbb-bg');
-                    setTimeout(() => {
-                        setAnimationSlidingDiagonals(false);
-                    }, 1000);
+                    // setTimeout(() => {
+                    //     setAnimationSlidingDiagonals(false);
+                    // }, 1000);
                 }}
 
                 nextBtn = {() => {

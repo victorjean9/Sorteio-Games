@@ -22,6 +22,11 @@
     font-size: 60px !important;
 }
 
+.bbb-week-presentation {
+	background: linear-gradient(-215deg, #1ecfbb, #e435cd, #d83467, #631ed1);
+    @include backgroundTheme();
+}
+
 .bbb-dinamica-muro {
 	background: linear-gradient(-215deg, #1C221C, #A4A3AF, #9FBFD1, #D5B994);
     @include backgroundTheme();
@@ -36,11 +41,6 @@
 	background: linear-gradient(-215deg, #C79B58, #F5D48A, #5E9CBF, #1D4F79);
     @include backgroundTheme();
 }
-
-
-
-
-
 
 .bbb-prova-imunidade-muro {
 	background: linear-gradient(-215deg, #110F17,#221E2F, #504E57, #908E97);
@@ -57,10 +57,6 @@
 .bbb-prova-imunidade-camarotes {
 	background: linear-gradient(-215deg, #142522, #4a6a42, #688758, #1e7b4c, #999d7c);
     @include backgroundTheme();
-}
-
-.bbb-dialogos-pos-prova-imunidade {
-	// nao tem
 }
 
 .bbb-fim-muro {

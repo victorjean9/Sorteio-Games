@@ -7,13 +7,13 @@
 
 
 import React from "react";
-import SlidingDiagonals from "../components/backgrounds/SlidingDiagonals";
+// import SlidingDiagonals from "../components/backgrounds/SlidingDiagonals";
 
 
 const TestPage = () => {
     return (
         <> 
-            <SlidingDiagonals />
+            {/* <SlidingDiagonals /> */}
         </>
     );
 }
