@@ -221,14 +221,8 @@ const StorylinePresentation = (props) => {
             case 4: // QUARTA-FEIRA
                 setDiaDaSemana("QUARTA-FEIRA");
                 break;
-            case 5: // QUINTA-FEIRA
-                setDiaDaSemana("QUINTA-FEIRA");
-                break;
-            case 6: // SEXTA-FEIRA
-                setDiaDaSemana("SEXTA-FEIRA");
-                break;
-            default: // SÁBADO
-                setDiaDaSemana("SÁBADO");
+            default: // QUINTA-FEIRA // SEXTA-FEIRA // SÁBADO
+                setDiaDaSemana("QUINTA, SEXTA E SÁBADO");
                 break;
         }
     }, [props.dayOfWeek]);
@@ -611,10 +605,10 @@ const BBBPage = (props) => {
                     setStorylineTitle("OS PARTICIPANTES DA SEGUNDA CASA ENTRAM NA CASA DO BBB");
                     setStorylineImage(dinamicaFimCasaSecundariaImg);
                     break;
-                case BBBType.PROVA_DO_LIDER:
+                case BBBType.RESUMO_DA_SEMANA:
                     props.setAppClass("bbb-prova-do-lider");
-                    setStorylineTitle("PROVA DO LÍDER");
-                    setStorylineImage(dinamicaProvaDoLiderImg);
+                    setStorylineTitle("RESUMO DA SEMANA");
+                    setStorylineImage(resumoDoDiaImg);
                     break;
                 case BBBType.FORMACAO_VIP_XEPA:
                     props.setAppClass("bbb-formacao-vip-xepa");

@@ -395,6 +395,19 @@ class BBBEvents {
         },
     ];
 
+    provaDoLiderTipo = [
+        "tempo",
+        "resistência",
+        "sorte",
+    ];
+
+    provaDoAnjoTipo = [
+        "tempo",
+        "sorte",
+        "estratégia",
+        "memória",
+    ];
+
     formacaoVIP = [
         { text: "(Lider) decidiu chamar (Jogador) pois afirma terem uma amizade." },
         { text: "(Lider) decidiu chamar (Jogador) pois não aguenta mais as reclamações de fome." },

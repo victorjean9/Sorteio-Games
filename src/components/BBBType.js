@@ -55,6 +55,7 @@ class BBBType {
     FINAL = 38;
     RESULTADO_FINAL = 39; // bbb-resultado-final.jpg
 
+    RESUMO_DA_SEMANA = 40; // bbb-resumo.jpg
 }
 
 export default (new BBBType());

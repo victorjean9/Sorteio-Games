@@ -312,46 +312,60 @@ class BBBLogic {
             oBigFoneVaiTocar = dinamicaDoParedao.oBigFoneVaiTocar;
             storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: dinamicaDoParedao.events, dayOfWeek: 5});
 
-            // Prova do lider
-            let provaDoLiderEventos = this.provaDoLider(playersLeft);
-            storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: provaDoLiderEventos.events, dayOfWeek: 5});
+            // RESUMO DA SEMANA
+            let resumoDaSemanaEvents = this.resumoDaSemana(playersLeft, week === 1);
+            lider = resumoDaSemanaEvents.lider;
+            anjo = resumoDaSemanaEvents.anjo;
+            piorDaProvaLider = resumoDaSemanaEvents.piorDaProvaLider;
+            piorDaProvaAnjo = resumoDaSemanaEvents.piorDaProvaAnjo;
+            monstros = resumoDaSemanaEvents.monstros;
+            VIPlist = resumoDaSemanaEvents.VIPlist;
+            XEPAlist = resumoDaSemanaEvents.XEPAlist;
+            
+            storyArray.push({type: BBBType.RESUMO_DA_SEMANA, occurrencies: resumoDaSemanaEvents.events, dayOfWeek: 5});
 
-            piorDaProvaLider = provaDoLiderEventos.worstPlayer;
-            lider = provaDoLiderEventos.winner;
 
-            // Formação VIP/XEPA
-            let formacaoVIP = this.formacaoVipXepa(lider, playersLeft);
-            storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: formacaoVIP.events, dayOfWeek: 5});
 
-            XEPAlist = [...formacaoVIP.XEPAlist];
-            VIPlist = [...formacaoVIP.VIPlist];
+            // // Prova do lider
+            // let provaDoLiderEventos = this.provaDoLider(playersLeft);
+            // storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: provaDoLiderEventos.events, dayOfWeek: 5});
 
-            /* SEXTA-FEIRA */
-            // festa
-            let festa = this.festa(playersLeft, week === 1);
-            storyArray.push({type: week === 1 ? BBBType.PRIMEIRA_FESTA : BBBType.FESTA, occurrencies: festa, dayOfWeek: 6});
+            // piorDaProvaLider = provaDoLiderEventos.worstPlayer;
+            // lider = provaDoLiderEventos.winner;
 
-            /* SABADO */
-            // Prova do anjo
-            let provaDoAnjoEventos = this.provaDoAnjo(playersLeft, lider);
-            storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: provaDoAnjoEventos.events, dayOfWeek: 7});
+            // // Formação VIP/XEPA
+            // let formacaoVIP = this.formacaoVipXepa(lider, playersLeft);
+            // storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: formacaoVIP.events, dayOfWeek: 5});
 
-            anjo = provaDoAnjoEventos.anjo;
-            piorDaProvaAnjo = provaDoAnjoEventos.piorJogador;
+            // XEPAlist = [...formacaoVIP.XEPAlist];
+            // VIPlist = [...formacaoVIP.VIPlist];
 
-            // Castigo do monstro
-            let castigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
-            storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: castigoDoMonstro.events, dayOfWeek: 7});
+            // /* SEXTA-FEIRA */
+            // // festa
+            // let festa = this.festa(playersLeft, week === 1);
+            // storyArray.push({type: week === 1 ? BBBType.PRIMEIRA_FESTA : BBBType.FESTA, occurrencies: festa, dayOfWeek: 6});
 
-            monstros = [...castigoDoMonstro.monstros];
-            XEPAlist = [...castigoDoMonstro.XEPAlist];
-            VIPlist = [...castigoDoMonstro.VIPlist];
+            // /* SABADO */
+            // // Prova do anjo
+            // let provaDoAnjoEventos = this.provaDoAnjo(playersLeft, lider);
+            // storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: provaDoAnjoEventos.events, dayOfWeek: 7});
 
-            /* DOMINGO */
-            // Presente do anjo
+            // anjo = provaDoAnjoEventos.anjo;
+            // piorDaProvaAnjo = provaDoAnjoEventos.piorJogador;
 
-            let presenteDoAnjo = this.presenteDoAnjo(playersLeft, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
-            storyArray.push({type: BBBType.PRESENTE_DO_ANJO, occurrencies: presenteDoAnjo, dayOfWeek: 1});
+            // // Castigo do monstro
+            // let castigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
+            // storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: castigoDoMonstro.events, dayOfWeek: 7});
+
+            // monstros = [...castigoDoMonstro.monstros];
+            // XEPAlist = [...castigoDoMonstro.XEPAlist];
+            // VIPlist = [...castigoDoMonstro.VIPlist];
+
+            // /* DOMINGO */
+            // // Presente do anjo
+
+            // let presenteDoAnjo = this.presenteDoAnjo(playersLeft, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
+            // storyArray.push({type: BBBType.PRESENTE_DO_ANJO, occurrencies: presenteDoAnjo, dayOfWeek: 1});
 
             // BIG FONE TOCA
             let tocarBigFoneEvent = null;
@@ -1002,79 +1016,174 @@ class BBBLogic {
         return storyEvents;
     }
 
-    provaDoLider = (players) => {
+    resumoDaSemana = (players, ehPrimeiraSemana) => {
+        let storyEvents = [];
+        let lider;
+        let piorDaProvaLider;
+        let anjo;
+        let piorDaProvaAnjo;
+        let VIPlist = [];
+        let XEPAlist = [];
+        let monstros;
         let playersLeft = this.shuffle([...players]); //embaralha jogadores
 
-        // let provaDoLiderIndex = this.randomize(BBBEvents.provaDoLider.length);
-        let provaDoLiderIndex = 0;
-        let provaDoLider = BBBEvents.provaDoLider[provaDoLiderIndex];
+        // PROVA DO LIDER
+        storyEvents.push("<b>👑 PROVA DO LÍDER 👑</b>");
 
-        let storyEvents = [];
-        let worstPlayer = null;
+        let provaDoLiderTipoIndex = this.randomize(BBBEvents.provaDoLiderTipo.length);
+        let provaDoLiderTipo = BBBEvents.provaDoLiderTipo[provaDoLiderTipoIndex];
 
-        if(provaDoLider.type === 'resistência'){
+        storyEvents.push("A prova do líder dessa semana será de " + provaDoLiderTipo + ".");
 
-            storyEvents.push(provaDoLider.description);
+        let indexWorstLiderPlayer = this.pickOnePlayer(playersLeft);
+        piorDaProvaLider = playersLeft[indexWorstLiderPlayer];
 
-            while(playersLeft.length > 1) {
-                let qtdPlayers = 0;
-                let eventNumber = 0;
-                let event;
-                do {
-                    eventNumber = this.randomize(provaDoLider.events.length);
-                    event = provaDoLider.events[eventNumber];
-                    qtdPlayers = event.players;
-                } while (qtdPlayers > playersLeft.length);
+        storyEvents.push("🚨 <b>" + piorDaProvaLider.name + "</b> obteve o pior desempenho na prova do líder.");
 
-                let i = 1;
-                let eventText = event.text;
-                let playersInSentence = [...playersLeft];
-                while(i <= qtdPlayers){
-                    let indexPlayer;
-                    let chosenPlayer;
+        let indexWinnerLiderPlayer;
+        do {
+            indexWinnerLiderPlayer = this.pickOnePlayer(playersLeft);
+            lider = playersLeft[indexWinnerLiderPlayer];
+        } while (indexWorstLiderPlayer === indexWinnerLiderPlayer);
 
-                    if(i === 1){
-                        indexPlayer = this.pickOnePlayer(playersLeft);
-                        chosenPlayer = playersLeft[indexPlayer];
-                    } else {
-                        indexPlayer = this.pickOnePlayer(playersInSentence);
-                        chosenPlayer = playersInSentence[indexPlayer];
-                    }
+        storyEvents.push("🏆 <b>" + lider.name + "</b> ganhou a prova do líder dessa semana!");
 
-                    for (let indexSentence = 0; indexSentence < playersInSentence.length; indexSentence++) {
-                        if(playersInSentence[indexSentence] === chosenPlayer) {
-                            playersInSentence.splice(indexSentence, 1);
-                            break;
-                        }
-                    }
+        // FORMAÇÃO VIP XEPA
+        storyEvents.push("<div class='ui divider'></div><b>💎 FORMAÇÃO DO VIP 💎</b>");
 
-                    let replacerStr = '(Jogador' + i +')';
-                    let regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
+        let formacaoEvent = this.formacaoVipXepa(lider, players);
+        VIPlist = formacaoEvent.VIPlist;
+        XEPAlist = formacaoEvent.XEPAlist;
 
-                    let newStr = '<b>' + chosenPlayer.name + '</b>';
+        formacaoEvent.events.forEach(evento => {
+            storyEvents.push(evento);
+        });
 
-                    eventText = eventText.replace(regexStr, newStr);
+        // FESTA
+        if(ehPrimeiraSemana) {
+            storyEvents.push("<div class='ui divider'></div><b>🎊 PRIMEIRA FESTA 🎉</b>");
+        } else {
+            storyEvents.push("<div class='ui divider'></div><b>🎊 FESTA 🎉</b>");
+        }
 
-                    if(i === 1){
-                        if(worstPlayer === null) {
-                            worstPlayer = chosenPlayer;
-                        }
-                        playersLeft.splice(indexPlayer, 1);
-                    }
+        let festaEvents = this.festa(players, ehPrimeiraSemana);
+        festaEvents.forEach(evento => {
+            storyEvents.push(evento);
+        });
+        
+        // PROVA DO ANJO
+        storyEvents.push("<div class='ui divider'></div><b>👼 PROVA DO ANJO 👼</b>");
 
-                    i++;
-                }
+        let provaDoAnjoEventos = this.provaDoAnjo(players, lider);
+        anjo = provaDoAnjoEventos.anjo;
+        piorDaProvaAnjo = provaDoAnjoEventos.piorJogador;
+        provaDoAnjoEventos.events.forEach(evento => {
+            storyEvents.push(evento);
+        });
+        
+        // CASTIGO DO MONSTRO
+        storyEvents.push("<div class='ui divider'></div><b>👹 CASTIGO DO MONSTRO 👹</b>");
 
-                storyEvents.push(eventText);
-            }
+        let castigoDoMonstroEvents = this.castigoDoMonstro(players, anjo, XEPAlist, VIPlist);
+        VIPlist = castigoDoMonstroEvents.VIPlist;
+        XEPAlist = castigoDoMonstroEvents.XEPAlist;
+        monstros = castigoDoMonstroEvents.monstros;
+        castigoDoMonstroEvents.events.forEach(evento => {
+            storyEvents.push(evento);
+        });
 
-        } else { /* sorte */ }
+        // PRESENTE DO ANJO
+        storyEvents.push("<div class='ui divider'></div><b>🎁 PRESENTE DO ANJO 🎁</b>");
 
-        let anunciaVencedor = "🏆 <b>" + playersLeft[0].name + "</b> venceu a prova do líder!";
-        storyEvents.push(anunciaVencedor);
+        let presenteDoAnjoEvent = this.presenteDoAnjo(players, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
+        storyEvents.push(presenteDoAnjoEvent);
 
-        return {type: provaDoLider.type, description: provaDoLider.description, events: storyEvents, winner: playersLeft[0], worstPlayer: worstPlayer};
-    } 
+        return {
+            events: storyEvents,
+            lider: lider,
+            piorDaProvaLider: piorDaProvaLider,
+            anjo: anjo,
+            piorDaProvaAnjo: piorDaProvaAnjo,
+            VIPlist: VIPlist,
+            XEPAlist: XEPAlist,
+            monstros: monstros,
+        }
+
+    }
+
+    // provaDoLider = (players) => {
+    //     let playersLeft = this.shuffle([...players]); //embaralha jogadores
+
+    //     // let provaDoLiderIndex = this.randomize(BBBEvents.provaDoLider.length);
+    //     let provaDoLiderIndex = 0;
+    //     let provaDoLider = BBBEvents.provaDoLider[provaDoLiderIndex];
+
+    //     let storyEvents = [];
+    //     let worstPlayer = null;
+
+    //     if(provaDoLider.type === 'resistência'){
+
+    //         storyEvents.push(provaDoLider.description);
+
+    //         while(playersLeft.length > 1) {
+    //             let qtdPlayers = 0;
+    //             let eventNumber = 0;
+    //             let event;
+    //             do {
+    //                 eventNumber = this.randomize(provaDoLider.events.length);
+    //                 event = provaDoLider.events[eventNumber];
+    //                 qtdPlayers = event.players;
+    //             } while (qtdPlayers > playersLeft.length);
+
+    //             let i = 1;
+    //             let eventText = event.text;
+    //             let playersInSentence = [...playersLeft];
+    //             while(i <= qtdPlayers){
+    //                 let indexPlayer;
+    //                 let chosenPlayer;
+
+    //                 if(i === 1){
+    //                     indexPlayer = this.pickOnePlayer(playersLeft);
+    //                     chosenPlayer = playersLeft[indexPlayer];
+    //                 } else {
+    //                     indexPlayer = this.pickOnePlayer(playersInSentence);
+    //                     chosenPlayer = playersInSentence[indexPlayer];
+    //                 }
+
+    //                 for (let indexSentence = 0; indexSentence < playersInSentence.length; indexSentence++) {
+    //                     if(playersInSentence[indexSentence] === chosenPlayer) {
+    //                         playersInSentence.splice(indexSentence, 1);
+    //                         break;
+    //                     }
+    //                 }
+
+    //                 let replacerStr = '(Jogador' + i +')';
+    //                 let regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
+
+    //                 let newStr = '<b>' + chosenPlayer.name + '</b>';
+
+    //                 eventText = eventText.replace(regexStr, newStr);
+
+    //                 if(i === 1){
+    //                     if(worstPlayer === null) {
+    //                         worstPlayer = chosenPlayer;
+    //                     }
+    //                     playersLeft.splice(indexPlayer, 1);
+    //                 }
+
+    //                 i++;
+    //             }
+
+    //             storyEvents.push(eventText);
+    //         }
+
+    //     } else { /* sorte */ }
+
+    //     let anunciaVencedor = "🏆 <b>" + playersLeft[0].name + "</b> venceu a prova do líder!";
+    //     storyEvents.push(anunciaVencedor);
+
+    //     return {type: provaDoLider.type, description: provaDoLider.description, events: storyEvents, winner: playersLeft[0], worstPlayer: worstPlayer};
+    // } 
 
     formacaoVipXepa = (lider, players) => {
         // a quantidade de pessoas no vip pode variar de 30 a 50% do grupo(contando com o lider pq ele tbm ganha pulseira)
@@ -1163,12 +1272,11 @@ class BBBLogic {
 
         storyEvents.push(eventTextXEPA);
 
-        return {qtdDePulseirasVIP: qtdDePulseirasVIP, qtdDePulseirasLider: qtdDePulseirasQueLiderVaiUsar, events: storyEvents, VIPlist: VIPlist, XEPAlist: XEPAlist };
+        return {events: storyEvents, VIPlist: VIPlist, XEPAlist: XEPAlist };
     }
 
     festa = (players, ehPrimeiraFesta) => {
         let playersOrder = [...players];
-        let playersGone = [];
 
         let storyEvents = [];
 
@@ -1180,26 +1288,16 @@ class BBBLogic {
                 eventNumber = this.randomize(ehPrimeiraFesta ? BBBEvents.primeiraFesta.length : BBBEvents.festa.length);
                 event = ehPrimeiraFesta ? BBBEvents.primeiraFesta[eventNumber] : BBBEvents.festa[eventNumber];
                 qtdPlayers = event.players;
-            } while (qtdPlayers > (playersGone.length + 1));
+            } while (qtdPlayers > playersOrder.length);
 
             let i = 1;
             let eventText = event.text;
-            // let firstPlayer = null;
-            let playersGoneAux = [...playersGone];
             while(i <= qtdPlayers){
                 let indexPlayer;
                 let chosenPlayer;
 
-                if(i === 1){
-                    indexPlayer = this.pickOnePlayer(playersOrder);
-                    chosenPlayer = playersOrder[indexPlayer];
-                    
-                    // firstPlayer = chosenPlayer;
-                    playersGone.push(chosenPlayer);
-                } else {
-                    indexPlayer = this.pickOnePlayer(playersGoneAux);
-                    chosenPlayer = playersGoneAux[indexPlayer];
-                }
+                indexPlayer = this.pickOnePlayer(playersOrder);
+                chosenPlayer = playersOrder[indexPlayer];
 
                 let replacerStr = '(Jogador' + i +')';
                 let regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
@@ -1208,11 +1306,7 @@ class BBBLogic {
 
                 eventText = eventText.replace(regexStr, newStr);
 
-                if(i === 1){
-                    playersOrder.splice(indexPlayer, 1);
-                } else {
-                    playersGoneAux.splice(indexPlayer, 1);
-                }
+                playersOrder.splice(indexPlayer, 1);
 
                 i++;
             }
@@ -1310,75 +1404,25 @@ class BBBLogic {
         storyEvents.push(eventTextSorteados);
 
         // prova do anjo em si
+        let provaDoAnjoTipoIndex = this.randomize(BBBEvents.provaDoAnjoTipo.length);
+        let provaDoAnjoTipo = BBBEvents.provaDoAnjoTipo[provaDoAnjoTipoIndex];
 
-        let provaDoAnjoIndex = this.randomize(BBBEvents.provaDoAnjo.length);
-        let provaDoAnjo = BBBEvents.provaDoAnjo[provaDoAnjoIndex];
+        storyEvents.push("A prova do anjo dessa semana será de " + provaDoAnjoTipo + ".");
 
-        if(provaDoAnjo.type === "tempo") {
+        let indexWorstAnjoPlayer = this.pickOnePlayer(jogadoresParticipantes);
+        piorJogador = jogadoresParticipantes[indexWorstAnjoPlayer];
 
-            let melhorTempo = 100;
-            let piorTempo = 0;
+        storyEvents.push("🚨 <b>" + piorJogador.name + "</b> obteve o pior desempenho na prova do anjo.");
 
-            storyEvents.push(provaDoAnjo.description);
+        let indexWinnerAnjoPlayer;
+        do {
+            indexWinnerAnjoPlayer = this.pickOnePlayer(jogadoresParticipantes);
+            melhorJogador = jogadoresParticipantes[indexWinnerAnjoPlayer];
+        } while (indexWorstAnjoPlayer === indexWinnerAnjoPlayer);
 
-            let playersShuffle = this.shuffle(jogadoresParticipantes);
+        storyEvents.push( "😇 O anjo da semana é <b>" + melhorJogador.name + "</b>!");
 
-
-            playersShuffle.forEach(player => {
-                // decide desclassificacao
-                let seraDesclassificado = this.randomize(101) > 90 ? true : false; // 90% de nao ter
-
-                let eventText = seraDesclassificado ? provaDoAnjo.eventFatal : provaDoAnjo.eventTempo;
-
-                let replacerStr = '(Jogador)';
-                let regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
-                let newStr = '<b>' + player.name + '</b>';
-
-                eventText = eventText.replace(regexStr, newStr);
-
-                
-                if(!seraDesclassificado) {
-                    let tempo = this.randomize(11) + Math.random();
-
-                    let replacerTempoStr = '(Tempo)';
-                    let regexTempoStr = new RegExp(this.escapeRegExp(replacerTempoStr), 'g');
-                    let newTempoStr = '<b>' + tempo + '</b>';
-
-                    eventText = eventText.replace(regexTempoStr, newTempoStr);
-
-                    // atualiza melhor tempo
-                    melhorTempo = tempo < melhorTempo ? tempo : melhorTempo;
-                    piorTempo = tempo > piorTempo ? tempo : piorTempo;
-
-                    if(melhorTempo === tempo) {
-                        melhorJogador = player;
-                    }
-                    if(piorTempo === tempo) {
-                        piorJogador = player;
-                    }
-                } else {
-                    if(piorTempo < 1000){
-                        piorTempo = 1000;
-                        piorJogador = player;
-                    }
-                }
-                
-                storyEvents.push(eventText);
-            });
-
-            // anuncia vencedor
-
-            let fraseVitoria = "😇 O anjo da semana é (Vencedor)!";
-            let replacerVencedorStr = '(Vencedor)';
-            let regexVencedorStr = new RegExp(this.escapeRegExp(replacerVencedorStr), 'g');
-            let newVencedorStr = '<b>' + melhorJogador.name + '</b>';
-
-            fraseVitoria = fraseVitoria.replace(regexVencedorStr, newVencedorStr);
-
-            storyEvents.push(fraseVitoria);
-        } else {}
-
-        return({type: provaDoAnjo.type, events: storyEvents, anjo: melhorJogador, piorJogador: piorJogador, jogadorVetado: jogadorVetado});
+        return({events: storyEvents, anjo: melhorJogador, piorJogador: piorJogador, jogadorVetado: jogadorVetado});
     }
 
     castigoDoMonstro = (players, anjo, XEPAlist, VIPlist) => {
@@ -1405,38 +1449,30 @@ class BBBLogic {
         }
 
         // escolhe um castigo
-        let castigoDoMonstroIndex = this.randomize(BBBEvents.castigoDoMonstro.length);
-        let castigoDoMonstro = BBBEvents.castigoDoMonstro[castigoDoMonstroIndex];
+        let castigoDoMonstroIndex = this.randomize(BBBEvents.eventosGeraisCastigoDoMonstro.length);
+        let castigoDoMonstro = BBBEvents.eventosGeraisCastigoDoMonstro[castigoDoMonstroIndex];
 
-        storyEvents.push(castigoDoMonstro.description);
+        let eventText = castigoDoMonstro.text;
 
-        if(castigoDoMonstro.type === "musica") {
+        let replacerAnjoStr = '(Anjo)';
+        let regexAnjoStr = new RegExp(this.escapeRegExp(replacerAnjoStr), 'g');
+        let newAnjoStr = '<b>' + anjo.name + '</b>';
 
-            let eventNumber = this.randomize(castigoDoMonstro.events.length);
-            let event = castigoDoMonstro.events[eventNumber];
+        eventText = eventText.replace(regexAnjoStr, newAnjoStr);
 
-            let eventText = event.text;
+        let replacerMonstro1Str = '(Jogador1)';
+        let regexMonstro1Str = new RegExp(this.escapeRegExp(replacerMonstro1Str), 'g');
+        let newMonstro1Str = '<b>' + monstros[0].name + '</b>';
 
-            let replacerAnjoStr = '(Anjo)';
-            let regexAnjoStr = new RegExp(this.escapeRegExp(replacerAnjoStr), 'g');
-            let newAnjoStr = '<b>' + anjo.name + '</b>';
+        eventText = eventText.replace(regexMonstro1Str, newMonstro1Str);
 
-            eventText = eventText.replace(regexAnjoStr, newAnjoStr);
+        let replacerMonstro2Str = '(Jogador2)';
+        let regexMonstro2Str = new RegExp(this.escapeRegExp(replacerMonstro2Str), 'g');
+        let newMonstro2Str = '<b>' + monstros[1].name + '</b>';
 
-            let replacerMonstro1Str = '(Jogador1)';
-            let regexMonstro1Str = new RegExp(this.escapeRegExp(replacerMonstro1Str), 'g');
-            let newMonstro1Str = '<b>' + monstros[0].name + '</b>';
+        eventText = eventText.replace(regexMonstro2Str, newMonstro2Str);
 
-            eventText = eventText.replace(regexMonstro1Str, newMonstro1Str);
-
-            let replacerMonstro2Str = '(Jogador2)';
-            let regexMonstro2Str = new RegExp(this.escapeRegExp(replacerMonstro2Str), 'g');
-            let newMonstro2Str = '<b>' + monstros[1].name + '</b>';
-
-            eventText = eventText.replace(regexMonstro2Str, newMonstro2Str);
-
-            storyEvents.push(eventText);
-        } else {}
+        storyEvents.push(eventText);
 
         // verifica se vip vai pra xepa
         let foramPraXepa = []; // somente indexes
@@ -1495,7 +1531,7 @@ class BBBLogic {
             novaXEPAlist = [...novaXEPAlist, ...foramPraXepa];
 
         } 
-        return {description: castigoDoMonstro.description, events: storyEvents, monstros: monstros, XEPAlist: novaXEPAlist,VIPlist: novaVIPlist}
+        return {events: storyEvents, monstros: monstros, XEPAlist: novaXEPAlist,VIPlist: novaVIPlist}
     }
 
     presenteDoAnjo = (players, anjo, lider, XEPAlist, VIPlist, piorLider, piorAnjo, monstros) => {
@@ -1597,7 +1633,7 @@ class BBBLogic {
         let newJogador3Str = '<b>' + jogador3.name + '</b>';
         eventText = eventText.replace(regexJogador3Str, newJogador3Str);
 
-        return [eventText];
+        return eventText;
     }
 
     dinamicaDoParedao = (oBigFoneFoiRecenteRecebido, ehPrimeiraSemana) => {
