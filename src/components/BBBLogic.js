@@ -1,6 +1,20 @@
 import BBBEvents from "./BBBEvents";
 import BBBType from "./BBBType";
 
+import PopCornEmoji from '../images/emojis/popcorn.png';
+import CrownEmoji from '../images/emojis/crown.png';
+import TrophyEmoji from '../images/emojis/trophy.png';
+import PoliceCarLightEmoji from '../images/emojis/police-car-light.png';
+import GemStoneLightEmoji from '../images/emojis/gem-stone.png';
+import ConfettiBallEmoji from '../images/emojis/confetti-ball.png';
+import PartyPopperEmoji from '../images/emojis/party-popper.png';
+import BabyAngelEmoji from '../images/emojis/baby-angel.png';
+import OgreEmoji from '../images/emojis/ogre.png';
+import WrappedGiftEmoji from '../images/emojis/wrapped-gift.png';
+import SmilingFaceWithHaloEmoji from '../images/emojis/smiling-face-with-halo.png';
+import TelephoneReceiverEmoji from '../images/emojis/telephone-receiver.png';
+import WarningEmoji from '../images/emojis/warning.png';
+
 class BBBLogic {
 
     escapeRegExp = (string) => {
@@ -23,7 +37,7 @@ class BBBLogic {
         }
       
         return array;
-      }
+    }
 
     pickOnePlayer = (playersList) => {
         if(playersList.length > 1) {
@@ -324,49 +338,6 @@ class BBBLogic {
             
             storyArray.push({type: BBBType.RESUMO_DA_SEMANA, occurrencies: resumoDaSemanaEvents.events, dayOfWeek: 5});
 
-
-
-            // // Prova do lider
-            // let provaDoLiderEventos = this.provaDoLider(playersLeft);
-            // storyArray.push({type: BBBType.PROVA_DO_LIDER, occurrencies: provaDoLiderEventos.events, dayOfWeek: 5});
-
-            // piorDaProvaLider = provaDoLiderEventos.worstPlayer;
-            // lider = provaDoLiderEventos.winner;
-
-            // // Formação VIP/XEPA
-            // let formacaoVIP = this.formacaoVipXepa(lider, playersLeft);
-            // storyArray.push({type: BBBType.FORMACAO_VIP_XEPA, occurrencies: formacaoVIP.events, dayOfWeek: 5});
-
-            // XEPAlist = [...formacaoVIP.XEPAlist];
-            // VIPlist = [...formacaoVIP.VIPlist];
-
-            // /* SEXTA-FEIRA */
-            // // festa
-            // let festa = this.festa(playersLeft, week === 1);
-            // storyArray.push({type: week === 1 ? BBBType.PRIMEIRA_FESTA : BBBType.FESTA, occurrencies: festa, dayOfWeek: 6});
-
-            // /* SABADO */
-            // // Prova do anjo
-            // let provaDoAnjoEventos = this.provaDoAnjo(playersLeft, lider);
-            // storyArray.push({type: BBBType.PROVA_DO_ANJO, occurrencies: provaDoAnjoEventos.events, dayOfWeek: 7});
-
-            // anjo = provaDoAnjoEventos.anjo;
-            // piorDaProvaAnjo = provaDoAnjoEventos.piorJogador;
-
-            // // Castigo do monstro
-            // let castigoDoMonstro = this.castigoDoMonstro(playersLeft, anjo, XEPAlist, VIPlist);
-            // storyArray.push({type: BBBType.CASTIGO_DO_MONSTRO, occurrencies: castigoDoMonstro.events, dayOfWeek: 7});
-
-            // monstros = [...castigoDoMonstro.monstros];
-            // XEPAlist = [...castigoDoMonstro.XEPAlist];
-            // VIPlist = [...castigoDoMonstro.VIPlist];
-
-            // /* DOMINGO */
-            // // Presente do anjo
-
-            // let presenteDoAnjo = this.presenteDoAnjo(playersLeft, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
-            // storyArray.push({type: BBBType.PRESENTE_DO_ANJO, occurrencies: presenteDoAnjo, dayOfWeek: 1});
-
             // BIG FONE TOCA
             let tocarBigFoneEvent = null;
             if(oBigFoneVaiTocar){
@@ -664,9 +635,9 @@ class BBBLogic {
                     playersOrder.splice(indexPlayer, 1);
 
                     if(chosenPlayer.type === 'pipoca') {
-                        eventText = '🍿' + eventText;
+                        eventText = `<img src='${PopCornEmoji}' class='emoji intext' alt='pipoca emoji'/>` + eventText;
                     } else {
-                        eventText = '👑' + eventText;
+                        eventText = `<img src='${CrownEmoji}' class='emoji intext' alt='coroa emoji'/>` + eventText;
                     }
                 }
 
@@ -678,7 +649,7 @@ class BBBLogic {
 
         let winner = qtdPipocas > 0 ? 'pipoca' : 'camarote';
 
-        let anunciaGrupoVencedor = "🏆 Vitória dos participantes <b>" + winner + "s</b>!"; 
+        let anunciaGrupoVencedor = `<img src='${TrophyEmoji}' class='emoji intext' alt='trofeu emoji'/> Vitória dos participantes <b>` + winner + "s</b>!"; 
         storyEvents.push(anunciaGrupoVencedor);
 
         return {type: provaImunidade.type, description: provaImunidade.description, events: storyEvents, winner: winner };
@@ -744,7 +715,7 @@ class BBBLogic {
             storyEvents.push(eventText);
         }
 
-        let anunciaVencedores = "🏆 <b>" + playersOrder[0].name + "</b> e <b>" + playersOrder[1].name + "</b> ganharam a prova de imunidade!"; 
+        let anunciaVencedores = `<img src='${TrophyEmoji}' class='emoji intext' alt='trofeu emoji'/> <b>` + playersOrder[0].name + "</b> e <b>" + playersOrder[1].name + "</b> ganharam a prova de imunidade!"; 
         storyEvents.push(anunciaVencedores);
 
         return {type: provaImunidade.type, description: provaImunidade.description, events: storyEvents, winners: playersOrder };
@@ -825,7 +796,7 @@ class BBBLogic {
 
                 if(i === 1){
                     if(typePlayer === 'ganhador'){
-                        eventText = '🏆' + eventText;
+                        eventText = `<img src='${TrophyEmoji}' class='emoji intext' alt='trofeu emoji'/>` + eventText;
 
                         playersGanhadoresOrder.splice(indexPlayer, 1);
                     } else {
@@ -1028,7 +999,7 @@ class BBBLogic {
         let playersLeft = this.shuffle([...players]); //embaralha jogadores
 
         // PROVA DO LIDER
-        storyEvents.push("<b>👑 PROVA DO LÍDER 👑</b>");
+        storyEvents.push(`<b><img src='${CrownEmoji}' class='emoji intext' alt='coroa emoji'/> PROVA DO LÍDER <img src='${CrownEmoji}' class='emoji intext' alt='coroa emoji'/></b>`);
 
         let provaDoLiderTipoIndex = this.randomize(BBBEvents.provaDoLiderTipo.length);
         let provaDoLiderTipo = BBBEvents.provaDoLiderTipo[provaDoLiderTipoIndex];
@@ -1038,7 +1009,7 @@ class BBBLogic {
         let indexWorstLiderPlayer = this.pickOnePlayer(playersLeft);
         piorDaProvaLider = playersLeft[indexWorstLiderPlayer];
 
-        storyEvents.push("🚨 <b>" + piorDaProvaLider.name + "</b> obteve o pior desempenho na prova do líder.");
+        storyEvents.push(`<img src='${PoliceCarLightEmoji}' class='emoji intext' alt='luz de carro de policia emoji'/> <b>` + piorDaProvaLider.name + "</b> obteve o pior desempenho na prova do líder.");
 
         let indexWinnerLiderPlayer;
         do {
@@ -1046,10 +1017,10 @@ class BBBLogic {
             lider = playersLeft[indexWinnerLiderPlayer];
         } while (indexWorstLiderPlayer === indexWinnerLiderPlayer);
 
-        storyEvents.push("🏆 <b>" + lider.name + "</b> ganhou a prova do líder dessa semana!");
+        storyEvents.push(`<img src='${TrophyEmoji}' class='emoji intext' alt='trofeu emoji'/> <b>` + lider.name + "</b> ganhou a prova do líder dessa semana!");
 
         // FORMAÇÃO VIP XEPA
-        storyEvents.push("<div class='ui divider'></div><b>💎 FORMAÇÃO DO VIP 💎</b>");
+        storyEvents.push(`<div class='ui divider'></div><b><img src='${GemStoneLightEmoji}' class='emoji intext' alt='diamante emoji'/> FORMAÇÃO DO VIP <img src='${GemStoneLightEmoji}' class='emoji intext' alt='diamante emoji'/></b>`);
 
         let formacaoEvent = this.formacaoVipXepa(lider, players);
         VIPlist = formacaoEvent.VIPlist;
@@ -1061,9 +1032,9 @@ class BBBLogic {
 
         // FESTA
         if(ehPrimeiraSemana) {
-            storyEvents.push("<div class='ui divider'></div><b>🎊 PRIMEIRA FESTA 🎉</b>");
+            storyEvents.push(`<div class='ui divider'></div><b><img src='${PartyPopperEmoji}' class='emoji intext' alt='confetti emoji'/> PRIMEIRA FESTA <img src='${ConfettiBallEmoji}' class='emoji intext' alt='bola de confetti emoji'/></b>`);
         } else {
-            storyEvents.push("<div class='ui divider'></div><b>🎊 FESTA 🎉</b>");
+            storyEvents.push(`<div class='ui divider'></div><b><img src='${PartyPopperEmoji}' class='emoji intext' alt='confetti emoji'/> FESTA <img src='${ConfettiBallEmoji}' class='emoji intext' alt='bola de confetti emoji'/></b>`);
         }
 
         let festaEvents = this.festa(players, ehPrimeiraSemana);
@@ -1072,7 +1043,7 @@ class BBBLogic {
         });
         
         // PROVA DO ANJO
-        storyEvents.push("<div class='ui divider'></div><b>👼 PROVA DO ANJO 👼</b>");
+        storyEvents.push(`<div class='ui divider'></div><b><img src='${BabyAngelEmoji}' class='emoji intext' alt='anjo bebê emoji'/> PROVA DO ANJO <img src='${BabyAngelEmoji}' class='emoji intext' alt='anjo bebê emoji'/></b>`);
 
         let provaDoAnjoEventos = this.provaDoAnjo(players, lider);
         anjo = provaDoAnjoEventos.anjo;
@@ -1082,7 +1053,7 @@ class BBBLogic {
         });
         
         // CASTIGO DO MONSTRO
-        storyEvents.push("<div class='ui divider'></div><b>👹 CASTIGO DO MONSTRO 👹</b>");
+        storyEvents.push(`<div class='ui divider'></div><b><img src='${OgreEmoji}' class='emoji intext' alt='ogro emoji'/> CASTIGO DO MONSTRO <img src='${OgreEmoji}' class='emoji intext' alt='ogro emoji'/></b>`);
 
         let castigoDoMonstroEvents = this.castigoDoMonstro(players, anjo, XEPAlist, VIPlist);
         VIPlist = castigoDoMonstroEvents.VIPlist;
@@ -1093,7 +1064,7 @@ class BBBLogic {
         });
 
         // PRESENTE DO ANJO
-        storyEvents.push("<div class='ui divider'></div><b>🎁 PRESENTE DO ANJO 🎁</b>");
+        storyEvents.push(`<div class='ui divider'></div><b><img src='${WrappedGiftEmoji}' class='emoji intext' alt='presente emoji'/> PRESENTE DO ANJO <img src='${WrappedGiftEmoji}' class='emoji intext' alt='presente emoji'/></b>`);
 
         let presenteDoAnjoEvent = this.presenteDoAnjo(players, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
         storyEvents.push(presenteDoAnjoEvent);
@@ -1111,80 +1082,7 @@ class BBBLogic {
 
     }
 
-    // provaDoLider = (players) => {
-    //     let playersLeft = this.shuffle([...players]); //embaralha jogadores
-
-    //     // let provaDoLiderIndex = this.randomize(BBBEvents.provaDoLider.length);
-    //     let provaDoLiderIndex = 0;
-    //     let provaDoLider = BBBEvents.provaDoLider[provaDoLiderIndex];
-
-    //     let storyEvents = [];
-    //     let worstPlayer = null;
-
-    //     if(provaDoLider.type === 'resistência'){
-
-    //         storyEvents.push(provaDoLider.description);
-
-    //         while(playersLeft.length > 1) {
-    //             let qtdPlayers = 0;
-    //             let eventNumber = 0;
-    //             let event;
-    //             do {
-    //                 eventNumber = this.randomize(provaDoLider.events.length);
-    //                 event = provaDoLider.events[eventNumber];
-    //                 qtdPlayers = event.players;
-    //             } while (qtdPlayers > playersLeft.length);
-
-    //             let i = 1;
-    //             let eventText = event.text;
-    //             let playersInSentence = [...playersLeft];
-    //             while(i <= qtdPlayers){
-    //                 let indexPlayer;
-    //                 let chosenPlayer;
-
-    //                 if(i === 1){
-    //                     indexPlayer = this.pickOnePlayer(playersLeft);
-    //                     chosenPlayer = playersLeft[indexPlayer];
-    //                 } else {
-    //                     indexPlayer = this.pickOnePlayer(playersInSentence);
-    //                     chosenPlayer = playersInSentence[indexPlayer];
-    //                 }
-
-    //                 for (let indexSentence = 0; indexSentence < playersInSentence.length; indexSentence++) {
-    //                     if(playersInSentence[indexSentence] === chosenPlayer) {
-    //                         playersInSentence.splice(indexSentence, 1);
-    //                         break;
-    //                     }
-    //                 }
-
-    //                 let replacerStr = '(Jogador' + i +')';
-    //                 let regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
-
-    //                 let newStr = '<b>' + chosenPlayer.name + '</b>';
-
-    //                 eventText = eventText.replace(regexStr, newStr);
-
-    //                 if(i === 1){
-    //                     if(worstPlayer === null) {
-    //                         worstPlayer = chosenPlayer;
-    //                     }
-    //                     playersLeft.splice(indexPlayer, 1);
-    //                 }
-
-    //                 i++;
-    //             }
-
-    //             storyEvents.push(eventText);
-    //         }
-
-    //     } else { /* sorte */ }
-
-    //     let anunciaVencedor = "🏆 <b>" + playersLeft[0].name + "</b> venceu a prova do líder!";
-    //     storyEvents.push(anunciaVencedor);
-
-    //     return {type: provaDoLider.type, description: provaDoLider.description, events: storyEvents, winner: playersLeft[0], worstPlayer: worstPlayer};
-    // } 
-
+    
     formacaoVipXepa = (lider, players) => {
         // a quantidade de pessoas no vip pode variar de 30 a 50% do grupo(contando com o lider pq ele tbm ganha pulseira)
         let qtdDePulseirasVIP = Math.floor(((Math.floor(Math.random() * 21) + 30) / 100) * players.length);
@@ -1412,7 +1310,7 @@ class BBBLogic {
         let indexWorstAnjoPlayer = this.pickOnePlayer(jogadoresParticipantes);
         piorJogador = jogadoresParticipantes[indexWorstAnjoPlayer];
 
-        storyEvents.push("🚨 <b>" + piorJogador.name + "</b> obteve o pior desempenho na prova do anjo.");
+        storyEvents.push(`<img src='${PoliceCarLightEmoji}' class='emoji intext' alt='luz de carro de policia emoji'/> <b>` + piorJogador.name + "</b> obteve o pior desempenho na prova do anjo.");
 
         let indexWinnerAnjoPlayer;
         do {
@@ -1420,7 +1318,7 @@ class BBBLogic {
             melhorJogador = jogadoresParticipantes[indexWinnerAnjoPlayer];
         } while (indexWorstAnjoPlayer === indexWinnerAnjoPlayer);
 
-        storyEvents.push( "😇 O anjo da semana é <b>" + melhorJogador.name + "</b>!");
+        storyEvents.push(`<img src='${SmilingFaceWithHaloEmoji}' class='emoji intext' alt='anjo emoji'/> O anjo da semana é <b>` + melhorJogador.name + "</b>!");
 
         return({events: storyEvents, anjo: melhorJogador, piorJogador: piorJogador, jogadorVetado: jogadorVetado});
     }
@@ -1732,7 +1630,7 @@ class BBBLogic {
         let indexPlayerAtendente = this.pickOnePlayer(players);
         let playerAtendente = players[indexPlayerAtendente];
 
-        let textAtendente = "📞 <b>" + playerAtendente.name + "</b> atendeu o big fone!";
+        let textAtendente = `<img src='${TelephoneReceiverEmoji}' class='emoji intext' alt='telefone emoji'/> <b>` + playerAtendente.name + "</b> atendeu o big fone!";
         storyEvents.push(textAtendente);
 
         let indexPlayerPuchado;
@@ -2891,7 +2789,7 @@ class BBBLogic {
             }
         }
 
-        let resumoEmparedados = "🧱 Estão no paredão: ";
+        let resumoEmparedados = `<img src='${WarningEmoji}' class='emoji intext' alt='perigo emoji'/> Estão no paredão: `;
 
         let contadorFinal = 1; 
         emparedados.forEach(player => {
@@ -3187,7 +3085,7 @@ class BBBLogic {
 
         }
 
-        let resumoEmparedados = "🧱 Estão no paredão: ";
+        let resumoEmparedados = `<img src='${WarningEmoji}' class='emoji intext' alt='perigo emoji'/> Estão no paredão: `;
 
         let contadorFinal = 1; 
         emparedados.forEach(player => {
