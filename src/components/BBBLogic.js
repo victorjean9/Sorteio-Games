@@ -2941,6 +2941,11 @@ class BBBLogic {
         let indexProva = this.randomize(BBBEvents.provaDeSobrevivencia.length);
         let prova = BBBEvents.provaDeSobrevivencia[indexProva];
 
+        let provaDoLiderTipoIndex = this.randomize(BBBEvents.provaDoLiderTipo.length);
+        let provaDoLiderTipo = BBBEvents.provaDoLiderTipo[provaDoLiderTipoIndex];
+
+        storyEvents.push("A prova de sorte será de " + provaDoLiderTipo + ".");
+
         if(prova.type === "resistencia"){
             let descricao = prova.description;
             let replacerStrDesc = '(qtd)';
@@ -2949,7 +2954,7 @@ class BBBLogic {
 
             descricao = descricao.replace(regexStrDesc, newStrDesc);
 
-            storyEvents.push(descricao);
+            //storyEvents.push(descricao);
 
             let countAux = 0;
             while(countAux < qtdParedao) {
@@ -2972,11 +2977,11 @@ class BBBLogic {
 
                 playersLeft.splice(indexPlayer, 1);
 
-                storyEvents.push(eventText);
+                //storyEvents.push(eventText);
 
                 countAux++;
             }
-        } else if(prova.type === "sorte") {
+        } else {
             let descricao = prova.description;
             let replacerStrDesc = '(qtd)';
             let regexStrDesc = new RegExp(this.escapeRegExp(replacerStrDesc), 'g');
@@ -2984,7 +2989,7 @@ class BBBLogic {
 
             descricao = descricao.replace(regexStrDesc, newStrDesc);
 
-            storyEvents.push(descricao);
+            //storyEvents.push(descricao);
 
             let opcoes = [];
             for (let indexOpcoes = 0; indexOpcoes < 49; indexOpcoes++) {
@@ -3020,7 +3025,7 @@ class BBBLogic {
                 indexOrdem++;
             });
 
-            storyEvents.push(eventTextNumSorte);
+            //storyEvents.push(eventTextNumSorte);
 
             let usados = [];
             let jogadorAtual = 0;
@@ -3058,7 +3063,7 @@ class BBBLogic {
                     let newStrNum = '<b>' + escolha + '</b>';
                     playerText = playerText.replace(regexStrNum, newStrNum);
 
-                    storyEvents.push(playerText);
+                    //storyEvents.push(playerText);
 
                     playersLeft.splice(jogadorAtual, 1);
                 } else {
@@ -3074,18 +3079,16 @@ class BBBLogic {
                     let newStrNum = '<b>' + escolha + '</b>';
                     playerText = playerText.replace(regexStrNum, newStrNum);
 
-                    storyEvents.push(playerText);
+                    //storyEvents.push(playerText);
 
                     jogadorAtual++;
                 }
             }
 
             emparedados = [...playersLeft];
-        } else { // tempo
-
         }
 
-        let resumoEmparedados = `<img src='${WarningEmoji}' class='emoji intext' alt='perigo emoji'/> Estão no paredão: `;
+        let resumoEmparedados = `<img src='${WarningEmoji}' class='emoji intext' alt='perigo emoji'/> Os jogadores que não conseguiram se salvar na prova de sobrevivência e com isso estão no paredão foram: `;
 
         let contadorFinal = 1; 
         emparedados.forEach(player => {
