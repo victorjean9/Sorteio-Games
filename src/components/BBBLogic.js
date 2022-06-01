@@ -324,7 +324,7 @@ class BBBLogic {
             // Dinâmica do paredao da semana
             let dinamicaDoParedao = this.dinamicaDoParedao(oBigFoneVaiTocar, week === 1);
             oBigFoneVaiTocar = dinamicaDoParedao.oBigFoneVaiTocar;
-            storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: dinamicaDoParedao.events, dayOfWeek: 5});
+            // storyArray.push({type: BBBType.DINAMICA_DO_PAREDAO, occurrencies: dinamicaDoParedao.events, dayOfWeek: 5});
 
             // RESUMO DA SEMANA
             let resumoDaSemanaEvents = this.resumoDaSemana(playersLeft, week === 1);
@@ -584,7 +584,7 @@ class BBBLogic {
         let provaImunidadeIndex = this.randomize(BBBEvents.provaImunidadeMuro.length);
         let provaImunidade = BBBEvents.provaImunidadeMuro[provaImunidadeIndex];
 
-        storyEvents.push(provaImunidade.description);
+        // storyEvents.push(provaImunidade.description);
 
         while(qtdPipocas > 0 && qtdCamarotes > 0){
             let qtdPlayers = 0;
@@ -644,7 +644,7 @@ class BBBLogic {
                 i++;
             }
 
-            storyEvents.push(eventText);
+            // storyEvents.push(eventText);
         }
 
         let winner = qtdPipocas > 0 ? 'pipoca' : 'camarote';
@@ -664,7 +664,7 @@ class BBBLogic {
         let provaImunidadeIndex = this.randomize(BBBEvents.provaImunidade.length);
         let provaImunidade = BBBEvents.provaImunidade[provaImunidadeIndex];
 
-        storyEvents.push(provaImunidade.description);
+        // storyEvents.push(provaImunidade.description);
 
         while(playersOrder.length > 2){
             let qtdPlayers = 0;
@@ -712,7 +712,7 @@ class BBBLogic {
                 i++;
             }
 
-            storyEvents.push(eventText);
+            // storyEvents.push(eventText);
         }
 
         let anunciaVencedores = `<img src='${TrophyEmoji}' class='emoji intext' alt='trofeu emoji'/> <b>` + playersOrder[0].name + "</b> e <b>" + playersOrder[1].name + "</b> ganharam a prova de imunidade!"; 
@@ -1004,7 +1004,7 @@ class BBBLogic {
         let provaDoLiderTipoIndex = this.randomize(BBBEvents.provaDoLiderTipo.length);
         let provaDoLiderTipo = BBBEvents.provaDoLiderTipo[provaDoLiderTipoIndex];
 
-        storyEvents.push("A prova do líder dessa semana será de " + provaDoLiderTipo + ".");
+        // storyEvents.push("A prova do líder dessa semana será de " + provaDoLiderTipo + ".");
 
         let indexWorstLiderPlayer = this.pickOnePlayer(playersLeft);
         piorDaProvaLider = playersLeft[indexWorstLiderPlayer];
@@ -1064,10 +1064,10 @@ class BBBLogic {
         });
 
         // PRESENTE DO ANJO
-        storyEvents.push(`<div class='ui divider'></div><b><img src='${WrappedGiftEmoji}' class='emoji intext' alt='presente emoji'/> PRESENTE DO ANJO <img src='${WrappedGiftEmoji}' class='emoji intext' alt='presente emoji'/></b>`);
+        // storyEvents.push(`<div class='ui divider'></div><b><img src='${WrappedGiftEmoji}' class='emoji intext' alt='presente emoji'/> PRESENTE DO ANJO <img src='${WrappedGiftEmoji}' class='emoji intext' alt='presente emoji'/></b>`);
 
-        let presenteDoAnjoEvent = this.presenteDoAnjo(players, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
-        storyEvents.push(presenteDoAnjoEvent);
+        // let presenteDoAnjoEvent = this.presenteDoAnjo(players, anjo, lider, XEPAlist, VIPlist, piorDaProvaLider, piorDaProvaAnjo, monstros);
+        // storyEvents.push(presenteDoAnjoEvent);
 
         return {
             events: storyEvents,
@@ -1081,7 +1081,6 @@ class BBBLogic {
         }
 
     }
-
     
     formacaoVipXepa = (lider, players) => {
         // a quantidade de pessoas no vip pode variar de 30 a 50% do grupo(contando com o lider pq ele tbm ganha pulseira)
@@ -1107,7 +1106,6 @@ class BBBLogic {
 
         eventText = eventText.replace(regexLiderStr, newLiderStr);
 
-        VIPlist.push(lider);
         storyEvents.push(eventText);
 
         // cria lista de jogadores aptos pro vip sem o lider
@@ -1137,8 +1135,27 @@ class BBBLogic {
             playersAptosVIP.splice(indexPlayer, 1);
 
             VIPlist.push(chosenPlayer);
-            storyEvents.push(eventText);
+            // storyEvents.push(eventText);
         }
+
+        let contadorVip = 1; 
+        let eventTextVIP = "<b>" + lider.name + "</b> decidiu chamar para o VIP: ";
+        VIPlist.forEach(player => {
+            let jogadorNome = '<b>' + player.name + '</b>';
+            eventTextVIP += jogadorNome;
+
+            if(contadorVip === VIPlist.length){
+                eventTextVIP += ".";
+            } else if(contadorVip === (VIPlist.length -1)){
+                eventTextVIP += " e ";
+            } else {
+                eventTextVIP += ", ";
+            }
+            contadorVip++;
+        });
+        storyEvents.push(eventTextVIP);
+
+        VIPlist.push(lider);
 
         if(qtdDePulseirasQueLiderVaiUsar < qtdDePulseirasVIP) {
             let qtdRestanteDePulseiras = qtdDePulseirasVIP - qtdDePulseirasQueLiderVaiUsar;
@@ -1256,14 +1273,14 @@ class BBBLogic {
 
             eventText = eventText.replace(regexVetadoStr, newVetadoStr);
 
-            storyEvents.push(eventText);
+            // storyEvents.push(eventText);
         }
 
         // a quantidade de pessoas a serem sorteadas pra prova do anjo pode variar de 30 a 50% do grupo.
         let auxQtdPlayers = jogadorVetado !== null ? players.length - 1 : players.length;
         let qtdDeJogadores = Math.floor(((Math.floor(Math.random() * 21) + 30) / 100) * auxQtdPlayers);
 
-        storyEvents.push("A prova do anjo dessa semana irá conter apenas " + qtdDeJogadores + " jogadores.");
+        // storyEvents.push("A prova do anjo dessa semana irá conter apenas " + qtdDeJogadores + " jogadores.");
 
         let playersAux = [...players];
         let jogadoresParticipantes = [];
@@ -1299,13 +1316,13 @@ class BBBLogic {
             contador++;
         });
 
-        storyEvents.push(eventTextSorteados);
+        // storyEvents.push(eventTextSorteados);
 
         // prova do anjo em si
         let provaDoAnjoTipoIndex = this.randomize(BBBEvents.provaDoAnjoTipo.length);
         let provaDoAnjoTipo = BBBEvents.provaDoAnjoTipo[provaDoAnjoTipoIndex];
 
-        storyEvents.push("A prova do anjo dessa semana será de " + provaDoAnjoTipo + ".");
+        // storyEvents.push("A prova do anjo dessa semana será de " + provaDoAnjoTipo + ".");
 
         let indexWorstAnjoPlayer = this.pickOnePlayer(jogadoresParticipantes);
         piorJogador = jogadoresParticipantes[indexWorstAnjoPlayer];
@@ -1790,7 +1807,7 @@ class BBBLogic {
 
         // monstro liberado
         let apresentadorConversaMonstro = "<b>" + apresentador + "</b> começa a conversar com os monstros <b>" + monstros[0].name + "</b> e <b>" + monstros[1].name + "</b> sobre o monstro da semana.";
-        storyEvents.push(apresentadorConversaMonstro);
+        // storyEvents.push(apresentadorConversaMonstro);
 
         for (let index = 0; index < 2; index++) {
             let eventMonstroIndex = this.randomize(BBBEvents.dialogosMonstros.length);
@@ -1802,11 +1819,11 @@ class BBBLogic {
             let regexJogador1Str = new RegExp(this.escapeRegExp(replacerJogador1Str), 'g');
             let newJogador1Str = '<b>' + monstros[index].name + '</b>';
             eventText = eventText.replace(regexJogador1Str, newJogador1Str);
-            storyEvents.push(eventText);
+            // storyEvents.push(eventText);
         }
 
         let apresentadorLiberaMonstro = "<b>" + apresentador + "</b> decretou o fim do castigo do monstro dessa semana.";
-        storyEvents.push(apresentadorLiberaMonstro);
+        // storyEvents.push(apresentadorLiberaMonstro);
 
         // avisos emparedados
 
@@ -2049,7 +2066,7 @@ class BBBLogic {
             }
             contador++;
         });
-        storyEvents.push(resumoApr);
+        // storyEvents.push(resumoApr);
 
         // lider indica
         naoPodemSerVotados = this.removeDups(naoPodemSerVotados);
@@ -2127,7 +2144,7 @@ class BBBLogic {
             votosCountList[votadoIndex].votos = votosCountList[votadoIndex].votos + 1;
             listaVotacao.push({player: playerSorteado, votouEm: votado});
 
-            storyEvents.push(motivoVotoText);
+            // storyEvents.push(motivoVotoText);
         });
 
         let maiorNumeroDeVotos = 0;
@@ -2944,7 +2961,7 @@ class BBBLogic {
         let provaDoLiderTipoIndex = this.randomize(BBBEvents.provaDoLiderTipo.length);
         let provaDoLiderTipo = BBBEvents.provaDoLiderTipo[provaDoLiderTipoIndex];
 
-        storyEvents.push("A prova de sorte será de " + provaDoLiderTipo + ".");
+        // storyEvents.push("A prova de sobrevivência será de " + provaDoLiderTipo + ".");
 
         if(prova.type === "resistencia"){
             let descricao = prova.description;
@@ -3160,24 +3177,3 @@ class BBBLogic {
 }
 
 export default (new BBBLogic());
-
-/*
-    NECESSÁRIAS
-    -> MODO TURBO (< 10 participantes)
-    -> FINAL
-
-    COISAS QUE FALTAM
-    -> Dedo duro
-    -> Prova bate volta
-    -> 30 segundos de cada participante
-    -> Jogo da concórdia
-    -> Jogo da discórdia
-
-    EXTRAS
-    -> Casa de vidro externa
-    -> Casa de vidro interna
-    -> Quarto branco
-    -> Desistências
-    -> Desclassificações
-    -> Paredao falso
-*/
