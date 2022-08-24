@@ -1,3 +1,4 @@
+import axios from 'axios';
 import React, { useEffect, useState } from 'react';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import Rotas from './components/Rotas';
@@ -21,20 +22,47 @@ const App = () => {
     }
 
     const emojis = importAll(require.context('./images/emojis', false, /\.(png|jpe?g|svg)$/));
+	let [outfits, setOutfits] = useState([]);
 
 	let [nome, setNome] = useState(null);
     let [appClass, setAppClass] = useState('home-bg paused');
 
-	let [playerNames, setPlayerNames] = useState({ val: [], emojis: []});
+	let [playerNames, setPlayerNames] = useState({ val: [], emojis: [], fortniteOutfit: []});
 	
 
 	useEffect(() => {
+		carregaOutfits();
+
 		if(sessionStorage.getItem('hostName') !== null)
 			setNome(sessionStorage.getItem('hostName'));
 
 		if(sessionStorage.getItem('playersList') !== null)
 			setPlayerNames(JSON.parse(sessionStorage.getItem('playersList')));
 	}, []);
+
+    const carregaOutfits = () => {
+        axios.get("https://fortnite-api.com/v2/cosmetics/br/search/all", {
+            params: {
+                type: "outfit", 
+                language: "pt-BR",
+                searchLanguage: "pt-BR",
+                hasFeaturedImage: "true",
+            }
+        })
+        .then((response) => {
+            let resultados = response.data.data;
+
+            let fotosOutfits = [];
+            resultados.forEach(outfit => {
+                fotosOutfits.push(outfit.images.smallIcon);
+            });
+
+            setOutfits(fotosOutfits);
+        })
+        .catch(() => {
+            setOutfits([]);
+        })
+    }
 
 	const renderHomePage = () => {
 		return(
@@ -44,31 +72,31 @@ const App = () => {
 
 	const renderHungerGamesPage = () => {
 		return(
-			<HungerGamesPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis}/>
+			<HungerGamesPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis} fortniteOutfits={outfits}/>
 		)
 	}
 
 	const renderBBBPage = () => {
 		return(
-			<BBBPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis}/>
+			<BBBPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis} fortniteOutfits={outfits}/>
 		)
 	}
 
 	const renderSquidGamePage = () => {
 		return(
-			<SquidGamePage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis}/>
+			<SquidGamePage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis} fortniteOutfits={outfits}/>
 		)
 	}
 
 	const renderFortnitePage = () => {
 		return(
-			<FortnitePage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis}/>
+			<FortnitePage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis} fortniteOutfits={outfits}/>
 		)
 	}
 
 	const renderChiquinhaPage = () => {
 		return(
-			<ChiquinhaPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis}/>
+			<ChiquinhaPage nome={nome} setAppClass={setAppClass} playerNames={playerNames} setPlayerNames={setPlayerNames} emojis={emojis} fortniteOutfits={outfits}/>
 		)
 	}
 

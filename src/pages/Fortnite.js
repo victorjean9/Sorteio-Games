@@ -7,6 +7,7 @@ import hgIntro from '../images/fortnite.jpg';
 import fortniteLogo from '../images/fortnite.png';
 import Rotas from "../components/Rotas";
 import { useHistory } from "react-router";
+import axios from "axios";
 
 const FortnitePage = (props) => {
 
@@ -68,7 +69,14 @@ const FortnitePage = (props) => {
                         <Header as='h1' inverted textAlign='center' >
                             Por: <b>{props.nome}</b>
                         </Header>
-                        <PlayersForm game={1} emojis={props.emojis} playerNames={props.playerNames} setPlayerNames={props.setPlayerNames} startPresentation={startPresentation} />
+                        <PlayersForm 
+                            game={3} 
+                            emojis={props.emojis} 
+                            fortniteOutfits={props.fortniteOutfits}
+                            playerNames={props.playerNames} 
+                            setPlayerNames={props.setPlayerNames} 
+                            startPresentation={startPresentation} 
+                        />
                         <br/>
                     </Container>
                 </div>

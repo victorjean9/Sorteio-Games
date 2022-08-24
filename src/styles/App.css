@@ -237,6 +237,10 @@ li::before {
     color: white !important;
 }
 
+.input-bordered.grande>.label{
+    padding-top: 23px !important;
+}
+
 .input-circular-btn {
     box-shadow: none !important;
     border: 2px solid white;
@@ -280,6 +284,14 @@ input::placeholder { /* Chrome, Firefox, Opera, Safari 10.1+ */
 
 .button-emoji-icon {
     width: 20px;
+}
+
+.button-fortnite-outfit {
+    padding: 2px 2px !important;
+}
+
+.button-fortnite-outfit-icon {
+    width: 60px !important;
 }
 
 .acrylic {
