@@ -189,7 +189,7 @@ li::before {
 
 .fortnite-bg {
     width: 100wh;
-    height: 100vh;
+    min-height: 100vh;
     color: #fff;
 	background: radial-gradient(ellipse at top, #FFD930, #FFD930, #C23A3C, #790E28, #370000);
     background-size: 400% 400%;

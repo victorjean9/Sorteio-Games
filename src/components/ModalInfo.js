@@ -24,6 +24,7 @@ const ModalInfo = (props) => {
                 <p style={{textAlign: 'center'}}>
                     Inspirado e baseado no site: <a href='https://brantsteele.net/hungergames/' target='_new'>BrantSteele</a>.<br/><br/>
                     Emojis fornecidos por: <a href='https://www.joypixels.com/' target='_new'>JoyPixels</a>.<br/><br/>
+                    Outfits do Fortnite fornecidos por: <a href='https://fortnite-api.com' target='_new'>Fortnite-API</a>.<br/><br/>
                     Feito com <Link to={Rotas.chiquinha}><img src={SparklingHeartAnimoji} className='animoji sparkling-heart' alt='sparkling heart'/></Link> por Victor Jean.
                     <Button as='a' href='https://twitter.com/victorjean9' target='_new' color='twitter'>
                         <Icon name='twitter' />

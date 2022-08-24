@@ -8,11 +8,14 @@ import fortniteLogo from '../images/fortnite.png';
 import Rotas from "../components/Rotas";
 import { useHistory } from "react-router";
 import axios from "axios";
+import ModalInfo from "../components/ModalInfo";
 
 const FortnitePage = (props) => {
 
     let history = useHistory();
     
+    let [modalInfoOpen, setModalInfoOpen] = useState(false);
+
     let [showIntro, setShowIntro] = useState(false);
     let [showPlayerSegment, setShowPlayerSegment] = useState(false);
     let [showPresentationName, setShowPresentationName] = useState(false);
@@ -50,7 +53,8 @@ const FortnitePage = (props) => {
     }
 
     return(<>
-            
+            <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
+            <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
             <Transition visible={showIntro} animation='fade up' duration={1000}>
                 <div className='hg-intro' style={{backgroundImage: 'url(' + hgIntro +')'}}>
                     <Header as='h2' className='loading-bottom' inverted>
@@ -61,7 +65,6 @@ const FortnitePage = (props) => {
             </Transition>
             <Transition visible={showPlayerSegment} animation='fade up' duration={1000}>
                 <div>
-                    <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
                     <Container>
                         <br/>
                         <br/>
@@ -100,6 +103,11 @@ const FortnitePage = (props) => {
                     </span>
                 </div>
             </Transition>
+            <ModalInfo
+                open={modalInfoOpen} 
+                onClose={() => setModalInfoOpen(false)}
+                onOpen={() => setModalInfoOpen(true)}
+            />
         </>
     );
 }
