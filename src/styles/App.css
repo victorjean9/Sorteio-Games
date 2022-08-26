@@ -187,11 +187,32 @@ li::before {
 
 /* FORTNITE */
 
+.fortnite-font {
+    font-family: 'Fortnite' !important;
+}
+
+.fort-icon-outfit {
+    background-color: rgba(0, 0, 0, 0.3) !important;
+}
+
+.fortnite-font-bordered {
+    font-family: 'Fortnite' !important;
+    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000 !important;
+}
+
+.fort-header-player {
+    margin-top: 10px !important;
+}
+
+.fort-header {
+    font-size: 50px !important;
+}
+
 .fortnite-bg {
     width: 100wh;
     min-height: 100vh;
     color: #fff;
-	background: radial-gradient(ellipse at top, #FFD930, #FFD930, #C23A3C, #790E28, #370000);
+	background: radial-gradient(ellipse at top,#4a8fff, #3972CE, #2C48B3, #1B007B, #120055);
     background-size: 400% 400%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 15s ease infinite;
@@ -199,7 +220,7 @@ li::before {
 }
 
 .fn-presentation-bg {
-	background:  linear-gradient(-215deg, black,black, black, black, #FFD930, #C23A3C, #790E28, #370000);
+	background:  linear-gradient(-215deg, black,black, black, black, #3972CE, #2C48B3, #1B007B, #120055);
     background-size: 400% 400%;
     -webkit-animation: Gradient 15s ease infinite;
     -moz-animation: Gradient 15s ease infinite;

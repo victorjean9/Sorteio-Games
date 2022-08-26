@@ -269,7 +269,9 @@ const PlayersForm = (props) => {
                     </Grid.Column>
                 </Grid>
                 <br/>
-                <Button fluid inverted basic onClick={() => verifyPlayers()} size='massive' >COMEÇAR SORTEIO</Button>
+                <Grid columns='equal'>
+                    <Grid.Column><Button fluid inverted basic onClick={() => verifyPlayers()} size='massive' >COMEÇAR SORTEIO</Button></Grid.Column>
+                </Grid>
             </div>
             <BasicModal
                 open={modalBasicOpen} 

@@ -10,6 +10,7 @@ import HungerGamesPage from './pages/HungerGames';
 import SquidGamePage from './pages/SquidGame';
 import TestPage from './pages/Test';
 import './styles/App.css';
+import './styles/fonts.css';
 
 const App = () => {
 
