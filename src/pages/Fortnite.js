@@ -15,6 +15,8 @@ import fortWinnerBack from "../images/fortnite/spiked_winner.jpg";
 import fortVictoryRoyale from "../images/fortnite/victory.png";
 import prosseguirBtnImg from "../images/fortnite/prosseguir_btn.jpg";
 import voltarBtnImg from "../images/fortnite/voltar_btn.jpg";
+import crownFort from "../images/fortnite/crown.png";
+
 import styled from "styled-components";
 import useLongPress from "../components/exported/useLongPress";
 import FortniteLogic from "../components/FortniteLogic";
@@ -51,12 +53,15 @@ const GroupListPresentiton = (props) => (
             </Grid>
             <Grid columns={props.isSmall ? 3 : 6} centered>
                 {   
-                    props.players.val.map(
+                    props.players.map(
                         (item, index) => (
                             <Grid.Column key={'fortPlayer' + index}>
-                                <Image src={props.players.fortniteOutfit[index]} className='fort-icon-outfit' size='massive' circular/>
+                                <Image src={item.fortniteOutfit} className='fort-icon-outfit' size='massive' circular/>
                                 <Header as='h1' inverted icon textAlign="center" className='fortnite-font-bordered fort-header-player'>
-                                    {item}
+                                    {
+                                        item.crown ? <Image size='tiny' src={crownFort} inline/> : null
+                                    }
+                                    {item.name}
                                 </Header>
                             </Grid.Column>
                         )
@@ -188,6 +193,8 @@ const FortnitePage = (props) => {
     
     let [modalInfoOpen, setModalInfoOpen] = useState(false);
 
+    let [playersList, setPlayersList] = useState([]);
+
     let [showIntro, setShowIntro] = useState(false);
     let [showPlayerSegment, setShowPlayerSegment] = useState(false);
     let [showPresentationName, setShowPresentationName] = useState(false);
@@ -198,7 +205,6 @@ const FortnitePage = (props) => {
 
     let [showStorylinePresentation, setShowStorylinePresentation] = useState(false);
     let [storylineOcurrencies, setStorylineOcurrencies] = useState([]);
-    let [storylineTitle, setStorylineTitle] = useState('');
     let [onda, setOnda] = useState(1);
 
     let [showWinnerPresentation, setShowWinnerPresentation] = useState(false);
@@ -223,19 +229,11 @@ const FortnitePage = (props) => {
         history.push(Rotas.base);
     }
 
+    const randomize = (total) => {
+        return Math.floor(Math.random() * total);
+    }
+
     const startActPresentation = (setActPresentation, setPreviousPresentation, actualMilis, previousMilis, bgClass) =>{
-
-        let playersArray = [];
-        let indexAux = 0;
-        props.playerNames.val.forEach(element => {
-            playersArray.push({name: element, fortniteOutfit: props.playerNames.fortniteOutfit[indexAux]});
-            indexAux++;
-        });
-
-        let game = FortniteLogic.generateGame(playersArray);
-        setStoryline(game);
-        console.log(game);
-
         setTimeout(() => {
             setPreviousPresentation(false);
             setTimeout(() => {
@@ -249,6 +247,23 @@ const FortnitePage = (props) => {
     
 
     let startPresentation = () => {
+
+        let playersArray = [];
+        let indexAux = 0;
+        props.playerNames.val.forEach(element => {
+            let hasCrown = false;
+            hasCrown = randomize(100) > 80;
+
+            playersArray.push({name: element, fortniteOutfit: props.playerNames.fortniteOutfit[indexAux], crown: hasCrown});
+            indexAux++;
+        });
+
+        setPlayersList(playersArray);
+
+        let game = FortniteLogic.generateGame(playersArray);
+        setStoryline(game);
+        console.log(game);
+
         setShowPlayerSegment(false);
         setTimeout(() => {
             props.setAppClass('black-presentation-bg');
@@ -266,7 +281,7 @@ const FortnitePage = (props) => {
 
     const showStoryline = (index) => {
         if(index < storyline.story.length){
-            if(index == 0) {
+            if(index === 0) {
                 startActPresentation(setShowStorylinePresentation, setShowPlayersList, 1000, 0, 'black-presentation-bg');
             }
 
@@ -308,7 +323,7 @@ const FortnitePage = (props) => {
             <Transition visible={showIntro} animation='fade up' duration={1000}>
                 <div className='hg-intro' style={{backgroundImage: 'url(' + hgIntro +')'}}>
                     <Header as='h2' className='loading-bottom' inverted>
-                        <Icon name='circle notch' loading size='big' color='white' />
+                        <Icon name='circle notch' loading size='big' />
                         <Header.Content>Carregando</Header.Content>
                     </Header>
                 </div>
@@ -355,7 +370,7 @@ const FortnitePage = (props) => {
             </Transition>
             <GroupListPresentiton 
                 visible={showPlayersList} 
-                players={props.playerNames} 
+                players={playersList} 
                 isSmall={isSmall}
 
                 previousBtn = {() => {
@@ -366,7 +381,6 @@ const FortnitePage = (props) => {
             />
             <StorylinePresentation
                 visible={showStorylinePresentation}
-                title={storylineTitle}
                 story={storylineOcurrencies}
                 onda={onda}
 

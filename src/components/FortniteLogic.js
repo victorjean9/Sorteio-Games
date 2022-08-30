@@ -1,4 +1,5 @@
 import FortniteEvents from "./FortniteEvents";
+import crownFort from "../images/fortnite/crown.png";
 
 class FortniteLogic {
 
@@ -49,6 +50,10 @@ class FortniteLogic {
 
                 let i = 1;
                 let eventText = event.event.text;
+
+                let availableCrowns = [];
+                let playersAliveInThisEvent = [];
+
                 while(i <= qtdPlayers){
                     let indexPlayer = this.pickOnePlayer(playersLeft);
                     let chosenPlayer = playersLeft[indexPlayer];
@@ -60,6 +65,10 @@ class FortniteLogic {
                         while(j < event.event.deaths.length) {
                             if(event.event.deaths[j] === i){
                                 playersDead.push(chosenPlayer);
+                                if(chosenPlayer.crown) {
+                                    console.log(chosenPlayer.name);
+                                    availableCrowns.push(chosenPlayer);
+                                }
                             }
                             j++;
                         }
@@ -67,11 +76,12 @@ class FortniteLogic {
                         
                         playersDead.forEach(element => {
                             if(element === chosenPlayer){
-                                isDead= true;
+                                isDead = true;
                             }
                         });
                         if(!isDead) {
                             playersAlive.push(chosenPlayer);
+                            playersAliveInThisEvent.push(chosenPlayer);
                         }
                         
                     } else {
@@ -81,7 +91,13 @@ class FortniteLogic {
                     let replacerStr = '(Jogador' + i +')';
                     var regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
 
-                    let newStr = '<b class="fort-player-name">' + chosenPlayer.name + '</b>';
+                    let crownTag = ""
+                    if(chosenPlayer.crown) {
+                        crownTag = `<img src="${crownFort}" class="ui mini inline image fort-pos-absolute"/>`;
+                    }
+
+                    let imgTag = `<img src="${chosenPlayer.fortniteOutfit}" class="ui mini inline image circular fort-icon-outfit"/>`;
+                    let newStr = `<b class="fort-player-name"> ${crownTag}${imgTag} ${chosenPlayer.name}</b>`;
 
                     eventText = eventText.replace(regexStr, newStr);
 
@@ -89,8 +105,25 @@ class FortniteLogic {
 
                     i++;
                 }
-
                 resultFull.push(eventText);
+
+                playersAliveInThisEvent.forEach(player => {
+                    if(availableCrowns.length > 0 && !player.crown) {
+                        console.log('entrou');
+                        let vaiPegarCoroa = false;
+                        vaiPegarCoroa = this.randomize(100) < 80;
+
+                        let crownTag = `<img src="${crownFort}" class="ui mini inline image fort-pos-absolute"/>`;
+                        let imgTagPlayerAlive = `<img src="${player.fortniteOutfit}" class="ui mini inline image circular fort-icon-outfit"/>`;
+                        let imgTagDeadPlayer = `<img src="${availableCrowns[0].fortniteOutfit}" class="ui mini inline image circular fort-icon-outfit fort-icon-pb"/>`;
+
+                        let crownText = `${crownTag}${imgTagPlayerAlive} <b class="fort-player-name">${player.name}</b> pegou a coroa que pertencia a ${imgTagDeadPlayer} <b class="fort-player-name">${availableCrowns[0].name}</b>`;
+                        let noCrownText = `${imgTagPlayerAlive} <b class="fort-player-name">${player.name}</b> não conseguiu pegar a coroa que pertencia a ${imgTagDeadPlayer} <b class="fort-player-name">${availableCrowns[0].name}</b>`;
+                        resultFull.push(vaiPegarCoroa ? crownText : noCrownText);
+
+                        availableCrowns.splice(0, 1);
+                    }
+                });
             }
             resultsArray.push({wave: onda, occurrencies: resultFull});
 

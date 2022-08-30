@@ -195,6 +195,16 @@ li::before {
     background-color: rgba(0, 0, 0, 0.3) !important;
 }
 
+.fort-icon-pb {
+    filter: grayscale(100%) !important;
+}
+
+.fort-pos-absolute {
+    position: absolute !important;
+    z-index: 10 !important;
+    margin-top: -10px !important;
+}
+
 .fortnite-font-bordered {
     font-family: 'Fortnite' !important;
     /* text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000 !important; */
@@ -210,6 +220,7 @@ li::before {
 }
 
 .fort-player-name {
+    position: relative !important;
     background: -webkit-linear-gradient(#E3E3E0, #F2F051);
     -webkit-background-clip: text;
     -webkit-text-fill-color: transparent;
