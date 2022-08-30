@@ -197,7 +197,8 @@ li::before {
 
 .fortnite-font-bordered {
     font-family: 'Fortnite' !important;
-    text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000 !important;
+    /* text-shadow: -1px -1px 0 #000, 1px -1px 0 #000, -1px 1px 0 #000, 1px 1px 0 #000 !important; */
+    -webkit-text-stroke: 1px #000;
 }
 
 .fort-header-player {
@@ -206,6 +207,22 @@ li::before {
 
 .fort-header {
     font-size: 50px !important;
+}
+
+.fort-player-name {
+    background: -webkit-linear-gradient(#E3E3E0, #F2F051);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.fort-header-story {
+    font-size: 40px !important;
+}
+
+@media only screen and (max-width: 770px) {
+    .fort-header-story {
+        font-size: 30px !important;
+    }
 }
 
 .fortnite-bg {

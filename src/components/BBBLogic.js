@@ -10,7 +10,6 @@ import ConfettiBallEmoji from '../images/emojis/confetti-ball.png';
 import PartyPopperEmoji from '../images/emojis/party-popper.png';
 import BabyAngelEmoji from '../images/emojis/baby-angel.png';
 import OgreEmoji from '../images/emojis/ogre.png';
-import WrappedGiftEmoji from '../images/emojis/wrapped-gift.png';
 import SmilingFaceWithHaloEmoji from '../images/emojis/smiling-face-with-halo.png';
 import TelephoneReceiverEmoji from '../images/emojis/telephone-receiver.png';
 import WarningEmoji from '../images/emojis/warning.png';

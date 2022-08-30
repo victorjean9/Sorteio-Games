@@ -17,6 +17,7 @@ import prosseguirBtnImg from "../images/fortnite/prosseguir_btn.jpg";
 import voltarBtnImg from "../images/fortnite/voltar_btn.jpg";
 import styled from "styled-components";
 import useLongPress from "../components/exported/useLongPress";
+import FortniteLogic from "../components/FortniteLogic";
 
 const FortniteBackground = styled.div`
     background-image: url(${(props) => {return props.image;}});
@@ -42,7 +43,7 @@ const GroupListPresentiton = (props) => (
             <br/>
             <Grid>
                 <Grid.Column>
-                    <Header as='h1' inverted textAlign='center' icon className='fortnite-font fort-header fort-header'> 
+                    <Header as='h1' inverted textAlign='center' icon className='fortnite-font fort-header'> 
                         <Header.Content>O ÔNIBUS DE BATALHA IRÁ PARTIR EM INSTANTES</Header.Content>
                     </Header>
                     <Divider/>
@@ -111,43 +112,47 @@ const StorylinePresentation = (props) => {
     return (
         <Transition visible={props.visible} animation={props.animation} duration={1000}>
             <Container>
-                <br/>
-                <br/>
-                <Header as='h1' inverted textAlign='center' className='fortnite-font fort-header fort-header'>
-                    {props.title}
-                    <Header.Subheader>{props.onda}ª Onda</Header.Subheader>
-                </Header>
-                <Divider/>
-                <Transition.Group
-                    as={List}
-                    duration={200}
-                    divided
-                    size='massive'
-                    verticalAlign='middle'
-                    >
-                    {
-                        storyArray.map(
-                            (item, index) => (
-                                <List.Item key={'storyOccurrence' + index} ><p className='fortnite-font' style={{textAlign: 'center'}} dangerouslySetInnerHTML={{__html: item}}/></List.Item>
-                            )
-                        )
-                    }
-                </Transition.Group>
-                {
-                    !showControls 
-                    ?   <p style={{textAlign: 'center'}}><Button inverted size='big' {...longPressEvent} basic circular icon><Icon name='angle down' /></Button></p>
-                    :   null
-                }
-                <br/>
-                {
-                    showControls 
-                    ?   <p style={{textAlign:'center'}}>
-                            <FortniteButton src={voltarBtnImg}  onClick={props.previousBtn} espacado/>
-                            <FortniteButton src={prosseguirBtnImg} onClick={props.nextBtn}/>
-                        </p>
-                    :   null
-                }
-                <br/>
+                        <br/>
+                        <br/>
+                        <Grid>
+                            <Grid.Column>
+                                <Header as='h1' inverted textAlign='center' className='fortnite-font fortnite-font-bordered fort-header'>
+                                    {props.onda}ª Onda
+                                </Header>
+                            <Divider/>
+                            <Transition.Group
+                                as={List}
+                                duration={200}
+                                divided
+                                size='massive'
+                                verticalAlign='middle'
+                                >
+                                {
+                                    storyArray.map(
+                                        (item, index) => (
+                                            <List.Item key={'storyOccurrence' + index} ><p className='fortnite-font fort-header-story fortnite-font-bordered' style={{textAlign: 'center'}} dangerouslySetInnerHTML={{__html: item}}/></List.Item>
+                                        )
+                                    )
+                                }
+                            </Transition.Group>
+                            {
+                                !showControls 
+                                ?   <p style={{textAlign: 'center'}}><Button inverted size='big' {...longPressEvent} basic circular icon><Icon name='angle down' /></Button></p>
+                                :   null
+                            }
+                            <br/>
+                            {
+                                showControls 
+                                ?   <p style={{textAlign:'center'}}>
+                                        <FortniteButton src={voltarBtnImg}  onClick={props.previousBtn} espacado/>
+                                        <FortniteButton src={prosseguirBtnImg} onClick={props.nextBtn}/>
+                                    </p>
+                                :   null
+                            }
+
+                            </Grid.Column>
+                        </Grid>
+                        <br/>
             </Container>
         </Transition>
     );
@@ -158,16 +163,17 @@ const WinnerSegment = (props) => {
         <Transition visible={props.visible} animation='fade' duration={1000}>
             <div style={{width: '100%', height: '100vh'}}>
                 <span className='span-grettings'>
+                    <Image src={fortVictoryRoyale} size='large'  centered/>
+                    <Image src={props.winner.fortniteOutfit} className='fort-icon-outfit' size='small' circular centered/>
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
-                        <>
-                            <Image src={props.winner.fortniteOutfit} className='fort-icon-outfit' size='massive' circular/>
-                            <br/>
-                            <b style={{textTransform: 'uppercase'}}>{props.winner.name}</b>
-                            <Header.Subheader>
-                                GANHOU O SORTEIO!
-                            </Header.Subheader>
-                        </>
+                        <b style={{textTransform: 'uppercase'}} className='fortnite-font fortnite-font-bordered'>{props.winner.name}</b>
+                        <Header.Subheader className='fortnite-font fortnite-font-bordered fort-header-story'>
+                            GANHOU O SORTEIO!
+                        </Header.Subheader>
                     </Header>
+                    <br/>
+                    <br/>
+                    <br/>
                 </span>
             </div>
         </Transition>
@@ -188,6 +194,18 @@ const FortnitePage = (props) => {
     let [showPresentationGame, setShowPresentationGame] = useState(false);
 
     let [showPlayersList, setShowPlayersList] = useState(false);
+    let [storyline, setStoryline] = useState();
+
+    let [showStorylinePresentation, setShowStorylinePresentation] = useState(false);
+    let [storylineOcurrencies, setStorylineOcurrencies] = useState([]);
+    let [storylineTitle, setStorylineTitle] = useState('');
+    let [onda, setOnda] = useState(1);
+
+    let [showWinnerPresentation, setShowWinnerPresentation] = useState(false);
+    let [winner, setWinner] = useState({name: "", fortniteOutfit: ''});
+
+    let [prevActBtn, setPrevActBtn ] = useState(() => {});
+    let [nextActBtn, setNextActBtn ] = useState(() => {});
 
     useEffect(() => {
         props.setAppClass('fortnite-bg');
@@ -206,6 +224,18 @@ const FortnitePage = (props) => {
     }
 
     const startActPresentation = (setActPresentation, setPreviousPresentation, actualMilis, previousMilis, bgClass) =>{
+
+        let playersArray = [];
+        let indexAux = 0;
+        props.playerNames.val.forEach(element => {
+            playersArray.push({name: element, fortniteOutfit: props.playerNames.fortniteOutfit[indexAux]});
+            indexAux++;
+        });
+
+        let game = FortniteLogic.generateGame(playersArray);
+        setStoryline(game);
+        console.log(game);
+
         setTimeout(() => {
             setPreviousPresentation(false);
             setTimeout(() => {
@@ -234,76 +264,120 @@ const FortnitePage = (props) => {
         }, 1000);
     }
 
+    const showStoryline = (index) => {
+        if(index < storyline.story.length){
+            if(index == 0) {
+                startActPresentation(setShowStorylinePresentation, setShowPlayersList, 1000, 0, 'black-presentation-bg');
+            }
+
+            setOnda(storyline.story[index].wave);
+            setStorylineOcurrencies(storyline.story[index].occurrencies);
+            setShowStorylinePresentation(true);
+
+            setPrevActBtn(() => () => {
+                setShowStorylinePresentation(false);
+                setTimeout(() => {
+                    showStoryline(index-1);
+                }, 100);
+            });
+            setNextActBtn(() => () => {
+                setShowStorylinePresentation(false);
+                setTimeout(() => {
+                    showStoryline(index+1);
+                }, 100);
+            });
+        } else {
+            // WINNER
+            setWinner(storyline.winner);
+            startActPresentation(setShowWinnerPresentation, setShowStorylinePresentation, 1000, 0, 'fn-presentation-bg');
+        }
+    }
+
     let hide = 0;
     let show = 3000;
 
     return(<>
-            <Transition visible={showPlayersList} animation='fade' duration={1000}>
+            <Transition visible={showPlayersList || showStorylinePresentation} animation='fade' duration={1000}>
+                <FortniteBackground image={fortBack} />
+            </Transition>
+            <Transition visible={showWinnerPresentation} animation='fade' duration={1000}>
                 <FortniteBackground image={fortWinnerBack} />
             </Transition>
-                <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
-                <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
-                <Transition visible={showIntro} animation='fade up' duration={1000}>
-                    <div className='hg-intro' style={{backgroundImage: 'url(' + hgIntro +')'}}>
-                        <Header as='h2' className='loading-bottom' inverted>
-                            <Icon name='circle notch' loading size='big' color='white' />
-                            <Header.Content>Carregando</Header.Content>
+            <Button className='corner-btn' circular basic inverted icon='home' onClick={() => homePage()} />
+            <Button className='corner-right-btn' circular basic inverted icon='info' onClick={() => setModalInfoOpen(true)} />
+            <Transition visible={showIntro} animation='fade up' duration={1000}>
+                <div className='hg-intro' style={{backgroundImage: 'url(' + hgIntro +')'}}>
+                    <Header as='h2' className='loading-bottom' inverted>
+                        <Icon name='circle notch' loading size='big' color='white' />
+                        <Header.Content>Carregando</Header.Content>
+                    </Header>
+                </div>
+            </Transition>
+            <Transition visible={showPlayerSegment} animation='fade up' duration={1000}>
+                <div>
+                    <Container>
+                        <br/>
+                        <br/>
+                        <Image src={fortniteLogo} size='medium' centered/>
+                        <Header as='h1' inverted textAlign='center' >
+                            Por: <b>{props.nome}</b>
                         </Header>
-                    </div>
-                </Transition>
-                <Transition visible={showPlayerSegment} animation='fade up' duration={1000}>
-                    <div>
-                        <Container>
-                            <br/>
-                            <br/>
-                            <Image src={fortniteLogo} size='medium' centered/>
-                            <Header as='h1' inverted textAlign='center' >
-                                Por: <b>{props.nome}</b>
-                            </Header>
-                            <PlayersForm 
-                                game={3} 
-                                emojis={props.emojis} 
-                                fortniteOutfits={props.fortniteOutfits}
-                                playerNames={props.playerNames} 
-                                setPlayerNames={props.setPlayerNames} 
-                                startPresentation={startPresentation} 
-                            />
-                            <br/>
-                        </Container>
-                    </div>
-                </Transition>
-                <Transition visible={showPresentationName} animation='fade' duration={1000}>
-                    <div style={{width: '100%', height: '100vh'}}>
-                        <span className='span-grettings'>
-                            <Header className='header-greetings fortnite-font-bordered' as='h1' inverted textAlign='center' >
-                                <b style={{textTransform: 'uppercase'}}>{props.nome}</b>
-                                <Header.Subheader>
-                                    Apresenta:
-                                </Header.Subheader>
-                            </Header>
-                        </span>
-                    </div>
-                </Transition>
-                <Transition visible={showPresentationGame} animation='zoom' duration={{hide, show}}>
-                    <div style={{width: '100%', height: '100vh'}}>
-                        <span className='span-grettings'>
-                            <Image src={fortniteLogo} size='huge' centered/>
-                        </span>
-                    </div>
-                </Transition>
-                <GroupListPresentiton 
-                    visible={showPlayersList} 
-                    players={props.playerNames} 
-                    isSmall={isSmall}
+                        <PlayersForm 
+                            game={3} 
+                            emojis={props.emojis} 
+                            fortniteOutfits={props.fortniteOutfits}
+                            playerNames={props.playerNames} 
+                            setPlayerNames={props.setPlayerNames} 
+                            startPresentation={startPresentation} 
+                        />
+                        <br/>
+                    </Container>
+                </div>
+            </Transition>
+            <Transition visible={showPresentationName} animation='fade' duration={1000}>
+                <div style={{width: '100%', height: '100vh'}}>
+                    <span className='span-grettings'>
+                        <Header className='header-greetings fortnite-font-bordered' as='h1' inverted textAlign='center' >
+                            <b style={{textTransform: 'uppercase'}}>{props.nome}</b>
+                            <Header.Subheader>
+                                Apresenta:
+                            </Header.Subheader>
+                        </Header>
+                    </span>
+                </div>
+            </Transition>
+            <Transition visible={showPresentationGame} animation='zoom' duration={{hide, show}}>
+                <div style={{width: '100%', height: '100vh'}}>
+                    <span className='span-grettings'>
+                        <Image src={fortniteLogo} size='huge' centered/>
+                    </span>
+                </div>
+            </Transition>
+            <GroupListPresentiton 
+                visible={showPlayersList} 
+                players={props.playerNames} 
+                isSmall={isSmall}
 
-                    previousBtn = {() => {
-                        startActPresentation(setShowPlayerSegment, setShowPlayersList, 1000, 0, 'fortnite-bg');
-                    }}
+                previousBtn = {() => {
+                    startActPresentation(setShowPlayerSegment, setShowPlayersList, 1000, 0, 'fortnite-bg');
+                }}
 
-                    nextBtn = { () => {}
-                        // () => showStoryline(0)
-                    }
-                />
+                nextBtn = { () => showStoryline(0) }
+            />
+            <StorylinePresentation
+                visible={showStorylinePresentation}
+                title={storylineTitle}
+                story={storylineOcurrencies}
+                onda={onda}
+
+                previousBtn = {() => prevActBtn()}
+                nextBtn = {() => nextActBtn()}
+            />
+            <WinnerSegment
+                emojis={props.emojis}
+                visible={showWinnerPresentation}
+                winner={winner}
+            />
             <ModalInfo
                 open={modalInfoOpen} 
                 onClose={() => setModalInfoOpen(false)}

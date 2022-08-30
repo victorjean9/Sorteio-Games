@@ -1,6 +1,6 @@
 import axios from 'axios';
 import React, { useEffect, useState } from 'react';
-import { Icon, Modal, Image, Input, Form, Divider } from 'semantic-ui-react';
+import { Icon, Modal, Image, Form, Divider } from 'semantic-ui-react';
 
 const ModalFortniteOutfitSelector = (props) => {
 
@@ -9,6 +9,7 @@ const ModalFortniteOutfitSelector = (props) => {
 
     useEffect(() => {
         carregaOutfits();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [nome]);
 
     const carregaOutfits = () => {
