@@ -115,7 +115,6 @@ class FortniteEvents {
         { players: 2, weapons: 0, deaths: [2], text: `(Jogador1) e (Jogador2) estão batalhando. O material de (Jogagor2) acaba e, sem conseguir construir um chão, (Jogador2) acaba se eliminando por queda.`},
 
         { players: 2, weapons: 1, deaths: [1], text: `(Jogador1) estava abrindo um drop quando (Jogagor2) chegou e eliminou (Jogador1) com (Arma1).`},
-        { players: 2, weapons: 1, deaths: [1], text: `(Jogador1) estava abrindo um drop quando (Jogagor2) chegou e eliminou (Jogador1) com (Arma1).`},
 
         { players: 2, weapons: 0, deaths: [1], text: `(Jogador1) e (Jogador2) estão batalhando. (Jogador2) joga uma Granada Boogie-Woogie que faz (Jogador1) dançar, e com isso consegue eliminar (Jogador1) bem tranquilamente.`},
         { players: 2, weapons: 0, deaths: [2], text: `(Jogador1) e (Jogador2) estão batalhando. (Jogador1) joga uma Granada Boogie-Woogie que faz (Jogador2) dançar, e com isso consegue eliminar (Jogador2) bem tranquilamente.`},
