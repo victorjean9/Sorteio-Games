@@ -53,7 +53,6 @@ import dinamicaDialogosPosProvaImunidadeImg from '../images/bbb/bbb-dialogos-pos
 import dinamicaFimMuroImg from '../images/bbb/bbb-fim-muro.png';
 import dinamicaFimCasaSecundariaImg from '../images/bbb/bbb-fim-casa-secundaria.png';
 
-import dinamicaProvaDoLiderImg from '../images/bbb/bbb-prova-do-lider.png';
 import dinamicaFormacaoVipXepaImg from '../images/bbb/bbb-formacao-vip-xepa.png';
 
 import dinamicaPrimeiraFestaImg from '../images/bbb/bbb-primeira-festa.png';

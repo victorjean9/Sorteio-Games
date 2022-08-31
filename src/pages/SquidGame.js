@@ -67,7 +67,7 @@ const SquidGamePage = (props) => {
                         <Header as='h1' inverted textAlign='center' >
                             Por: <b>{props.nome}</b>
                         </Header>
-                        <PlayersForm game={1} emojis={props.emojis} playerNames={props.playerNames} setPlayerNames={props.setPlayerNames} startPresentation={startPresentation} />
+                        <PlayersForm game={2} emojis={props.emojis} fortniteOutfits={props.fortniteOutfits} playerNames={props.playerNames} setPlayerNames={props.setPlayerNames} startPresentation={startPresentation} />
                         <br/>
                     </Container>
                 </div>

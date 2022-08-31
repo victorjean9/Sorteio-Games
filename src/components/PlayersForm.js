@@ -1,14 +1,17 @@
 
 import React, { useEffect, useState } from "react";
 import { Button, Divider, Grid, Header, Icon, Image, Input } from "semantic-ui-react";
+import Games from "./Games";
 import ModalAddMulti from "./ModalAddMulti";
 import BasicModal from "./ModalBasic";
 import ModalEmojiSelector from "./ModalEmojiSelector";
+import ModalFortniteOutfitSelector from "./ModalFortniteOutfitSelector";
 
 
 const PlayersForm = (props) => {
     let [modalAddMultiOpen, setModalAddMultiOpen] = useState(false);
     let [modalEmojiSelectorOpen, setModalEmojiSelectorOpen] = useState(false);
+    let [modalFortniteOutfitSelectorOpen, setModalFortniteOutfitSelectorOpen] = useState(false);
 
     let [modalBasicOpen, setModalBasicOpen] = useState(false);
     let [modalBasicErrorOpen, setModalBasicErrorOpen] = useState(false);
@@ -29,11 +32,11 @@ const PlayersForm = (props) => {
 
     useEffect(() => {
         switch (props.game) {
-            case 0:
+            case Games.hungerGames:
                 setPlayerName('tributo');
                 setPlayersNames('tributos');
                 break;
-            case 1:
+            case Games.bigBrotherBrasil:
                 setPlayerName('brother/sister');
                 setPlayersNames('brothers/sisters');
                 break;
@@ -45,57 +48,91 @@ const PlayersForm = (props) => {
         }
     }, [props.game]);
 
+    const pegaOutfitFortniteAleatorio = () => {
+        let index = Math.floor(Math.random() * props.fortniteOutfits.length);
+        return props.fortniteOutfits[index];
+    }
+
     const addNewPlayer = (nome, emoji) => {
         let emojiEscolhido = emoji;
         if(emoji === null){
             emojiEscolhido = Math.floor(Math.random() * props.emojis.length);
         }
 
-        props.setPlayerNames({ val: [...props.playerNames.val, nome], emojis: [...props.playerNames.emojis, emojiEscolhido]});
+        props.setPlayerNames({ 
+            val: [...props.playerNames.val, nome], 
+            emojis: [...props.playerNames.emojis, emojiEscolhido],
+            fortniteOutfit: [...props.playerNames.fortniteOutfit, pegaOutfitFortniteAleatorio()]
+        });
 
-        sessionStorage.setItem('playersList', JSON.stringify({ val: [...props.playerNames.val, nome], emojis: [...props.playerNames.emojis, emojiEscolhido]}));
+        sessionStorage.setItem('playersList', JSON.stringify({ 
+            val: [...props.playerNames.val, nome], 
+            emojis: [...props.playerNames.emojis, emojiEscolhido],
+            fortniteOutfit: [...props.playerNames.fortniteOutfit, pegaOutfitFortniteAleatorio()]
+        }));
     }
 
     const addMultiplePlayers = (list) => {
         setModalAddMultiOpen(false);
 
         let emojisArr = [];
+        let fortniteOutfitArr = [];
         let listIndex = 0;
         while (listIndex < list.length) {
             emojisArr.push(Math.floor(Math.random() * props.emojis.length));
+            fortniteOutfitArr.push(pegaOutfitFortniteAleatorio());
             listIndex++;
         }
 
         if(props.playerNames.val.length === 1 && props.playerNames.val[0] === ''){
-            props.setPlayerNames({ val: [...list], emojis: [...emojisArr]});
-            sessionStorage.setItem('playersList', JSON.stringify({ val: [...list], emojis: [...emojisArr]}));
+            props.setPlayerNames({ 
+                val: [...list], 
+                emojis: [...emojisArr],
+                fortniteOutfit: [...fortniteOutfitArr]
+            });
+            sessionStorage.setItem('playersList', JSON.stringify({ 
+                val: [...list], 
+                emojis: [...emojisArr],
+                fortniteOutfit: [...fortniteOutfitArr]
+            }));
         } else {
-            props.setPlayerNames({ val: [...props.playerNames.val, ...list], emojis: [...props.playerNames.emojis, ...emojisArr]});
-            sessionStorage.setItem('playersList', JSON.stringify({ val: [...props.playerNames.val, ...list], emojis: [...props.playerNames.emojis, ...emojisArr]}));
+            props.setPlayerNames({ 
+                val: [...props.playerNames.val, ...list], 
+                emojis: [...props.playerNames.emojis, ...emojisArr],
+                fortniteOutfit: [...props.playerNames.fortniteOutfit, ...fortniteOutfitArr]
+            });
+            sessionStorage.setItem('playersList', JSON.stringify({ 
+                val: [...props.playerNames.val, ...list], 
+                emojis: [...props.playerNames.emojis, ...emojisArr],
+                fortniteOutfit: [...props.playerNames.fortniteOutfit, ...fortniteOutfitArr]
+            }));
         }
     }
 
     function handleChange(event) {
         let vals = [...props.playerNames.val];
         let emojisArr = [...props.playerNames.emojis];
+        let fortniteOutfitArr = [...props.playerNames.fortniteOutfit];
 
         vals[this] = event.target.value;
 
-        props.setPlayerNames({ val: vals, emojis: emojisArr });
+        props.setPlayerNames({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr });
 
-        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr }));
+        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr }));
     }
 
     const deletePlayer = (i) => {
         let vals = [...props.playerNames.val];
         let emojisArr = [...props.playerNames.emojis];
+        let fortniteOutfitArr = [...props.playerNames.fortniteOutfit];
     
         vals.splice(i, 1);
         emojisArr.splice(i, 1);
+        fortniteOutfitArr.splice(i, 1);
 
-        props.setPlayerNames({ val: vals, emojis: emojisArr });
+        props.setPlayerNames({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr });
 
-        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr }));
+        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr }));
     }
 
     const verifyPlayers = () => {
@@ -127,16 +164,35 @@ const PlayersForm = (props) => {
         setModalEmojiSelectorOpen(true);
     }
 
+    const openModalFortniteOutfit = (player) => {
+        setSelectedPlayerIndex(player);
+        setModalFortniteOutfitSelectorOpen(true);
+    }
+
     const closeModalEmoji = (emoji) => {
         let vals = [...props.playerNames.val];
         let emojisArr = [...props.playerNames.emojis];
+        let fortniteOutfitArr = [...props.playerNames.fortniteOutfit];
 
         emojisArr[selectedPlayerIndex] = emoji;
 
-        props.setPlayerNames({ val: vals, emojis: emojisArr });
-        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr }));
+        props.setPlayerNames({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr });
+        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr }));
 
         setModalEmojiSelectorOpen(false);
+    }
+
+    const closeModalFortniteOutfit = (outfitUrl) => {
+        let vals = [...props.playerNames.val];
+        let emojisArr = [...props.playerNames.emojis];
+        let fortniteOutfitArr = [...props.playerNames.fortniteOutfit];
+
+        fortniteOutfitArr[selectedPlayerIndex] = outfitUrl;
+
+        props.setPlayerNames({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr });
+        sessionStorage.setItem('playersList', JSON.stringify({ val: vals, emojis: emojisArr, fortniteOutfit: fortniteOutfitArr }));
+
+        setModalFortniteOutfitSelectorOpen(false);
     }
 
     const startGame = () => {
@@ -160,12 +216,26 @@ const PlayersForm = (props) => {
                         (item, index) => {
                             let icon = <Icon className='input-circular-btn' name='trash' circular link onClick={() => deletePlayer(index)}/>;
                             let action = null;
-                            if(props.game === 1) {
+                            if(props.game === Games.bigBrotherBrasil) {
                                 icon = null;
                                 action = <div className='input-emoji'>
                                             <Button.Group basic inverted size="small">
                                                 <Button className="button-emoji" onClick={() => openModalEmoji(index)}>
                                                     <Image src={props.emojis[props.playerNames.emojis[index]]} className="button-emoji-icon"/>
+                                                </Button>
+                                                <Button icon='trash' onClick={() => deletePlayer(index)}/>
+                                            </Button.Group>
+                                        </div>;
+                            } else if(props.game === Games.fortnite) {
+                                icon = null;
+                                action = <div className='input-fortnite-skin'>
+                                            <Button.Group basic inverted size="small">
+                                                <Button className="button-fortnite-outfit" onClick={() => openModalFortniteOutfit(index)}>
+                                                    {
+                                                        props.playerNames.fortniteOutfit[index] !== ""
+                                                        ?   <Image src={props.playerNames.fortniteOutfit[index]} size='mini' className="button-fortnite-outfit-icon"/>
+                                                        :   <Icon name='circle notch' loading/>
+                                                    }
                                                 </Button>
                                                 <Button icon='trash' onClick={() => deletePlayer(index)}/>
                                             </Button.Group>
@@ -177,7 +247,7 @@ const PlayersForm = (props) => {
                                     key={'player-' + index}
                                     label={'#' + (index+1)} 
                                     placeholder={'Digite o nome do ' + playerName}
-                                    className='input-bordered'
+                                    className={props.game === Games.fortnite ? 'input-bordered grande' : 'input-bordered'}
                                     size='big' 
                                     value={item||''} onChange={handleChange.bind(index)}
                                     icon={icon} 
@@ -199,7 +269,9 @@ const PlayersForm = (props) => {
                     </Grid.Column>
                 </Grid>
                 <br/>
-                <Button fluid inverted basic onClick={() => verifyPlayers()} size='massive' >COMEÇAR SORTEIO</Button>
+                <Grid columns='equal'>
+                    <Grid.Column><Button fluid inverted basic onClick={() => verifyPlayers()} size='massive' >COMEÇAR SORTEIO</Button></Grid.Column>
+                </Grid>
             </div>
             <BasicModal
                 open={modalBasicOpen} 
@@ -233,6 +305,12 @@ const PlayersForm = (props) => {
 
                 emojis={props.emojis}
                 closeModalEmoji={closeModalEmoji}
+            />
+            <ModalFortniteOutfitSelector
+                open={modalFortniteOutfitSelectorOpen} 
+                onClose={() => setModalFortniteOutfitSelectorOpen(false)}
+                onOpen={() => setModalFortniteOutfitSelectorOpen(true)}
+                closeModalFortniteOutfit={closeModalFortniteOutfit}
             />
         </div>
     );
