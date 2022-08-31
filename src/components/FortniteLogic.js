@@ -166,7 +166,7 @@ class FortniteLogic {
     };
 
     drop = () => {
-        let isFatal = this.probabilityFatal(.3); // 30% de morte
+        let isFatal = this.probabilityFatal(.1); // 30% de morte
 
         let event = '';
         let eventNumber = 0;
