@@ -117,7 +117,7 @@ class FortniteLogic {
                 resultFull.push(eventText);
 
                 playersAliveInThisEvent.forEach(player => {
-                    if(availableCrowns.length > 0 && !player.crown && playersAlive.length > 1) {
+                    if(availableCrowns.length > 0 && !player.crown && playersLeft.length > 0) {
                         let vaiPegarCoroa = false;
                         vaiPegarCoroa = this.randomize(100) < 80;
 
