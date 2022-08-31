@@ -173,7 +173,7 @@ const WinnerSegment = (props) => {
                     <Header className='header-greetings' as='h1' inverted textAlign='center' >
                         <b style={{textTransform: 'uppercase'}} className='fortnite-font fortnite-font-bordered'>{props.winner.name}</b>
                         <Header.Subheader className='fortnite-font fortnite-font-bordered fort-header-story'>
-                            GANHOU O SORTEIO!
+                            GANHOU O SORTEIO{ props.winner.crown ? " COM COROA " : "" }!
                         </Header.Subheader>
                     </Header>
                     <br/>
@@ -273,7 +273,7 @@ const FortnitePage = (props) => {
                 setTimeout(() => {
                     setShowPresentationGame(true);
                     props.setAppClass('fn-presentation-bg');
-                        startActPresentation(setShowPlayersList, setShowPresentationGame, 100, 5000, null);
+                    startActPresentation(setShowPlayersList, setShowPresentationGame, 100, 5000, null);
                 }, 1000);
             }, 1500);
         }, 1000);
@@ -290,10 +290,14 @@ const FortnitePage = (props) => {
             setShowStorylinePresentation(true);
 
             setPrevActBtn(() => () => {
-                setShowStorylinePresentation(false);
-                setTimeout(() => {
-                    showStoryline(index-1);
-                }, 100);
+                if(index === 0){
+                    startActPresentation(setShowPlayersList, setShowStorylinePresentation, 1000, 0, null);
+                } else {
+                    setShowStorylinePresentation(false);
+                    setTimeout(() => {
+                        showStoryline(index-1);
+                    }, 100);
+                }
             });
             setNextActBtn(() => () => {
                 setShowStorylinePresentation(false);

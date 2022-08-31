@@ -54,6 +54,16 @@ class FortniteLogic {
                 let availableCrowns = [];
                 let playersAliveInThisEvent = [];
 
+                // põe armas
+                for (let indexArmas = 1; indexArmas <= event.event.weapons; indexArmas++) {
+                    let pickOneArma = FortniteEvents.armas[this.pickOnePlayer(FortniteEvents.armas)];
+
+                    let replacerStr = '(Arma' + indexArmas +')';
+                    var regexStr = new RegExp(this.escapeRegExp(replacerStr), 'g');
+
+                    eventText = eventText.replace(regexStr, pickOneArma);
+                }
+
                 while(i <= qtdPlayers){
                     let indexPlayer = this.pickOnePlayer(playersLeft);
                     let chosenPlayer = playersLeft[indexPlayer];
@@ -108,8 +118,7 @@ class FortniteLogic {
                 resultFull.push(eventText);
 
                 playersAliveInThisEvent.forEach(player => {
-                    if(availableCrowns.length > 0 && !player.crown) {
-                        console.log('entrou');
+                    if(availableCrowns.length > 0 && !player.crown && playersAlive.length > 1) {
                         let vaiPegarCoroa = false;
                         vaiPegarCoroa = this.randomize(100) < 80;
 
@@ -120,6 +129,14 @@ class FortniteLogic {
                         let crownText = `${crownTag}${imgTagPlayerAlive} <b class="fort-player-name">${player.name}</b> pegou a coroa que pertencia a ${imgTagDeadPlayer} <b class="fort-player-name">${availableCrowns[0].name}</b>`;
                         let noCrownText = `${imgTagPlayerAlive} <b class="fort-player-name">${player.name}</b> não conseguiu pegar a coroa que pertencia a ${imgTagDeadPlayer} <b class="fort-player-name">${availableCrowns[0].name}</b>`;
                         resultFull.push(vaiPegarCoroa ? crownText : noCrownText);
+
+                        if(vaiPegarCoroa) {
+                            playersAlive.forEach(play => {
+                                if(play === player) {
+                                    play.crown = true;
+                                }
+                            });
+                        }
 
                         availableCrowns.splice(0, 1);
                     }
@@ -167,10 +184,12 @@ class FortniteLogic {
     }
 
     normal = (onda) => {
-        let probabilidade = .2;
-        if(onda > 9) {
-            probabilidade = .3;
-        }
+        let probabilidade = .2 * ((onda*0.1)+1);
+        // if(onda > 9) {
+        //     probabilidade = .3
+        // }
+
+        console.log(probabilidade);
 
         let isFatal = this.probabilityFatal(probabilidade); // 20% de morte
 
