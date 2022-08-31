@@ -234,6 +234,12 @@ li::before {
     .fort-header-story {
         font-size: 30px !important;
     }
+
+    .fort-pos-absolute {
+        position: absolute !important;
+        z-index: 10 !important;
+        margin-top: -15px !important;
+    }
 }
 
 .fortnite-bg {

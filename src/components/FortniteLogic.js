@@ -76,7 +76,6 @@ class FortniteLogic {
                             if(event.event.deaths[j] === i){
                                 playersDead.push(chosenPlayer);
                                 if(chosenPlayer.crown) {
-                                    console.log(chosenPlayer.name);
                                     availableCrowns.push(chosenPlayer);
                                 }
                             }
@@ -185,11 +184,6 @@ class FortniteLogic {
 
     normal = (onda) => {
         let probabilidade = .2 * ((onda*0.1)+1);
-        // if(onda > 9) {
-        //     probabilidade = .3
-        // }
-
-        console.log(probabilidade);
 
         let isFatal = this.probabilityFatal(probabilidade); // 20% de morte
 
