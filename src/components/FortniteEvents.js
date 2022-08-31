@@ -78,6 +78,7 @@ class FortniteEvents {
 
     mortes = [
         //{ players: 1, deaths: [1], text: `(Jogador1) .`},
+        { players: 1, weapons: 0, deaths: [1], text: `O jogo de (Jogador1) crashou e (Jogador1) foi eliminado voando.`},
         { players: 1, weapons: 0, deaths: [1], text: `(Jogador1) se perdeu na tempestade.`},
         { players: 1, weapons: 0, deaths: [1], text: `(Jogador1) se eliminou sem querer ao cair de um local alto.`},
         { players: 1, weapons: 0, deaths: [1], text: `(Jogador1) se eliminou sem querer ao cair de um local alto.`},
@@ -118,6 +119,7 @@ class FortniteEvents {
 
         { players: 2, weapons: 0, deaths: [1], text: `(Jogador1) e (Jogador2) estão batalhando. (Jogador2) joga uma Granada Boogie-Woogie que faz (Jogador1) dançar, e com isso consegue eliminar (Jogador1) bem tranquilamente.`},
         { players: 2, weapons: 0, deaths: [2], text: `(Jogador1) e (Jogador2) estão batalhando. (Jogador1) joga uma Granada Boogie-Woogie que faz (Jogador2) dançar, e com isso consegue eliminar (Jogador2) bem tranquilamente.`},
+        { players: 2, weapons: 0, deaths: [1], text: `(Jogador1) entrou em uma batalha com (Jogador2), mas foi eliminado por (Jogador2) pois a conexão de (Jogador1) estava instável e errou todos os tiros.`},
     ];
 }
 
