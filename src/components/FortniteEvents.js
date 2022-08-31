@@ -25,6 +25,7 @@ class FortniteEvents {
     
     normal = [
         //{ players: 1, text: `(Jogador1) `},
+        { players: 1, weapons: 0, text: `(Jogador1) está passando por cima do loot deixado por algum jogador eliminado.`},
         { players: 1, weapons: 0, text: `(Jogador1) está coletando madeira.`},
         { players: 1, weapons: 0, text: `(Jogador1) está coletando pedra.`},
         { players: 1, weapons: 0, text: `(Jogador1) está coletando metal.`},
@@ -42,6 +43,7 @@ class FortniteEvents {
         { players: 1, weapons: 0, text: `(Jogador1) está escondido em um caminhão.`},
         { players: 1, weapons: 0, text: `(Jogador1) está correndo pelo mapa a procura de algum oponente.`},
         { players: 1, weapons: 0, text: `(Jogador1) está tentando domar um animal.`},
+        { players: 1, weapons: 0, text: `(Jogador1) está abrindo um drop.`},
         { players: 2, weapons: 0, text: `(Jogador1) encontrou (Jogador2) mas evitou confronto.`},
         { players: 2, weapons: 0, text: `(Jogador1) encontrou (Jogador2) e tentou fazer amizade, mas não obteve sucesso.`},
         { players: 2, weapons: 0, text: `(Jogador1) encontrou (Jogador2) e tentou fazer amizade, entretanto teve que fugir de (Jogador2) que iniciou um confronto.`},
@@ -50,9 +52,14 @@ class FortniteEvents {
         { players: 2, weapons: 0, text: `(Jogador1) inicia um confronto com (Jogador2), mas (Jogador2) após perder quase toda sua vida, foge do confronto com uma fenda portátil.`},
         { players: 2, weapons: 0, text: `(Jogador1) inicia um confronto com (Jogador2), mas após perder quase toda sua vida, foge do confronto com uma grandada de onda de choque.`},
         { players: 2, weapons: 0, text: `(Jogador1) inicia um confronto com (Jogador2), mas (Jogador2) após perder quase toda sua vida, foge do confronto com uma grandada de onda de choque.`},
+        
+        { players: 2, weapons: 0, text: `(Jogador1) e (Jogador2) estão batalhando, mas (Jogador2) jogou uma Granada Boogie-Woogie tão perto que ambos estão dançando.`},
+        { players: 2, weapons: 0, text: `(Jogador1) e (Jogador2) estão batalhando, mas (Jogador1) jogou uma Granada Boogie-Woogie tão perto que ambos estão dançando.`},
     ];
 
     drop = [
+        { players: 1, weapons: 0, text: `(Jogador1) caiu em um local do mapa que não possui nenhum tipo de loot.`},
+        { players: 1, weapons: 0, text: `(Jogador1) caiu no mar.`},
         { players: 1, weapons: 0, text: `(Jogador1) conseguiu cair sozinho no local que escolheu.`},
         { players: 2, weapons: 0, text: `(Jogador1) caiu numa casa perto de (Jogador2).`},
         { players: 2, weapons: 0, text: `(Jogador1) seguiu (Jogador2) para tentar sua primeira eliminação.`},
@@ -104,6 +111,14 @@ class FortniteEvents {
         { players: 1, weapons: 0, deaths: [1], text: `(Jogador1) construiu uma rampa para usar o jump e errou o pulo, se eliminando por queda.`},
         { players: 2, weapons: 1, deaths: [2], text: `(Jogador1) que estava escondido numa moita, conseque eliminar (Jogador2) com (Arma1).`},
 
+        { players: 2, weapons: 0, deaths: [1], text: `(Jogador1) e (Jogador2) estão batalhando. O material de (Jogagor1) acaba e, sem conseguir construir um chão, (Jogador1) acaba se eliminando por queda.`},
+        { players: 2, weapons: 0, deaths: [2], text: `(Jogador1) e (Jogador2) estão batalhando. O material de (Jogagor2) acaba e, sem conseguir construir um chão, (Jogador2) acaba se eliminando por queda.`},
+
+        { players: 2, weapons: 1, deaths: [1], text: `(Jogador1) estava abrindo um drop quando (Jogagor2) chegou e eliminou (Jogador1) com (Arma1).`},
+        { players: 2, weapons: 1, deaths: [1], text: `(Jogador1) estava abrindo um drop quando (Jogagor2) chegou e eliminou (Jogador1) com (Arma1).`},
+
+        { players: 2, weapons: 0, deaths: [1], text: `(Jogador1) e (Jogador2) estão batalhando. (Jogador2) joga uma Granada Boogie-Woogie que faz (Jogador1) dançar, e com isso consegue eliminar (Jogador1) bem tranquilamente.`},
+        { players: 2, weapons: 0, deaths: [2], text: `(Jogador1) e (Jogador2) estão batalhando. (Jogador1) joga uma Granada Boogie-Woogie que faz (Jogador2) dançar, e com isso consegue eliminar (Jogador2) bem tranquilamente.`},
     ];
 }
 
